@@ -15,9 +15,9 @@
 
 | Resource | Direct Link | Description |
 | :--- | :--- | :--- |
-| 📺 **Official Video Demo** | [![YouTube Demo](https://img.shields.io/badge/YouTube-Watch%20Demo%20Video-red?style=for-the-badge&logo=youtube)](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) | [**Watch ArgusASM Demo Video on YouTube**](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) |
-| 📊 **Presentation (Google Slides)** | [![Google Slides](https://img.shields.io/badge/Google%20Slides-ArgusASM%20Presentation-F4B400?style=for-the-badge&logo=googleslides)](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) | [**Live Google Slides Pitch Deck**](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) |
-| 📑 **Presentation (Repository PDF)** | [`ArgusASM_AIORI.pdf`](./ArgusASM_AIORI.pdf) | **Exported High-Resolution Presentation Deck in Root Directory** |
+| 📺 **Video (Intro & Implementation Plan)** | [![YouTube Video](https://img.shields.io/badge/YouTube-Watch%20Video-red?style=for-the-badge&logo=youtube)](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) | [**Watch Introduction & Implementation Plan Video on YouTube**](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) — Complete project introduction, PS-011 alignment, architecture, and Level 2 implementation schedule. |
+| 📊 **Presentation (Google Slides)** | [![Google Slides](https://img.shields.io/badge/Google%20Slides-ArgusASM%20Presentation-F4B400?style=for-the-badge&logo=googleslides)](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) | [**Live Google Slides Presentation Deck**](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) — Initial phase presentation slides covering system design, scope boundaries, and implementation plan. |
+| 📑 **Initial Phase Plan & Deck (PDF)** | [`ArgusASM_AIORI.pdf`](./ArgusASM_AIORI.pdf) | **Initial Phase Presentation Deck & Implementation Plan (PDF)** — Exported presentation deck containing the master plan in the root directory. |
 | 📋 **Hackathon Guidelines & Format** | [`docs/hackathon-format/Proposed-structure-hackathon.pdf`](./docs/hackathon-format/Proposed-structure-hackathon.pdf) | **Official Hackathon Submission Structure Specification** |
 
 ---
@@ -377,7 +377,7 @@ npm run dev
 
 ```
 .
-├── ArgusASM_AIORI.pdf              # Official Level 2 Presentation Deck (PDF)
+├── ArgusASM_AIORI.pdf              # Initial Phase Presentation Deck & Implementation Plan (PDF)
 ├── README.md                       # Master Documentation & Evaluator Guide
 ├── approved_scope.json             # Authorized target scope definition & caps
 ├── docs/
@@ -432,7 +432,7 @@ npm run dev
 | **Safety & Ethical Guardrails** | Pre-flight scope lock, fixed 5-port list, passive banner grab, zero exploitation. | `scope_engine.py`, `approved_scope.json`, Ledger |
 | **False-Positive Handling** | Dedicated FP engine calibrating wildcard DNS, CDN proxies, and staging certificates. | `fp_engine.py`, `docs/fp-analysis.md` |
 | **Technical Innovation** | SHA-256 Merkle audit trail chaining snapshots, Time-Travel scrubber, Topology Graph. | `merkle.py`, Topology Graph UI |
-| **Documentation & Packaging** | Comprehensive README, presentation slides, PDF deck, clean folder structure. | [`ArgusASM_AIORI.pdf`](./ArgusASM_AIORI.pdf), [`docs/hackathon-format/`](./docs/hackathon-format/) |
+| **Documentation & Packaging** | Comprehensive README, video introduction & implementation plan, initial phase slides (PDF & Google Slides), clean folder structure. | [`ArgusASM_AIORI.pdf`](./ArgusASM_AIORI.pdf), [`docs/hackathon-format/`](./docs/hackathon-format/) |
 
 ---
 
