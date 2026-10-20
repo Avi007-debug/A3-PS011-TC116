@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 /**
- * PageLoader — shown during route transitions.
+ * PageLoader - shown during route transitions.
  * Usage: render it in __root.tsx when router is pending.
  */
 export function PageLoader({ isLoading }: { isLoading: boolean }) {
