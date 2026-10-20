@@ -1,6 +1,6 @@
 -- ============================================================================
 -- ArgusASM Database Schema (Supabase / PostgreSQL)
--- AIORI Hackathon 2026 — Problem Statement PS-011
+-- AIORI Hackathon 2026 - Problem Statement PS-011
 -- Autonomous Attack-Surface Inventory & Drift Sentinel
 -- ============================================================================
 
