@@ -191,7 +191,7 @@ export function Hero() {
                 Inspect Asset Inventory
               </Link>
               <Link
-                to="/zero-decrypt"
+                to="/drift"
                 className="hover-glow inline-flex items-center gap-2 border border-border bg-surface px-5 py-3 font-mono text-xs uppercase tracking-[0.16em] text-foreground/90 hover:text-foreground font-semibold"
               >
                 Drift Timeline (T0 vs T1)

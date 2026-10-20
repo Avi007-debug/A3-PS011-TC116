@@ -19,7 +19,7 @@ import { isSupabaseConfigured } from "@/lib/supabase";
 interface NavTab {
   id: string;
   label: string;
-  to: "/" | "/capabilities" | "/zero-decrypt" | "/security" | "/audit" | "/qa";
+  to: "/" | "/capabilities" | "/drift" | "/security" | "/audit" | "/qa";
   hash?: string;
   badge?: string;
   badgeColor?: "blue" | "amber" | "red" | "emerald";
@@ -44,7 +44,7 @@ const NAV_TABS: NavTab[] = [
   {
     id: "drift",
     label: "Drift",
-    to: "/zero-decrypt",
+    to: "/drift",
     badge: "3",
     badgeColor: "amber",
     icon: GitCompare,
@@ -77,12 +77,10 @@ const NAV_TABS: NavTab[] = [
 export function Nav({
   onOpenCli,
   onOpenQa,
-  onOpenPcap,
   onOpenSupabase,
 }: {
   onOpenCli?: () => void;
   onOpenQa?: () => void;
-  onOpenPcap?: () => void;
   onOpenSupabase?: () => void;
 }) {
   const navigate = useNavigate();

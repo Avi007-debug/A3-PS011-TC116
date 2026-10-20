@@ -38,7 +38,7 @@ const EXPLORE_PORTALS = [
     cta: "Inspect Inventory →",
   },
   {
-    to: "/zero-decrypt" as const,
+    to: "/drift" as const,
     badge: "Stateful Delta",
     num: "02",
     accentClass: "border-l-warn",

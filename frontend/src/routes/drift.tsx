@@ -7,7 +7,7 @@ import { CliTerminalModal } from "@/components/sentinel/CliTerminalModal";
 import { JudgeDefenseModal } from "@/components/sentinel/JudgeDefenseModal";
 import { SupabaseSettingsModal } from "@/components/sentinel/SupabaseSettingsModal";
 
-export const Route = createFileRoute("/zero-decrypt")({
+export const Route = createFileRoute("/drift")({
   head: () => ({
     meta: [
       { title: "Drift Timeline & Snapshot Diff | ArgusASM" },
