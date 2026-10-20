@@ -207,52 +207,52 @@ export function Hero() {
 
           {/* Key Metric Indicators */}
           <div className="mt-10 grid grid-cols-2 gap-3 border-t border-border/80 pt-6 sm:grid-cols-4 font-mono">
-            <div className="bg-surface/50 border border-border/50 p-3">
+            <div className="bg-surface border border-border p-3">
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Approved Scope</p>
               <p className="mt-1 text-xl font-bold tabular-nums text-foreground">
                 {LIVE_TELEMETRY.approvedDomains} / {LIVE_TELEMETRY.maxDomains} Domains
               </p>
             </div>
-            <div className="bg-surface/50 border border-border/50 p-3">
+            <div className="bg-surface border border-border p-3">
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Monitored Hosts</p>
               <p className="mt-1 text-xl font-bold tabular-nums text-primary">
                 {LIVE_TELEMETRY.approvedHosts} / {LIVE_TELEMETRY.maxHosts} Hosts
               </p>
             </div>
-            <div className="bg-surface/50 border border-border/50 p-3">
+            <div className="bg-surface border border-border p-3">
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Active Probes</p>
               <p className="mt-1 text-xl font-bold tabular-nums text-foreground">4/4 Documented</p>
             </div>
-            <div className="bg-surface/50 border border-border/50 p-3">
+            <div className="bg-surface border border-border p-3">
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Drift Detected</p>
-              <p className="mt-1 text-xl font-bold tabular-nums text-amber-700 dark:text-amber-400">{LIVE_TELEMETRY.driftEventsDetected} Faults</p>
+              <p className="mt-1 text-xl font-bold tabular-nums text-warn">{LIVE_TELEMETRY.driftEventsDetected} Faults</p>
             </div>
           </div>
         </div>
 
         {/* Right Column: Live Interactive Telemetry Console */}
-        <div className="editorial-glass scanlines flex min-h-[560px] flex-col overflow-hidden rounded border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#070A10]/95 shadow-xl text-slate-900 dark:text-foreground">
+        <div className="flex min-h-[560px] flex-col overflow-hidden border border-border bg-surface">
           {/* Console Header / Tabs */}
-          <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 bg-slate-100/90 dark:bg-[#070A10]/95 px-3.5 py-2 text-[11px] font-mono">
-            <div className="flex flex-wrap items-center gap-1">
+          <div className="flex items-center justify-between border-b border-border bg-surface-raised px-3.5 py-2 text-[11px] font-mono">
+            <div className="flex flex-wrap items-center gap-0">
               <button
                 type="button"
                 onClick={() => setActiveTab("stream")}
-                className={`px-3 py-1 uppercase tracking-wider transition-all cursor-pointer ${
+                className={`px-3 py-1.5 font-sans font-semibold uppercase tracking-[0.06em] text-[10px] transition-colors cursor-pointer border-b-2 ${
                   activeTab === "stream"
-                    ? "border-b-2 border-blue-600 dark:border-orange-400 bg-blue-50 dark:bg-orange-500/15 text-blue-700 dark:text-orange-400 font-bold shadow-xs"
-                    : "text-slate-600 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground"
+                    ? "border-b-primary text-primary bg-surface"
+                    : "border-b-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
-                ● Live Perimeter
+                <span className="inline-block w-1.5 h-1.5 bg-current align-middle mr-1.5" />Live Perimeter
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab("probes")}
-                className={`px-3 py-1 uppercase tracking-wider transition-all cursor-pointer ${
+                className={`px-3 py-1.5 font-sans font-semibold uppercase tracking-[0.06em] text-[10px] transition-colors cursor-pointer border-b-2 ${
                   activeTab === "probes"
-                    ? "border-b-2 border-blue-600 dark:border-orange-400 bg-blue-50 dark:bg-orange-500/15 text-blue-700 dark:text-orange-400 font-bold"
-                    : "text-slate-600 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground"
+                    ? "border-b-primary text-primary bg-surface"
+                    : "border-b-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
                 4 Documented Probes
@@ -260,10 +260,10 @@ export function Hero() {
               <button
                 type="button"
                 onClick={() => setActiveTab("diff")}
-                className={`px-3 py-1 uppercase tracking-wider transition-all cursor-pointer ${
+                className={`px-3 py-1.5 font-sans font-semibold uppercase tracking-[0.06em] text-[10px] transition-colors cursor-pointer border-b-2 ${
                   activeTab === "diff"
-                    ? "border-b-2 border-blue-600 dark:border-orange-400 bg-blue-50 dark:bg-orange-500/15 text-blue-700 dark:text-orange-400 font-bold"
-                    : "text-slate-600 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground"
+                    ? "border-b-primary text-primary bg-surface"
+                    : "border-b-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
                 T0 vs T1 Diff
@@ -271,95 +271,95 @@ export function Hero() {
               <button
                 type="button"
                 onClick={() => setActiveTab("merkle")}
-                className={`px-3 py-1 uppercase tracking-wider transition-all cursor-pointer ${
+                className={`px-3 py-1.5 font-sans font-semibold uppercase tracking-[0.06em] text-[10px] transition-colors cursor-pointer border-b-2 ${
                   activeTab === "merkle"
-                    ? "border-b-2 border-blue-600 dark:border-orange-400 bg-blue-50 dark:bg-orange-500/15 text-blue-700 dark:text-orange-400 font-bold"
-                    : "text-slate-600 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground"
+                    ? "border-b-primary text-primary bg-surface"
+                    : "border-b-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
                 Merkle Receipt
               </button>
             </div>
 
-            <div className="flex items-center gap-2 text-blue-700 dark:text-orange-400 font-mono text-[10px]">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-orange-400 animate-pulse" />
+            <div className="flex items-center gap-2 text-success font-mono text-[10px]">
+              <span className="h-1.5 w-1.5 bg-success" />
               <span className="font-bold">GUARDRAILS ACTIVE</span>
             </div>
           </div>
 
           {/* Sub-HUD Metrics Ribbon */}
-          <div className="grid grid-cols-4 border-b border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-[#090D14]/70 px-4 py-2 font-mono text-[10.5px] text-slate-600 dark:text-muted-foreground">
+          <div className="grid grid-cols-4 border-b border-border bg-surface-raised px-4 py-2 font-mono text-[10.5px] text-muted-foreground">
             <div>
-              <span className="block text-[9px] uppercase tracking-wider text-slate-500 dark:text-muted-foreground/70">POLICY</span>
-              <span className="text-slate-900 dark:text-foreground font-semibold">READ-ONLY PROBES</span>
+              <span className="block text-[9px] uppercase tracking-wider text-muted-foreground">POLICY</span>
+              <span className="text-foreground font-semibold">READ-ONLY PROBES</span>
             </div>
             <div>
-              <span className="block text-[9px] uppercase tracking-wider text-slate-500 dark:text-muted-foreground/70">CHECKS RUN</span>
-              <span className="text-blue-700 dark:text-orange-400 font-bold tabular-nums">{probeChecksCount.toLocaleString()}</span>
+              <span className="block text-[9px] uppercase tracking-wider text-muted-foreground">CHECKS RUN</span>
+              <span className="text-primary font-bold tabular-nums">{probeChecksCount.toLocaleString()}</span>
             </div>
             <div>
-              <span className="block text-[9px] uppercase tracking-wider text-slate-500 dark:text-muted-foreground/70">SCOPE LOCK</span>
-              <span className="text-slate-900 dark:text-foreground font-semibold">20 DOM / 10 HOST</span>
+              <span className="block text-[9px] uppercase tracking-wider text-muted-foreground">SCOPE LOCK</span>
+              <span className="text-foreground font-semibold">20 DOM / 10 HOST</span>
             </div>
             <div>
-              <span className="block text-[9px] uppercase tracking-wider text-slate-500 dark:text-muted-foreground/70">EXPLOITATION</span>
-              <span className="text-emerald-700 dark:text-primary font-bold">ZERO (PASSIVE)</span>
+              <span className="block text-[9px] uppercase tracking-wider text-muted-foreground">EXPLOITATION</span>
+              <span className="text-success font-bold">ZERO (PASSIVE)</span>
             </div>
           </div>
 
           {/* Console Tab Contents */}
-          <div className="flex-1 p-4 font-mono text-[11.5px] leading-relaxed overflow-y-auto">
+          <div className="flex-1 p-4 font-mono text-[11.5px] leading-relaxed overflow-y-auto bg-[#000000]">
             {activeTab === "stream" && (
               <div className="space-y-3">
-                <div className="flex items-center justify-between border-b border-border/40 pb-1.5 text-[10.5px] uppercase tracking-wider text-muted-foreground">
+                <div className="flex items-center justify-between border-b border-border pb-1.5 text-[10.5px] uppercase tracking-wider text-muted-foreground">
                   <span className="text-primary font-semibold">[APPROVED PERIMETER DISCOVERY STREAM]</span>
                   <span>PS-011 AUTHORIZED SCOPE</span>
                 </div>
 
-                <div className="space-y-1.5 font-mono text-[11.5px] text-slate-800 dark:text-foreground/90">
-                  <div className="flex items-start gap-2 bg-slate-100 dark:bg-background/60 p-1.5 border-l-2 border-blue-500 dark:border-primary/50">
-                    <span className="text-slate-500 dark:text-muted-foreground shrink-0 text-[10.5px]">14:02:11</span>
-                    <span className="text-blue-700 dark:text-primary font-bold shrink-0">[SCOPE_LOCK]</span>
+                <div className="space-y-1.5 font-mono text-[11.5px] text-foreground">
+                  <div className="flex items-start gap-2 p-1.5 border-l-2 border-info hover:bg-surface-raised transition-colors">
+                    <span className="text-muted-foreground shrink-0 text-[10.5px]">14:02:11</span>
+                    <span className="text-info font-bold shrink-0">[SCOPE_LOCK]</span>
                     <span className="truncate">Validated approved_scope.json: 15 domains, 8 hosts within caps</span>
                   </div>
 
-                  <div className="flex items-start gap-2 bg-blue-50 dark:bg-primary/10 p-1.5 border-l-2 border-blue-600 dark:border-primary">
-                    <span className="text-slate-500 dark:text-muted-foreground shrink-0 text-[10.5px]">14:02:12</span>
-                    <span className="text-blue-700 dark:text-primary font-bold shrink-0">[DNS_PROBE]</span>
+                  <div className="flex items-start gap-2 p-1.5 border-l-2 border-info hover:bg-surface-raised transition-colors">
+                    <span className="text-muted-foreground shrink-0 text-[10.5px]">14:02:12</span>
+                    <span className="text-info font-bold shrink-0">[DNS_PROBE]</span>
                     <span className="truncate">aiori.lab &rarr; A:10.0.1.10, NS:ns-01.aiori.lab, MX:10 mail.aiori.lab (TTL 300)</span>
                   </div>
 
-                  <div className="flex items-start gap-2 bg-red-50 dark:bg-destructive/10 p-1.5 border-l-2 border-red-600 dark:border-destructive">
-                    <span className="text-slate-500 dark:text-muted-foreground shrink-0 text-[10.5px]">14:02:13</span>
-                    <span className="text-red-700 dark:text-destructive font-bold shrink-0">[TLS_ALERT]</span>
-                    <span className="text-red-700 dark:text-destructive">legacy.aiori.lab:443 certificate expired on 2026-01-01 (RFC 5280)</span>
+                  <div className="flex items-start gap-2 p-1.5 border-l-2 border-destructive hover:bg-surface-raised transition-colors">
+                    <span className="text-muted-foreground shrink-0 text-[10.5px]">14:02:13</span>
+                    <span className="text-destructive font-bold shrink-0">[TLS_ALERT]</span>
+                    <span className="text-destructive">legacy.aiori.lab:443 certificate expired on 2026-01-01 (RFC 5280)</span>
                   </div>
 
-                  <div className="flex items-start gap-2 bg-amber-50 dark:bg-amber-500/10 p-1.5 border-l-2 border-amber-600 dark:border-amber-500">
-                    <span className="text-slate-500 dark:text-muted-foreground shrink-0 text-[10.5px]">14:02:14</span>
-                    <span className="text-amber-700 dark:text-amber-500 font-bold shrink-0">[PORT_WARN]</span>
-                    <span className="text-amber-800 dark:text-amber-200">dev-edge.aiori.lab:8080 OPEN (Werkzeug debug console exposed)</span>
+                  <div className="flex items-start gap-2 p-1.5 border-l-2 border-warn hover:bg-surface-raised transition-colors">
+                    <span className="text-muted-foreground shrink-0 text-[10.5px]">14:02:14</span>
+                    <span className="text-warn font-bold shrink-0">[PORT_WARN]</span>
+                    <span className="text-warn">dev-edge.aiori.lab:8080 OPEN (Werkzeug debug console exposed)</span>
                   </div>
 
-                  <div className="flex items-start gap-2 bg-red-50 dark:bg-destructive/10 p-1.5 border-l-2 border-red-600 dark:border-destructive">
-                    <span className="text-slate-500 dark:text-muted-foreground shrink-0 text-[10.5px]">14:02:15</span>
-                    <span className="text-red-700 dark:text-destructive font-bold shrink-0">[DANGLING_DNS]</span>
-                    <span className="text-red-700 dark:text-destructive">test-s3.aiori.lab &rarr; Orphaned CNAME to unallocated S3 (NoSuchBucket)</span>
+                  <div className="flex items-start gap-2 p-1.5 border-l-2 border-destructive hover:bg-surface-raised transition-colors">
+                    <span className="text-muted-foreground shrink-0 text-[10.5px]">14:02:15</span>
+                    <span className="text-destructive font-bold shrink-0">[DANGLING_DNS]</span>
+                    <span className="text-destructive">test-s3.aiori.lab &rarr; Orphaned CNAME to unallocated S3 (NoSuchBucket)</span>
                   </div>
 
-                  <div className="flex items-start gap-2 bg-emerald-50 dark:bg-primary/10 p-1.5 border-l-2 border-emerald-600 dark:border-primary">
-                    <span className="text-slate-500 dark:text-muted-foreground shrink-0 text-[10.5px]">14:02:16</span>
-                    <span className="text-emerald-700 dark:text-primary font-bold shrink-0">[MERKLE_ROOT]</span>
-                    <span className="text-emerald-800 dark:text-primary truncate">Chained T1 snapshot hash to Block #1840291 (Receipt verified)</span>
+                  <div className="flex items-start gap-2 p-1.5 border-l-2 border-success hover:bg-surface-raised transition-colors">
+                    <span className="text-muted-foreground shrink-0 text-[10.5px]">14:02:16</span>
+                    <span className="text-success font-bold shrink-0">[MERKLE_ROOT]</span>
+                    <span className="text-success truncate">Chained T1 snapshot hash to Block #1840291 (Receipt verified)</span>
                   </div>
                 </div>
 
-                <div className="mt-4 rounded border border-slate-200 dark:border-border/80 bg-slate-50 dark:bg-background/80 p-3">
+                <div className="mt-4 border border-border bg-surface p-3">
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="font-bold text-amber-700 dark:text-amber-400">PERIMETER HYGIENE SCORE: 68/100 (ELEVATED RISK)</span>
-                    <span className="text-blue-700 dark:text-primary font-mono text-[10px] animate-pulse">● Continuous Scan</span>
+                    <span className="font-bold text-warn">PERIMETER HYGIENE SCORE: 68/100 (ELEVATED RISK)</span>
+                    <span className="text-info font-mono text-[10px] animate-pulse flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 bg-info" /> Continuous Scan</span>
                   </div>
-                  <p className="mt-1 text-[10.5px] text-slate-600 dark:text-muted-foreground font-sans">
+                  <p className="mt-1 text-[10.5px] text-muted-foreground font-sans">
                     3 seeded issues detected in current snapshot: 1 expired TLS certificate (-35), 1 unexpected open port (-25), and 1 potential dangling CNAME (-30).
                   </p>
                 </div>
@@ -368,17 +368,17 @@ export function Hero() {
 
             {activeTab === "probes" && (
               <div className="space-y-3">
-                <div className="flex justify-between items-center text-[10.5px] uppercase tracking-wider text-primary border-b border-border/40 pb-1">
+                <div className="flex justify-between items-center text-[10.5px] uppercase tracking-wider text-primary border-b border-border pb-1">
                   <span>The 4 Documented Probes (PS-011 Specification)</span>
                   <span className="text-muted-foreground">Standardized Checks</span>
                 </div>
-                <div className="border border-border/80 bg-background/60 p-3 space-y-2 text-foreground/90 font-mono text-[11px]">
+                <div className="border border-border bg-surface p-3 space-y-2 text-foreground font-mono text-[11px]">
                   <div>├─ [Check 1: DNS Inventory] Resolves A, AAAA, CNAME, MX, TXT, NS per RFC 1035</div>
                   <div className="pl-5 text-muted-foreground">└─ Tracks TTLs, authoritative nameservers, and zone modification timestamps</div>
                   <div>├─ [Check 2: TLS Certificate] Inspects Subject, Issuer, Expiry date, SANs per RFC 5280</div>
                   <div className="pl-5 text-destructive font-semibold">└─ Flagged: legacy.aiori.lab expired cert (Trust chain failure)</div>
                   <div>├─ [Check 3: Permitted Ports] Strictly limited to ports [22, 53, 80, 443, 8080]</div>
-                  <div className="pl-5 text-amber-500 font-semibold">└─ Flagged: dev-edge.aiori.lab:8080 open outside approved whitelist</div>
+                  <div className="pl-5 text-warn font-semibold">└─ Flagged: dev-edge.aiori.lab:8080 open outside approved whitelist</div>
                   <div>└─ [Check 4: Dangling DNS] Detects orphaned cloud CNAMEs (AWS S3, GitHub, Azure)</div>
                   <div className="pl-5 text-destructive font-semibold">└─ Flagged: test-s3.aiori.lab points to deprovisioned S3 (NoSuchBucket)</div>
                 </div>
@@ -387,20 +387,20 @@ export function Hero() {
 
             {activeTab === "diff" && (
               <div className="space-y-3">
-                <div className="flex justify-between items-center text-[10.5px] uppercase tracking-wider text-primary border-b border-border/40 pb-1">
+                <div className="flex justify-between items-center text-[10.5px] uppercase tracking-wider text-primary border-b border-border pb-1">
                   <span>Stateful Drift Delta (T0 Baseline vs T1 Current)</span>
                   <span className="text-primary font-semibold">3 Delta Events</span>
                 </div>
                 <div className="space-y-2 text-[11px] font-mono">
-                  <div className="border border-destructive/40 bg-destructive/10 p-2">
+                  <div className="border border-destructive p-2 border-l-4">
                     <span className="font-bold text-destructive">[CRITICAL DRIFT] EXPIRED_CERT: legacy.aiori.lab</span>
                     <p className="text-[10px] text-muted-foreground mt-0.5">T0: Active / Valid | T1: Expired (-292 days overdue)</p>
                   </div>
-                  <div className="border border-amber-500/40 bg-amber-500/10 p-2">
-                    <span className="font-bold text-amber-700 dark:text-amber-400">[HIGH DRIFT] NEW_SERVICE: dev-edge.aiori.lab:8080</span>
+                  <div className="border border-warn p-2 border-l-4">
+                    <span className="font-bold text-warn">[HIGH DRIFT] NEW_SERVICE: dev-edge.aiori.lab:8080</span>
                     <p className="text-[10px] text-muted-foreground mt-0.5">T0: Port 8080 Filtered | T1: Port 8080 OPEN (Werkzeug debug console)</p>
                   </div>
-                  <div className="border border-destructive/40 bg-destructive/10 p-2">
+                  <div className="border border-destructive p-2 border-l-4">
                     <span className="font-bold text-destructive">[HIGH DRIFT] DANGLING_DNS: test-s3.aiori.lab</span>
                     <p className="text-[10px] text-muted-foreground mt-0.5">T0: Active cloud target | T1: Deprovisioned bucket (HTTP 404 NoSuchBucket)</p>
                   </div>
@@ -410,11 +410,11 @@ export function Hero() {
 
             {activeTab === "merkle" && (
               <div className="space-y-2">
-                <div className="flex justify-between items-center text-[10.5px] uppercase tracking-wider text-primary border-b border-border/40 pb-1">
+                <div className="flex justify-between items-center text-[10.5px] uppercase tracking-wider text-primary border-b border-border pb-1">
                   <span>Cryptographic Merkle Baseline Attestation</span>
                   <span className="text-muted-foreground">SHA-256 Provenance</span>
                 </div>
-                <pre className="border border-border/80 bg-background/80 p-3 font-mono text-[10.5px] leading-snug text-foreground/90 overflow-x-auto">
+                <pre className="border border-border bg-surface p-3 font-mono text-[10.5px] leading-snug text-foreground overflow-x-auto">
 {`Merkle Root: ${LIVE_TELEMETRY.merkleRoot}
 Block Height: #${LIVE_TELEMETRY.blockHeight} · Status: VERIFIED_TAMPER_FREE
 ├─ Leaf 1 (Approved Scope):   0x7f82b9a4c1e3...

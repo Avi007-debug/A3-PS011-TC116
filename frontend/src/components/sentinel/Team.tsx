@@ -7,7 +7,7 @@ export function Team() {
       <SectionHead
         tag="Engineering & Research Roster"
         title="Six specialized disciplines, one cohesive security architecture"
-        lede="Responsibility is strictly delineated across protocol state machines, machine learning signal pipelines, eBPF kernel hooks, and cryptographic ledgers."
+        lede="Responsibility is strictly delineated across passive DNS/TLS/port inspection pipelines, stateful drift engines, CVSS-weighted scoring algorithms, and cryptographic Merkle audit ledgers."
       />
 
       <div className="mt-10 grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
@@ -16,7 +16,7 @@ export function Team() {
             <div>
               <div className="flex items-center justify-between font-mono text-[11px]">
                 <span className="text-primary font-bold">&gt; {m.role}</span>
-                <span className="border border-border/70 bg-background/50 px-1.5 py-0.5 text-[9.5px] text-muted-foreground">
+                <span className="border border-border-strong px-1.5 py-0.5 text-[9.5px] text-muted-foreground font-mono">
                   {m.badge}
                 </span>
               </div>
@@ -26,7 +26,7 @@ export function Team() {
               </p>
             </div>
 
-            <div className="mt-6 border-t border-border/60 pt-3 flex items-center justify-between font-mono text-[10px] text-muted-foreground">
+            <div className="mt-6 border-t border-border pt-3 flex items-center justify-between font-mono text-[10px] text-muted-foreground">
               <span>PGP FINGERPRINT:</span>
               <span className="text-primary font-bold select-all">{m.pgp}</span>
             </div>

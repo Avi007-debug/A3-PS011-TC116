@@ -25,13 +25,13 @@ const RESOURCES = [
 
 export function Footer() {
   return (
-    <footer id="docs" className="border-t border-border/80 bg-background px-5 py-16 sm:px-8 lg:px-12">
+    <footer id="docs" className="border-t border-border bg-background px-5 py-16 sm:px-8 lg:px-12">
       <div className="mx-auto w-full max-w-6xl">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           {/* Left Column: Project Overview */}
           <div>
             <div className="flex items-center gap-3 font-mono text-sm tracking-tight">
-              <div className="flex h-7 w-7 items-center justify-center overflow-hidden rounded border border-primary/50 bg-surface/90 shadow-[0_0_8px_rgba(20,184,166,0.3)]">
+              <div className="flex h-7 w-7 items-center justify-center border border-border-strong bg-surface">
                 <img src="/logo.png" alt="ArgusASM Logo" className="h-full w-full object-contain" />
               </div>
               <span className="font-bold text-foreground">
@@ -52,7 +52,7 @@ export function Footer() {
               {PROJECT.theme}.
             </p>
 
-            <div className="mt-6 font-mono text-xs text-muted-foreground space-y-1.5 border-l-2 border-primary/40 pl-3">
+            <div className="mt-6 font-mono text-xs text-muted-foreground space-y-1.5 border-l-2 border-primary pl-3">
               <div>COMPLIANCE: <span className="text-foreground font-semibold">{PROJECT.compliance}</span></div>
               <div>COMMIT HASH: <span className="text-primary font-bold select-all">{PROJECT.commit}</span></div>
               <div>SCOPE POLICY: <span className="text-primary font-semibold">Max 20 Domains / 10 Hosts (Capped)</span></div>
@@ -83,7 +83,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-border/80 pt-6 font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
+        <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6 font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
           <span>© 2026 {PROJECT.name} · AIORI Hackathon PS-011</span>
 
           <div className="flex items-center gap-4">
@@ -91,7 +91,7 @@ export function Footer() {
               href="https://github.com/aiori-hackathon/A3-PS011-TC116"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover-glow flex items-center gap-1.5 border border-border/60 bg-surface px-3 py-1.5 text-muted-foreground transition-all hover:border-primary/50 hover:text-primary"
+              className="hover-glow flex items-center gap-1.5 border border-border px-3 py-1.5 text-muted-foreground transition-colors hover:border-primary hover:text-primary"
               title="View on GitHub"
             >
               <svg

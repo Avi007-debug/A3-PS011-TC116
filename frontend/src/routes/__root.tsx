@@ -36,7 +36,7 @@ function NotFoundComponent() {
           </div>
         </div>
 
-        <h1 className="text-6xl font-bold font-mono text-primary mb-2">404</h1>
+        <h1 className="text-6xl font-bold font-mono text-destructive mb-2">404</h1>
         <h2 className="text-lg font-semibold text-foreground mb-1">
           Route not in scope
         </h2>
@@ -47,13 +47,13 @@ function NotFoundComponent() {
         <div className="flex items-center justify-center gap-3 flex-wrap">
           <Link
             to="/"
-            className="hover-glow inline-flex items-center gap-2 border border-primary bg-primary/20 px-5 py-2.5 font-mono text-sm font-bold text-primary transition-all hover:bg-primary/30"
+            className="btn-primary"
           >
             ← Return to Overview
           </Link>
           <a
             href="javascript:history.back()"
-            className="hover-glow inline-flex items-center gap-2 border border-border bg-surface px-5 py-2.5 font-mono text-sm text-muted-foreground hover:text-foreground"
+            className="btn-secondary"
           >
             Go Back
           </a>
@@ -70,8 +70,8 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <div className="mb-6 inline-flex items-center gap-2 border border-destructive/60 bg-destructive/10 px-4 py-2 font-mono text-xs text-destructive uppercase tracking-wider">
-          <span className="inline-block h-2 w-2 rounded-full bg-destructive animate-pulse" />
+        <div className="mb-6 inline-flex items-center gap-2 border border-destructive px-4 py-2 font-mono text-xs text-destructive uppercase tracking-wider">
+          <span className="inline-block h-2 w-2 bg-destructive" />
           SYSTEM FAULT DETECTED
         </div>
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
@@ -82,7 +82,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           can attempt recovery.
         </p>
         {error?.message && (
-          <pre className="mt-4 rounded border border-border bg-surface p-3 text-left font-mono text-xs text-destructive overflow-auto max-h-32">
+          <pre className="mt-4 border border-border bg-surface p-3 text-left font-mono text-xs text-destructive overflow-auto max-h-32">
             {error.message}
           </pre>
         )}
@@ -92,13 +92,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="hover-glow inline-flex items-center gap-1.5 border border-primary bg-primary/20 px-4 py-2 font-mono text-sm font-bold text-primary transition-all hover:bg-primary/30"
+            className="btn-primary"
           >
             Retry Module
           </button>
           <a
             href="/"
-            className="hover-glow inline-flex items-center gap-1.5 border border-border bg-surface px-4 py-2 font-mono text-sm text-muted-foreground hover:text-foreground"
+            className="btn-secondary"
           >
             Go home
           </a>
@@ -123,7 +123,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <ScrollRestoration />
       <PageLoader isLoading={isLoading} />
-      <div key={pathname} className="page-transition-wrap">
+      <div key={pathname} className="page-enter">
         <Outlet />
       </div>
     </QueryClientProvider>

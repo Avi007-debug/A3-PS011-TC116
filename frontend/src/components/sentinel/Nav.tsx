@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   Activity,
@@ -96,14 +96,6 @@ export function Nav({
   // Live Backend Connection State
   const [health, setHealth] = useState<SystemHealth>(backendService.getHealth());
 
-  const [theme, setTheme] = useState<"dark" | "light">(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("argus_theme");
-      if (saved === "light" || saved === "dark") return saved;
-      if (window.matchMedia("(prefers-color-scheme: light)").matches) return "light";
-    }
-    return "dark";
-  });
 
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
 
@@ -114,30 +106,8 @@ export function Nav({
     return unsub;
   }, []);
 
-  useEffect(() => {
-    if (typeof document !== "undefined") {
-      if (theme === "light") {
-        document.documentElement.classList.add("light");
-        document.documentElement.classList.remove("dark");
-        document.documentElement.setAttribute("data-theme", "light");
-      } else {
-        document.documentElement.classList.remove("light");
-        document.documentElement.classList.add("dark");
-        document.documentElement.setAttribute("data-theme", "dark");
-      }
-      localStorage.setItem("argus_theme", theme);
-    }
-  }, [theme]);
+  // Dark-only mode â€” no toggleTheme needed
 
-  const toggleTheme = () => {
-    if (typeof document !== "undefined") {
-      document.documentElement.classList.add("theme-transitioning");
-      setTimeout(() => {
-        document.documentElement.classList.remove("theme-transitioning");
-      }, 420);
-    }
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
 
   const handleNavClick = (e: React.MouseEvent, tab: NavTab) => {
     e.preventDefault();
@@ -166,8 +136,8 @@ export function Nav({
       const res = await backendService.runScan();
       setScanMessage(
         res.isSimulated
-          ? "Demo Scan Complete: 23 targets verified · 3 seeded drift faults identified"
-          : `Live Scan Complete: ${res.targetsScanned} targets scanned · Drift delta verified`
+          ? "Demo Scan Complete: 23 targets verified Â· 3 seeded drift faults identified"
+          : `Live Scan Complete: ${res.targetsScanned} targets scanned Â· Drift delta verified`
       );
       setTimeout(() => setScanMessage(null), 4000);
     } catch {
@@ -198,49 +168,49 @@ export function Nav({
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300">
-      {/* Top Telemetry & Health HUD Strip */}
-      <div className="border-b border-border/80 bg-slate-100/90 dark:bg-[#07090E]/95 px-4 py-1 font-mono text-[10px] text-slate-700 dark:text-muted-foreground backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-50">
+      {/* Top Telemetry HUD Strip */}
+      <div className="border-b border-border bg-surface px-4 py-1 font-mono text-[10px] text-muted-foreground">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 overflow-x-auto whitespace-nowrap">
           <div className="flex items-center gap-2.5">
-            {/* Live Connection Mode Badge */}
+            {/* Live Connection Badge */}
             <button
               type="button"
               onClick={() => backendService.checkHealth()}
-              title={`Connection Mode: ${health.mode.toUpperCase()} (${health.status}) · Latency: ${health.latencyMs}ms. Click to recheck.`}
-              className={`flex items-center gap-1.5 px-2 py-0.5 rounded font-bold uppercase tracking-wider text-[9.5px] border cursor-pointer transition-colors ${
+              title={`Connection: ${health.mode.toUpperCase()} (${health.status}) Â· ${health.latencyMs}ms`}
+              className={`flex items-center gap-1.5 px-2 py-0.5 font-bold uppercase tracking-wider text-[9.5px] border cursor-pointer transition-colors ${
                 health.status === "connected"
-                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
-                  : "border-amber-500/40 bg-amber-500/10 text-amber-800 dark:text-amber-400"
+                  ? "border-success text-success"
+                  : "border-warn text-warn"
               }`}
             >
               <span
                 className={`inline-block h-1.5 w-1.5 rounded-full ${
-                  health.status === "connected" ? "bg-emerald-500 animate-pulse" : "bg-amber-500"
+                  health.status === "connected" ? "bg-success" : "bg-warn"
                 }`}
               />
               <span>{health.status === "connected" ? "LOCAL BACKEND" : "DEMO FIXTURE"}</span>
               <span className="text-[8.5px] opacity-75">({health.latencyMs}ms)</span>
             </button>
 
-            <span className="text-border">|</span>
-            <span className="font-semibold text-slate-900 dark:text-foreground">
-              SCOPE: {LIVE_TELEMETRY.approvedDomains}/{LIVE_TELEMETRY.maxDomains} DOM · {LIVE_TELEMETRY.approvedHosts}/{LIVE_TELEMETRY.maxHosts} HOSTS
+            <span className="text-border-strong">|</span>
+            <span className="font-semibold text-foreground">
+              SCOPE: {LIVE_TELEMETRY.approvedDomains}/{LIVE_TELEMETRY.maxDomains} DOM Â· {LIVE_TELEMETRY.approvedHosts}/{LIVE_TELEMETRY.maxHosts} HOSTS
             </span>
-            <span className="text-border">|</span>
-            <span className="text-amber-700 dark:text-amber-400 font-semibold">
+            <span className="text-border-strong">|</span>
+            <span className="text-warn font-semibold">
               DRIFT: {LIVE_TELEMETRY.driftEventsDetected} FAULTS
             </span>
-            <span className="text-border">|</span>
-            <span className="text-slate-600 dark:text-muted-foreground">CHECKS: 4/4 ACTIVE</span>
-            <span className="text-border">|</span>
-            <span className="text-blue-700 dark:text-teal-400 font-medium">READ-ONLY</span>
-            <span className="text-border">|</span>
+            <span className="text-border-strong">|</span>
+            <span className="text-muted-foreground">CHECKS: 4/4 ACTIVE</span>
+            <span className="text-border-strong">|</span>
+            <span className="text-info font-semibold">READ-ONLY</span>
+            <span className="text-border-strong">|</span>
             {onOpenSupabase ? (
               <button
                 type="button"
                 onClick={onOpenSupabase}
-                className="flex items-center gap-1 text-blue-700 dark:text-teal-400 hover:underline font-semibold cursor-pointer"
+                className="flex items-center gap-1 text-info hover:underline font-semibold cursor-pointer"
               >
                 DB: {isSupabaseConfigured ? "CONNECTED" : "LOCAL"}
               </button>
@@ -248,47 +218,47 @@ export function Nav({
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-slate-600 dark:text-muted-foreground font-semibold">{PROJECT.ps}</span>
-            <span className="text-border">|</span>
-            <span className="text-blue-700 dark:text-teal-400 font-mono font-semibold">
+            <span className="text-muted-foreground font-semibold">{PROJECT.ps}</span>
+            <span className="text-border-strong">|</span>
+            <span className="text-info font-mono font-semibold">
               MERKLE: {LIVE_TELEMETRY.merkleRoot.slice(0, 10)}...
             </span>
-            <span className="text-border">|</span>
-            <span className="font-mono text-[9px] text-slate-500 dark:text-muted-foreground">NON-EXPLOITATIVE</span>
+            <span className="text-border-strong">|</span>
+            <span className="font-mono text-[9px] text-muted-foreground">NON-EXPLOITATIVE</span>
           </div>
         </div>
       </div>
 
-      {/* Main Command Bar */}
+      {/* Main Nav Bar */}
       <nav
         aria-label="Primary"
-        className={`border-b transition-all duration-200 ${
+        className={`border-b transition-colors duration-150 ${
           scrolled
-            ? "border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#080C14]/95 shadow-md backdrop-blur-md"
-            : "border-slate-200/80 dark:border-white/5 bg-white/85 dark:bg-[#080C14]/85 backdrop-blur-sm"
+            ? "border-border-strong bg-surface"
+            : "border-border bg-[#000000]"
         }`}
       >
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:px-8">
-          {/* Brand Identity */}
+          {/* Brand */}
           <Link
             to="/"
-            className="group flex items-center gap-2.5 font-mono text-sm tracking-tight transition-transform hover:scale-[1.01] shrink-0"
+            className="group flex items-center gap-2.5 shrink-0"
           >
-            <div className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded border border-orange-500/40 bg-slate-900 shadow-[0_0_15px_rgba(255,122,0,0.35)] group-hover:border-orange-400 transition-all">
+            <div className="relative flex h-8 w-8 items-center justify-center border border-border-strong bg-surface group-hover:border-primary transition-colors">
               <img src="/logo.png" alt="ArgusASM Logo" className="h-full w-full object-contain" />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold tracking-wider text-slate-900 dark:text-foreground text-sm">
-                ARGUS<span className="text-orange-500 dark:text-orange-400">ASM</span>
+              <span className="font-bold tracking-wider text-foreground text-sm font-sans uppercase">
+                ARGUS<span className="text-primary">ASM</span>
               </span>
-              <span className="font-mono text-[8px] uppercase tracking-widest text-slate-500 dark:text-muted-foreground/80 leading-none">
+              <span className="font-mono text-[8px] uppercase tracking-widest text-muted-foreground leading-none">
                 Perimeter Observatory
               </span>
             </div>
           </Link>
 
-          {/* Segmented Glass Dock Navigation */}
-          <div className="hidden lg:flex items-center p-1 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-[#0E131F]/90 shadow-inner backdrop-blur-md">
+          {/* Desktop Navigation Tabs */}
+          <div className="hidden lg:flex items-center gap-0 border border-border bg-surface">
             {NAV_TABS.map((tab) => {
               const active = isTabActive(tab);
               return (
@@ -296,22 +266,24 @@ export function Nav({
                   key={tab.id}
                   href={tab.hash ? `${tab.to}#${tab.hash}` : tab.to}
                   onClick={(e) => handleNavClick(e, tab)}
-                  className={`group relative flex items-center gap-1.5 px-3 py-1.5 rounded-md font-mono text-[11px] uppercase tracking-wider transition-all duration-150 cursor-pointer ${
+                  className={`group relative flex items-center gap-1.5 px-3 py-2 font-sans font-semibold text-[11px] uppercase tracking-[0.06em] transition-colors duration-120 cursor-pointer border-b-2 ${
                     active
-                      ? "bg-white dark:bg-orange-500/15 text-blue-600 dark:text-orange-400 font-bold shadow-xs border border-slate-200/80 dark:border-orange-500/30"
-                      : "text-slate-600 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground hover:bg-white/60 dark:hover:bg-white/5"
+                      ? "text-primary border-b-primary bg-surface-raised"
+                      : "text-muted-foreground border-b-transparent hover:text-foreground hover:bg-surface-raised"
                   }`}
                 >
-                  <tab.icon className="h-3 w-3 shrink-0 opacity-75" />
+                  <tab.icon className="h-3 w-3 shrink-0" />
                   <span>{tab.label}</span>
                   {tab.badge && (
                     <span
-                      className={`text-[8.5px] px-1 py-0.2 rounded-full font-mono font-bold leading-tight ${
+                      className={`text-[8.5px] px-1 py-0 font-mono font-bold border ${
                         tab.badgeColor === "amber"
-                          ? "bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-400"
+                          ? "border-warn text-warn"
                           : tab.badgeColor === "red"
-                            ? "bg-red-100 dark:bg-red-500/20 text-red-800 dark:text-red-400"
-                            : "bg-blue-100 dark:bg-blue-500/20 text-blue-800 dark:text-blue-400"
+                            ? "border-destructive text-destructive"
+                            : tab.badgeColor === "emerald"
+                              ? "border-success text-success"
+                              : "border-info text-info"
                       }`}
                     >
                       {tab.badge}
@@ -324,19 +296,19 @@ export function Nav({
 
           {/* Action Toolbar */}
           <div className="flex items-center gap-2">
-            {/* Live Scan Trigger Button */}
+            {/* Run Scan */}
             <button
               type="button"
               onClick={handleTriggerScan}
               disabled={isScanning}
-              className={`hover-glow hidden sm:flex items-center gap-1.5 rounded border border-orange-500/50 bg-orange-500/10 dark:bg-orange-500/15 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-orange-700 dark:text-orange-400 font-bold hover:bg-orange-500/20 transition-all cursor-pointer ${
+              className={`hidden sm:flex items-center gap-1.5 border border-primary px-3 py-1.5 font-sans font-semibold text-[11px] uppercase tracking-[0.06em] text-primary hover:bg-primary hover:text-black transition-colors duration-120 cursor-pointer ${
                 isScanning ? "opacity-60 cursor-not-allowed" : ""
               }`}
-              title="Execute authorized perimeter discovery scan"
+              title="Execute authorized perimeter scan"
             >
               <span className="flex items-center gap-1">
                 {isScanning ? (
-                  <Loader2 className="h-3 w-3 animate-spin text-orange-600 dark:text-orange-400" />
+                  <Loader2 className="h-3 w-3 animate-spin" />
                 ) : (
                   <Play className="h-2.5 w-2.5 fill-current" />
                 )}
@@ -344,93 +316,73 @@ export function Nav({
               <span>{isScanning ? "Scanning..." : "Run Scan"}</span>
             </button>
 
-            {/* CLI Modal Trigger */}
+            {/* CLI */}
             {onOpenCli ? (
               <button
                 type="button"
                 onClick={onOpenCli}
-                className="hover-glow hidden md:flex items-center gap-1.5 rounded border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-[#0B0F17] px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-slate-800 dark:text-foreground hover:border-blue-500 dark:hover:border-orange-500/60 cursor-pointer"
+                className="hidden md:flex items-center gap-1.5 border border-border-strong px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground hover:border-primary hover:text-primary transition-colors duration-120 cursor-pointer"
                 title="Launch CLI Sandbox Terminal"
               >
-                <span className="text-blue-600 dark:text-orange-400 font-bold">&gt;_</span>
+                <span className="text-primary font-bold">&gt;_</span>
                 <span>CLI</span>
               </button>
             ) : null}
 
-            {/* Methodology Modal Trigger */}
+            {/* Methodology */}
             {onOpenQa ? (
               <button
                 type="button"
                 onClick={onOpenQa}
-                className="hover-glow hidden xl:flex items-center gap-1.5 rounded border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-[#0B0F17] px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-slate-700 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground hover:border-slate-300 dark:hover:border-white/20 cursor-pointer"
-                title="Open Methodology & Compliance Dossier"
+                className="hidden xl:flex items-center gap-1.5 border border-border-strong px-3 py-1.5 font-sans font-semibold text-[11px] uppercase tracking-[0.06em] text-muted-foreground hover:border-primary hover:text-primary transition-colors duration-120 cursor-pointer"
+                title="Open Methodology Dossier"
               >
                 <span>Methodology</span>
               </button>
             ) : null}
 
-            {/* Smooth Theme Toggle Button */}
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="hover-glow flex h-8 w-8 items-center justify-center rounded border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-[#0B0F17] text-slate-800 dark:text-foreground hover:border-slate-400 dark:hover:border-white/30 transition-all cursor-pointer"
-              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode (smooth animated transition)`}
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? (
-                <svg className="h-4 w-4 text-amber-400 transition-transform duration-300 hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="12" cy="12" r="5" />
-                  <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-                </svg>
-              ) : (
-                <svg className="h-4 w-4 text-blue-600 transition-transform duration-300 hover:-rotate-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                </svg>
-              )}
-            </button>
-
             {/* Mobile Menu Button */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden flex items-center gap-1 rounded border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-[#0B0F17] px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider text-slate-800 dark:text-foreground"
+              className="lg:hidden flex items-center gap-1 border border-border-strong px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider text-foreground hover:border-primary hover:text-primary transition-colors"
               aria-expanded={mobileMenuOpen}
               aria-label="Toggle Navigation Menu"
             >
               <span>{mobileMenuOpen ? "CLOSE" : "MENU"}</span>
               {mobileMenuOpen ? (
-                <X className="h-3 w-3 text-blue-600 dark:text-orange-400" />
+                <X className="h-3 w-3 text-primary" />
               ) : (
-                <ChevronDown className="h-3 w-3 text-blue-600 dark:text-orange-400" />
+                <ChevronDown className="h-3 w-3 text-primary" />
               )}
             </button>
           </div>
         </div>
 
-        {/* Scan Status Toast Banner */}
+        {/* Scan Status Banner */}
         {scanMessage && (
-          <div className="border-t border-orange-500/30 bg-orange-500/10 px-4 py-1.5 font-mono text-xs text-orange-800 dark:text-orange-300 flex items-center justify-between animate-in slide-in-from-top-1">
+          <div className="border-t border-primary px-4 py-1.5 font-mono text-xs text-primary flex items-center justify-between bg-surface">
             <div className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-orange-500 animate-ping" />
+              <span className="h-1.5 w-1.5 bg-primary" />
               <span>{scanMessage}</span>
             </div>
             <button
               type="button"
               onClick={() => setScanMessage(null)}
-              className="text-orange-700 dark:text-orange-400 hover:underline text-[10px]"
+              className="text-muted-foreground hover:text-primary text-[10px] uppercase tracking-wider"
             >
               DISMISS
             </button>
           </div>
         )}
 
-        {/* Mobile Navigation Drawer */}
+        {/* Mobile Drawer */}
         {mobileMenuOpen && (
           <div
             ref={mobileNavRef}
-            className="lg:hidden border-t border-slate-200 dark:border-white/10 bg-white/98 dark:bg-[#090D14]/98 px-4 py-4 shadow-2xl backdrop-blur-xl animate-in fade-in duration-150"
+            className="lg:hidden border-t border-border bg-surface px-4 py-4"
           >
-            <div className="flex flex-col gap-1 font-mono text-xs uppercase tracking-wider">
+            <div className="flex flex-col gap-1 font-sans font-semibold text-xs uppercase tracking-[0.06em]">
               {NAV_TABS.map((tab) => {
                 const active = isTabActive(tab);
                 return (
@@ -438,18 +390,18 @@ export function Nav({
                     key={tab.id}
                     href={tab.hash ? `${tab.to}#${tab.hash}` : tab.to}
                     onClick={(e) => handleNavClick(e, tab)}
-                    className={`flex items-center justify-between p-2.5 rounded border transition-all ${
+                    className={`flex items-center justify-between p-2.5 border transition-colors duration-120 ${
                       active
-                        ? "border-blue-500/50 dark:border-orange-500/50 bg-blue-50 dark:bg-orange-500/10 text-blue-700 dark:text-orange-300 font-bold"
-                        : "border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-[#0B0F17]/60 text-slate-700 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground"
+                        ? "border-primary bg-surface-raised text-primary"
+                        : "border-border text-muted-foreground hover:text-foreground hover:border-border-strong"
                     }`}
                   >
                     <span className="flex items-center gap-2">
-                      <tab.icon className="h-3.5 w-3.5 shrink-0 opacity-70" />
+                      <tab.icon className="h-3.5 w-3.5 shrink-0" />
                       <span>{tab.label}</span>
                     </span>
                     {tab.badge && (
-                      <span className="text-[9px] px-1.5 py-0.5 rounded border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 font-bold">
+                      <span className="text-[9px] px-1.5 py-0.5 border border-border-strong font-mono font-bold text-muted-foreground">
                         {tab.badge}
                       </span>
                     )}
@@ -457,14 +409,14 @@ export function Nav({
                 );
               })}
 
-              <div className="mt-3 pt-3 border-t border-slate-200 dark:border-white/10 flex flex-wrap gap-2">
+              <div className="mt-3 pt-3 border-t border-border flex flex-wrap gap-2">
                 <button
                   type="button"
                   onClick={() => {
                     setMobileMenuOpen(false);
                     handleTriggerScan();
                   }}
-                  className="flex-1 flex items-center justify-center gap-1.5 rounded border border-orange-500/40 bg-orange-500/10 p-2 text-center text-orange-700 dark:text-orange-400 font-bold"
+                  className="flex-1 flex items-center justify-center gap-1.5 border border-primary p-2 text-center text-primary font-bold hover:bg-primary hover:text-black transition-colors"
                 >
                   <Play className="h-3 w-3 fill-current" />
                   <span>Trigger Scan</span>
@@ -476,7 +428,7 @@ export function Nav({
                       setMobileMenuOpen(false);
                       onOpenCli();
                     }}
-                    className="flex-1 rounded border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-[#0B0F17] p-2 text-center text-slate-800 dark:text-foreground font-bold"
+                    className="flex-1 border border-border-strong p-2 text-center text-muted-foreground font-bold hover:border-primary hover:text-primary transition-colors"
                   >
                     &gt;_ CLI
                   </button>
