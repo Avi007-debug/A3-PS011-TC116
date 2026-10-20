@@ -53,7 +53,7 @@ const EXPLORE_PORTALS = [
     num: "03",
     accentClass: "border-l-primary",
     title: "Perimeter Hygiene & Seeded Findings",
-    desc: "Evaluate the 0–100 posture score with CVSS-weighted deductions. Validate detection of expired certs, shadow port 8080, and dangling S3 CNAMEs with safe fix advisories.",
+    desc: "Evaluate the 0-100 posture score with CVSS-weighted deductions. Validate detection of expired certs, shadow port 8080, and dangling S3 CNAMEs with safe fix advisories.",
     metrics: "68 / 100 Score · CVSS 3.1 Rubric",
     cta: "View Posture & Findings →",
   },

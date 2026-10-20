@@ -19,7 +19,7 @@ function NotFoundComponent() {
             <span className="nf-dot nf-dot--red" />
             <span className="nf-dot nf-dot--yellow" />
             <span className="nf-dot nf-dot--green" />
-            <span className="nf-titlebar-label">sentinel — error</span>
+            <span className="nf-titlebar-label">sentinel - error</span>
           </div>
           <div className="nf-body">
             <p className="nf-prompt">$ argus route --resolve</p>
@@ -117,12 +117,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const isLoading = useRouterState({ select: (s) => s.isLoading });
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
     <QueryClientProvider client={queryClient}>
       <ScrollRestoration />
       <PageLoader isLoading={isLoading} />
-      <Outlet />
+      <div key={pathname} className="page-transition-wrap">
+        <Outlet />
+      </div>
     </QueryClientProvider>
   );
 }
