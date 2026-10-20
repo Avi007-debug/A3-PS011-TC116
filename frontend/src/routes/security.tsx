@@ -16,7 +16,7 @@ export const Route = createFileRoute("/security")({
       {
         name: "description",
         content:
-          "0–100 Perimeter Hygiene scoring with CVSS deductions, seeded-issue detection sandbox (expired certs, port 8080, dangling S3), and certificate posture matrix.",
+          "0-100 Perimeter Hygiene scoring with CVSS deductions, seeded-issue detection sandbox (expired certs, port 8080, dangling S3), and certificate posture matrix.",
       },
     ],
   }),
@@ -57,13 +57,13 @@ function SecurityPage() {
             </h1>
 
             <p className="mt-4 max-w-3xl text-sm sm:text-base leading-relaxed text-muted-foreground">
-              Audit external perimeter posture with defensible 0–100 scores across 4 dimensions: DNS zone hygiene, TLS certificates, permitted port exposure, and dangling CNAME integrity. Validate empirical detection of the 3 required seeded faults with automated safe remediation directives.
+              Audit external perimeter posture with defensible 0-100 scores across 4 dimensions: DNS zone hygiene, TLS certificates, permitted port exposure, and dangling CNAME integrity. Validate empirical detection of the 3 required seeded faults with automated safe remediation directives.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-4 font-mono text-xs">
               <div className="border border-border bg-background/80 px-3 py-1.5">
                 <span className="text-muted-foreground mr-2">HYGIENE SCORE:</span>
-                <strong className="text-amber-400 font-bold">68 / 100 (Elevated Risk)</strong>
+                <strong className="text-amber-700 dark:text-amber-400 font-bold">68 / 100 (Elevated Risk)</strong>
               </div>
               <div className="border border-border bg-background/80 px-3 py-1.5">
                 <span className="text-muted-foreground mr-2">SEEDED ISSUES:</span>

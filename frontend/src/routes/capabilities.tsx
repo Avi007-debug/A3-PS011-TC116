@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/sentinel/Nav";
 import { Features } from "@/components/sentinel/Features";
+import { AssetTopologyGraph } from "@/components/sentinel/AssetTopologyGraph";
 import { Architecture } from "@/components/sentinel/Architecture";
 import { TechStack } from "@/components/sentinel/TechStack";
 import { Footer } from "@/components/sentinel/Footer";
@@ -57,7 +58,7 @@ function CapabilitiesPage() {
             </h1>
 
             <p className="mt-4 max-w-3xl text-sm sm:text-base leading-relaxed text-muted-foreground">
-              Explore ArgusASM&apos;s capabilities across scope guardrails, the 4 documented inspection probes (DNS, TLS, ports, dangling CNAMEs), and stateful baseline drift monitoring — supported by a 5-stage pipeline for AIORI Hackathon 2026 PS-011.
+              Explore ArgusASM&apos;s capabilities across scope guardrails, the 4 documented inspection probes (DNS, TLS, ports, dangling CNAMEs), and stateful baseline drift monitoring - supported by a 5-stage pipeline for AIORI Hackathon 2026 PS-011.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-4 font-mono text-xs">
@@ -79,6 +80,9 @@ function CapabilitiesPage() {
 
         {/* Technical Capabilities Explorer */}
         <Features onRunCli={handleOpenCliWithCmd} />
+
+        {/* Interactive Asset Relationship Graph (Argus Watchfield) */}
+        <AssetTopologyGraph />
 
         {/* 5-Stage Pipeline Architecture */}
         <Architecture />

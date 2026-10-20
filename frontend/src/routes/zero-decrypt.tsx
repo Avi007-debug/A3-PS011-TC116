@@ -66,7 +66,7 @@ function DriftTimelinePage() {
               </div>
               <div className="border border-border bg-background/80 p-3">
                 <span className="text-muted-foreground block text-[10.5px]">CURRENT SNAPSHOT</span>
-                <strong className="text-amber-400 text-base">T1 Drift (68 pts)</strong>
+                <strong className="text-amber-700 dark:text-amber-400 text-base">T1 Drift (68 pts)</strong>
               </div>
               <div className="border border-border bg-background/80 p-3">
                 <span className="text-muted-foreground block text-[10.5px]">DETECTED DRIFTS</span>
