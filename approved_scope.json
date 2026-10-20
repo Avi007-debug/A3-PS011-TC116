@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "project": "ArgusASM",
+  "version": "1.0.0",
+  "hackathon": "AIORI Hackathon 2026",
+  "problem_statement": "PS-011",
+  "scope_policy": {
+    "max_allowed_domains": 20,
+    "max_allowed_hosts": 10,
+    "permitted_ports": [22, 53, 80, 443, 8080],
+    "enforce_non_exploitation": true,
+    "passive_probing_only": true
+  },
+  "approved_domains": [
+    { "domain": "aiori.lab", "role": "production", "owner": "AIORI Core Infrastructure", "zone": "authoritative" },
+    { "domain": "api.aiori.lab", "role": "production", "owner": "API Gateway Team", "zone": "authoritative" },
+    { "domain": "auth.aiori.lab", "role": "production", "owner": "IAM Operations", "zone": "authoritative" },
+    { "domain": "portal.aiori.lab", "role": "production", "owner": "Web Platform Team", "zone": "authoritative" },
+    { "domain": "docs.aiori.lab", "role": "production", "owner": "Developer Relations", "zone": "authoritative" },
+    { "domain": "cdn.aiori.lab", "role": "production", "owner": "Edge & Delivery", "zone": "authoritative" },
+    { "domain": "telemetry.aiori.lab", "role": "production", "owner": "Observability Team", "zone": "authoritative" },
+    { "domain": "staging.aiori.lab", "role": "staging", "owner": "QA Engineering", "zone": "authoritative" },
+    { "domain": "qa-api.aiori.lab", "role": "staging", "owner": "QA Engineering", "zone": "authoritative" },
+    { "domain": "test-s3.aiori.lab", "role": "testbed", "owner": "Cloud Migration Team", "zone": "authoritative", "seeded_issue": "dangling_cname_s3" },
+    { "domain": "legacy.aiori.lab", "role": "testbed", "owner": "Legacy Decommission", "zone": "authoritative", "seeded_issue": "expired_tls_cert" },
+    { "domain": "dev-edge.aiori.lab", "role": "testbed", "owner": "DevOps", "zone": "authoritative", "seeded_issue": "unauthorized_port_8080" },
+    { "domain": "vault.aiori.lab", "role": "production", "owner": "Security Operations", "zone": "authoritative" },
+    { "domain": "mail.aiori.lab", "role": "production", "owner": "IT Infrastructure", "zone": "authoritative" },
+    { "domain": "internal.aiori.lab", "role": "staging", "owner": "Platform Eng", "zone": "authoritative" }
+  ],
+  "approved_hosts": [
+    { "ip": "10.0.1.10", "hostname": "gw-01.aiori.lab", "role": "gateway", "approved_ports": [22, 80, 443] },
+    { "ip": "10.0.1.11", "hostname": "api-01.aiori.lab", "role": "api", "approved_ports": [80, 443] },
+    { "ip": "10.0.1.12", "hostname": "auth-01.aiori.lab", "role": "auth", "approved_ports": [443] },
+    { "ip": "10.0.1.13", "hostname": "ns-01.aiori.lab", "role": "dns", "approved_ports": [53] },
+    { "ip": "10.0.1.14", "hostname": "cdn-01.aiori.lab", "role": "edge", "approved_ports": [80, 443] },
+    { "ip": "10.0.1.20", "hostname": "staging-node.aiori.lab", "role": "staging", "approved_ports": [80, 443] },
+    { "ip": "10.0.1.25", "hostname": "shadow-test.aiori.lab", "role": "testbed", "approved_ports": [80, 443], "notes": "Port 8080 opened during T1 drift" },
+    { "ip": "10.0.1.30", "hostname": "legacy-box.aiori.lab", "role": "legacy", "approved_ports": [443], "notes": "Expired cert test target" }
+  ]
+}
