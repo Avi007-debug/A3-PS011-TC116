@@ -19,9 +19,9 @@
 
 | Resource | Direct Link | Description |
 | :--- | :--- | :--- |
-| 📺 **Video (Intro & Implementation Plan)** | [![YouTube Video](https://img.shields.io/badge/YouTube-Watch%20Video-red?style=for-the-badge&logo=youtube)](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) | [**Watch Introduction & Implementation Plan Video on YouTube**](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) — Complete project introduction, PS-011 alignment, architecture, and Level 2 implementation schedule. |
-| 📊 **Presentation (Google Slides)** | [![Google Slides](https://img.shields.io/badge/Google%20Slides-ArgusASM%20Presentation-F4B400?style=for-the-badge&logo=googleslides)](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) | [**Live Google Slides Presentation Deck**](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) — Initial phase presentation slides covering system design, scope boundaries, and implementation plan. |
-| 📑 **Initial Phase Plan & Deck (PDF)** | [`ArgusASM_AIORI.pdf`](./ArgusASM_AIORI.pdf) | **Initial Phase Presentation Deck & Implementation Plan (PDF)** — Exported presentation deck containing the master plan in the root directory. |
+| 📺 **Video (Intro & Implementation Plan)** | [![YouTube Video](https://img.shields.io/badge/YouTube-Watch%20Video-red?style=for-the-badge&logo=youtube)](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) | [**Watch Introduction & Implementation Plan Video on YouTube**](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) - Complete project introduction, PS-011 alignment, architecture, and Level 2 implementation schedule. |
+| 📊 **Presentation (Google Slides)** | [![Google Slides](https://img.shields.io/badge/Google%20Slides-ArgusASM%20Presentation-F4B400?style=for-the-badge&logo=googleslides)](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) | [**Live Google Slides Presentation Deck**](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) - Initial phase presentation slides covering system design, scope boundaries, and implementation plan. |
+| 📑 **Initial Phase Plan & Deck (PDF)** | [`ArgusASM_AIORI.pdf`](./ArgusASM_AIORI.pdf) | **Initial Phase Presentation Deck & Implementation Plan (PDF)** - Exported presentation deck containing the master plan in the root directory. |
 | 📋 **Hackathon Guidelines & Format** | [`docs/hackathon-format/Proposed-structure-hackathon.pdf`](./docs/hackathon-format/Proposed-structure-hackathon.pdf) | **Official Hackathon Submission Structure Specification** |
 
 ---
@@ -32,7 +32,7 @@
 
 Organizations running multi-cloud infrastructure continuously accumulate internet-facing assets over time: unmaintained test subdomains, expired or misconfigured TLS certificates, unvetted open service ports, and dangling DNS CNAME records pointing to decommissioned cloud instances (AWS S3, GitHub Pages, Azure App Services).
 
-**ArgusASM** is an autonomous, strictly authorized, read-only **External Attack-Surface Management (ASM)** and **Cryptographic Drift Sentinel**. Named after *Argus Panoptes*—the mythological hundred-eyed guardian who never closed all eyes at once—ArgusASM maintains continuous visibility over external assets, discovers perimeter drift, enforces non-exploitation safety guardrails, and provides mathematically verifiable baseline integrity using SHA-256 Merkle audit chains.
+**ArgusASM** is an autonomous, strictly authorized, read-only **External Attack-Surface Management (ASM)** and **Cryptographic Drift Sentinel**. Named after *Argus Panoptes* - the mythological hundred-eyed guardian who never closed all eyes at once - ArgusASM maintains continuous visibility over external assets, discovers perimeter drift, enforces non-exploitation safety guardrails, and provides mathematically verifiable baseline integrity using SHA-256 Merkle audit chains.
 
 ### PS-011 Requirements Compliance Matrix
 
@@ -214,7 +214,7 @@ $$\text{Hygiene Score} = 100 - \sum \min(\text{Deductions}_{\text{class}}, \text
 | Potential Dangling CNAME (Low Confidence) | **-5** | 15 |
 | Weak TLS Configuration | **-5** | 15 |
 
-- **Gauge Ranges**: 🟢 **80 – 100** (Good) | 🟡 **50 – 79** (Warning) | 🔴 **0 – 49** (Critical)
+- **Gauge Ranges**: 🟢 **80 - 100** (Good) | 🟡 **50 - 79** (Warning) | 🔴 **0 - 49** (Critical)
 
 ### Cryptographic Merkle Audit Trail
 

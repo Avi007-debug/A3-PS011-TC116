@@ -1,5 +1,5 @@
 # AIORI HACKATHON 2026 | PS-011
-# ArgusASM — Autonomous Attack-Surface Inventory & Drift Sentinel
+# ArgusASM - Autonomous Attack-Surface Inventory & Drift Sentinel
 ## Master Project Plan, Feature Specification and Level 2 Execution Schedule
 
 | Item | Detail |
@@ -219,7 +219,7 @@ Evidence Store: SQLite + Canonical JSON Snapshots (T0.json, T1.json)
 | `GET /api/inventory` | Executes active probes and compiles current asset inventory. |
 | `GET /api/diff?baseline=T0&current=T1` | Computes stateful drift between two snapshots. |
 | `GET /api/findings` | Surfaces security findings with CVSS deductions and confidence. |
-| `GET /api/score` | Computes 0–100 Perimeter Hygiene Score for baseline and current state. |
+| `GET /api/score` | Computes 0-100 Perimeter Hygiene Score for baseline and current state. |
 | `GET /api/ledger/receipt` | Generates SHA-256 Merkle root audit trail receipt. |
 | `POST /api/scan` | Triggers an immediate perimeter re-scan. |
 | `POST /api/simulate/remediation` | Generates copy-paste remediation commands (Certbot, DNS, UFW). |
@@ -349,22 +349,22 @@ ArgusASM is built by 2 developers using a **feature-wise vertical slice** model:
 
 ## 12. Day-by-Day Execution Schedule (16 to 31 Oct)
 
-- **Phase 1: Foundation & The Four Probes (Days 1 to 4: 16–19 Oct)**
+- **Phase 1: Foundation & The Four Probes (Days 1 to 4: 16-19 Oct)**
   - Day 1: Initialize `backend/` and `frontend/`, implement `scope_engine.py` with hard caps, build `dns_probe.py`.
   - Day 2: Implement `tls_probe.py` (RFC 5280) and `service_probe.py` (ports 22, 53, 80, 443, 8080).
   - Day 3: Implement `dangling_dns_probe.py` with provider fingerprinting.
   - Day 4: Assemble `app.py` REST API, connect active probes to React Inventory table.
-- **Phase 2: Drift Engine & Seeded Testbed (Days 5 to 8: 20–23 Oct)**
+- **Phase 2: Drift Engine & Seeded Testbed (Days 5 to 8: 20-23 Oct)**
   - Day 5: Docker testbed with CoreDNS and mock targets for `legacy.aiori.lab`, `dev-edge.aiori.lab`, `test-s3.aiori.lab`.
   - Day 6: Build `drift_engine.py` comparing $T_0$ against $T_1$. Connect to frontend Diff Viewer.
-  - Day 7: Implement `scoring_engine.py` (0–100 score with CVSS deductions).
+  - Day 7: Implement `scoring_engine.py` (0-100 score with CVSS deductions).
   - Day 8: Build `tests/seeded_validation.py` asserting 100% detection of all 3 seeded issues.
-- **Phase 3: Differentiators & Hardening (Days 9 to 12: 24–27 Oct)**
+- **Phase 3: Differentiators & Hardening (Days 9 to 12: 24-27 Oct)**
   - Day 9: Implement Canvas/SVG Asset Relationship Graph.
   - Day 10: Implement Time-Travel Historical Scrubber ($T_0, T_1, T_2$).
   - Day 11: Implement `fp_engine.py` (confidence calibration) & Remediation Advisor drawer.
   - Day 12: Implement SHA-256 Merkle Audit Ledger and tamper-verification CLI.
-- **Phase 4: Documentation, Demo & Submission (Days 13 to 15: 28–30 Oct)**
+- **Phase 4: Documentation, Demo & Submission (Days 13 to 15: 28-30 Oct)**
   - Day 13: Author submission document `Proposed-structure-hackathon.pdf`.
   - Day 14: Dry-run demo recording and mentor walkthrough preparation.
   - Day 15: Final code freeze, repository handover readiness, add `aiori-hackathon` collaborator.
