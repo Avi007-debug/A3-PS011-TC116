@@ -1,0 +1,26 @@
+$ORIGIN aiori.lab.
+$TTL 300
+@   IN  SOA ns-01.aiori.lab. hostmaster.aiori.lab. (
+        2026102001 ; serial
+        7200       ; refresh
+        3600       ; retry
+        1209600    ; expire
+        300        ; minimum
+)
+@           IN  NS      ns-01.aiori.lab.
+@           IN  NS      ns-02.aiori.lab.
+@           IN  A       10.0.1.10
+@           IN  AAAA    2001:db8::10
+@           IN  MX  10  mail.aiori.lab.
+@           IN  TXT     "v=spf1 include:_spf.aiori.lab ~all"
+
+ns-01       IN  A       10.0.1.53
+ns-02       IN  A       10.0.1.54
+api         IN  A       10.0.1.15
+vpn         IN  A       10.0.1.20
+mail        IN  A       10.0.1.25
+legacy      IN  A       10.0.2.10
+dev-edge    IN  A       10.0.2.20
+
+docs        IN  CNAME   api.aiori.lab.
+test-s3     IN  CNAME   aiori-dormant-bucket.s3.us-east-1.amazonaws.com.

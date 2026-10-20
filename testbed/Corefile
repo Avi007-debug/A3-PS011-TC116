@@ -1,0 +1,11 @@
+.:53 {
+    forward . 8.8.8.8
+    log
+    errors
+}
+
+aiori.lab:53 {
+    file /etc/coredns/zones/aiori.lab
+    log
+    errors
+}

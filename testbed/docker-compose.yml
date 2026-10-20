@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  coredns:
+    image: coredns/coredns:1.11.1
+    container_name: argus_coredns
+    command: -conf /etc/coredns/Corefile
+    volumes:
+      - ./Corefile:/etc/coredns/Corefile:ro
+      - ./zones:/etc/coredns/zones:ro
+    ports:
+      - "1053:53/udp"
+      - "1053:53/tcp"
+    networks:
+      argus_net:
+        ipv4_address: 10.0.1.53
+    restart: unless-stopped
+
+  api_gateway:
+    image: nginx:alpine
+    container_name: argus_api_gateway
+    ports:
+      - "8081:80"
+    networks:
+      argus_net:
+        ipv4_address: 10.0.1.15
+    restart: unless-stopped
+
+  dev_edge:
+    image: python:3.11-alpine
+    container_name: argus_dev_edge
+    command: python -m http.server 8080
+    ports:
+      - "8080:8080"
+    networks:
+      argus_net:
+        ipv4_address: 10.0.2.20
+    restart: unless-stopped
+
+networks:
+  argus_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/16
