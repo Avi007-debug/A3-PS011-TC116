@@ -83,7 +83,7 @@ export function ScoreGauge() {
     <Section id="score">
       <SectionHead
         tag="Perimeter Hygiene Scoring Engine"
-        title="A reproducible 0–100 perimeter hygiene score with CVSS-weighted deductions"
+        title="A reproducible 0-100 perimeter hygiene score with CVSS-weighted deductions"
         lede="Every point deduction is mathematically grounded in RFC 1035 (DNS), RFC 5280 (TLS), permitted port policy, or potential dangling cloud CNAMEs. Toggle between baseline T0 and drifting T1 scans."
         action={
           <div className="flex flex-wrap items-center gap-2 border border-border bg-surface p-1.5 font-mono text-xs">
@@ -138,7 +138,7 @@ export function ScoreGauge() {
 
       <div ref={ref} className="mt-12 grid gap-10 lg:grid-cols-[340px_1fr] lg:items-start">
         {/* Left: Animated Score Dial */}
-        <div className="panel relative flex flex-col items-center p-8 text-center bg-surface/80 border-border shadow-xl">
+        <div className="editorial-glass relative flex flex-col items-center p-8 text-center rounded border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#070A10]/95 shadow-xl">
           <div className="absolute top-4 left-4">
             <StatusBadge
               status={value >= 90 ? "HARDENED" : value >= 70 ? "ACCEPTABLE" : "ELEVATED_RISK"}
@@ -157,8 +157,8 @@ export function ScoreGauge() {
                 cy="100"
                 r={R}
                 fill="none"
-                stroke="var(--border)"
-                strokeWidth="12"
+                className="stroke-slate-200 dark:stroke-white/10"
+                strokeWidth="10"
               />
               <circle
                 cx="100"
@@ -166,7 +166,7 @@ export function ScoreGauge() {
                 r={R}
                 fill="none"
                 stroke={colorFor(value)}
-                strokeWidth="12"
+                strokeWidth="10"
                 strokeLinecap="round"
                 strokeDasharray={C}
                 strokeDashoffset={C * (1 - pct)}
@@ -181,37 +181,37 @@ export function ScoreGauge() {
               >
                 {value}
               </span>
-              <span className="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              <span className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-slate-500 dark:text-muted-foreground/80 font-bold">
                 / 100 Hygiene
               </span>
             </div>
           </div>
 
-          <div className="mt-6 w-full border-t border-border pt-4 text-left font-mono text-xs space-y-2 text-muted-foreground">
+          <div className="mt-6 w-full border-t border-slate-200 dark:border-white/10 pt-4 text-left font-mono text-xs space-y-2 text-slate-600 dark:text-muted-foreground">
             <div className="flex justify-between">
               <span>Rating:</span>
-              <span className="font-semibold text-foreground">
+              <span className="font-semibold text-slate-900 dark:text-foreground">
                 {value >= 90 ? "HARDENED PERIMETER" : value >= 70 ? "ACCEPTABLE" : "ELEVATED DRIFT RISK"}
               </span>
             </div>
             <div className="flex justify-between">
               <span>Evaluated Scope:</span>
-              <span className="text-foreground">15 Domains / 8 Hosts</span>
+              <span className="text-slate-900 dark:text-foreground font-semibold">15 Domains / 8 Hosts</span>
             </div>
             <div className="flex justify-between">
               <span>Active Probes:</span>
-              <span className="text-primary font-semibold">4 / 4 Complete</span>
+              <span className="text-emerald-700 dark:text-teal-400 font-semibold">4 / 4 Complete</span>
             </div>
             <div className="flex justify-between">
               <span>Deductions:</span>
-              <span className="text-amber-400 font-semibold">{showDrift ? "-32 Pts (3 Seeded)" : "0 Pts (Clean)"}</span>
+              <span className="text-amber-700 dark:text-amber-400 font-semibold">{showDrift ? "-32 Pts (3 Seeded)" : "0 Pts (Clean)"}</span>
             </div>
           </div>
         </div>
 
         {/* Right: Rubric Breakdown Cards */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between border-b border-border/70 pb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-2 font-mono text-xs uppercase tracking-wider text-slate-600 dark:text-muted-foreground">
             <span>4-Dimension Rubric Breakdown</span>
             <span>Weight: 25% Per Category</span>
           </div>
@@ -224,36 +224,36 @@ export function ScoreGauge() {
               return (
                 <div
                   key={item.key}
-                  className={`panel p-4 transition-all border ${
+                  className={`editorial-card p-4 rounded transition-all border ${
                     isCompromised
-                      ? "border-destructive/50 bg-destructive/5 shadow-[0_0_15px_rgba(239,68,68,0.1)]"
-                      : "border-border/80 bg-surface/80"
+                      ? "border-destructive/60 bg-destructive/10 shadow-[0_0_15px_rgba(239,68,68,0.15)]"
+                      : "border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B0F17]/80 shadow-xs"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground block">
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 dark:text-muted-foreground block font-bold">
                         {item.rfc}
                       </span>
-                      <h4 className="mt-0.5 font-mono text-sm font-bold text-foreground">
+                      <h4 className="mt-0.5 font-mono text-sm font-bold text-slate-900 dark:text-foreground">
                         {item.label}
                       </h4>
                     </div>
                     <span
                       className={`font-mono text-lg font-bold ${
-                        isCompromised ? "text-destructive" : "text-primary"
+                        isCompromised ? "text-destructive" : "text-emerald-700 dark:text-teal-400"
                       }`}
                     >
                       {currentScore} / 25
                     </span>
                   </div>
 
-                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  <p className="mt-2 text-xs text-slate-600 dark:text-muted-foreground leading-relaxed font-sans">
                     {item.note}
                   </p>
 
-                  <div className="mt-3 border-t border-border/40 pt-2 font-mono text-[11px] text-primary/90 flex items-start gap-1.5">
-                    <span className="text-primary font-bold">Fix:</span>
+                  <div className="mt-3 border-t border-slate-200 dark:border-white/10 pt-2 font-mono text-[11px] text-emerald-700 dark:text-teal-400 font-medium flex items-start gap-1.5">
+                    <span className="font-bold">Fix:</span>
                     <span>{item.fix}</span>
                   </div>
                 </div>
