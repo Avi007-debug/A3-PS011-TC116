@@ -1,6 +1,6 @@
 {
   "name": "argus-asm-sentinel",
-  "description": "ArgusASM — Autonomous Attack-Surface Inventory & Drift Sentinel",
+  "description": "ArgusASM - Autonomous Attack-Surface Inventory & Drift Sentinel",
   "private": true,
   "sideEffects": false,
   "type": "module",

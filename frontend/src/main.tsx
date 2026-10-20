@@ -14,8 +14,15 @@ declare module "@tanstack/react-router" {
 }
 
 function App() {
-  // Always trigger the military cyber boot animation on page load or refresh
-  const [splashDone, setSplashDone] = useState(false);
+  // Sentinel splash plays once per browser session and respects reduced-motion
+  const [splashDone, setSplashDone] = useState(() => {
+    if (typeof window !== "undefined") {
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const seen = sessionStorage.getItem("argus_sentinel_seen") === "true";
+      return reduced || seen;
+    }
+    return false;
+  });
 
   const handleSplashComplete = useCallback(() => {
     setSplashDone(true);
