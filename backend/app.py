@@ -64,7 +64,7 @@ class RemediationRequest(BaseModel):
 def get_root():
     """Service status and hackathon alignment metadata."""
     return {
-        "service": "ArgusASM — Attack-Surface Inventory & Drift Sentinel API",
+        "service": "ArgusASM - Attack-Surface Inventory & Drift Sentinel API",
         "status": "ONLINE",
         "version": "v1.0.0",
         "hackathon": "AIORI Hackathon 2026",
