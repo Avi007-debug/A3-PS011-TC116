@@ -144,7 +144,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden px-5 pb-24 pt-28 sm:px-8 lg:px-12">
+    <section className="relative overflow-hidden orange-glow-screen px-5 pb-24 pt-28 sm:px-8 lg:px-12">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-35" aria-hidden="true" />
       <NetworkCanvas />
       <div
@@ -225,23 +225,23 @@ export function Hero() {
             </div>
             <div className="bg-surface/50 border border-border/50 p-3">
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Drift Detected</p>
-              <p className="mt-1 text-xl font-bold tabular-nums text-amber-400">{LIVE_TELEMETRY.driftEventsDetected} Faults</p>
+              <p className="mt-1 text-xl font-bold tabular-nums text-amber-700 dark:text-amber-400">{LIVE_TELEMETRY.driftEventsDetected} Faults</p>
             </div>
           </div>
         </div>
 
         {/* Right Column: Live Interactive Telemetry Console */}
-        <div className="panel scanlines flex min-h-[560px] flex-col overflow-hidden border-border/90 bg-surface/95 shadow-2xl">
+        <div className="editorial-glass scanlines flex min-h-[560px] flex-col overflow-hidden rounded border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#070A10]/95 shadow-xl text-slate-900 dark:text-foreground">
           {/* Console Header / Tabs */}
-          <div className="flex items-center justify-between border-b border-border bg-background/90 px-3.5 py-2.5 text-[11px] font-mono">
-            <div className="flex flex-wrap items-center gap-1.5">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 bg-slate-100/90 dark:bg-[#070A10]/95 px-3.5 py-2 text-[11px] font-mono">
+            <div className="flex flex-wrap items-center gap-1">
               <button
                 type="button"
                 onClick={() => setActiveTab("stream")}
-                className={`px-3 py-1 uppercase tracking-wider transition-colors ${
+                className={`px-3 py-1 uppercase tracking-wider transition-all cursor-pointer ${
                   activeTab === "stream"
-                    ? "border-b-2 border-primary bg-primary/15 text-primary font-bold shadow-[0_0_10px_rgba(20,184,166,0.15)]"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "border-b-2 border-blue-600 dark:border-orange-400 bg-blue-50 dark:bg-orange-500/15 text-blue-700 dark:text-orange-400 font-bold shadow-xs"
+                    : "text-slate-600 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground"
                 }`}
               >
                 ● Live Perimeter
@@ -249,10 +249,10 @@ export function Hero() {
               <button
                 type="button"
                 onClick={() => setActiveTab("probes")}
-                className={`px-3 py-1 uppercase tracking-wider transition-colors ${
+                className={`px-3 py-1 uppercase tracking-wider transition-all cursor-pointer ${
                   activeTab === "probes"
-                    ? "border-b-2 border-primary bg-primary/15 text-primary font-bold"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "border-b-2 border-blue-600 dark:border-orange-400 bg-blue-50 dark:bg-orange-500/15 text-blue-700 dark:text-orange-400 font-bold"
+                    : "text-slate-600 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground"
                 }`}
               >
                 4 Documented Probes
@@ -260,10 +260,10 @@ export function Hero() {
               <button
                 type="button"
                 onClick={() => setActiveTab("diff")}
-                className={`px-3 py-1 uppercase tracking-wider transition-colors ${
+                className={`px-3 py-1 uppercase tracking-wider transition-all cursor-pointer ${
                   activeTab === "diff"
-                    ? "border-b-2 border-primary bg-primary/15 text-primary font-bold"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "border-b-2 border-blue-600 dark:border-orange-400 bg-blue-50 dark:bg-orange-500/15 text-blue-700 dark:text-orange-400 font-bold"
+                    : "text-slate-600 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground"
                 }`}
               >
                 T0 vs T1 Diff
@@ -271,39 +271,39 @@ export function Hero() {
               <button
                 type="button"
                 onClick={() => setActiveTab("merkle")}
-                className={`px-3 py-1 uppercase tracking-wider transition-colors ${
+                className={`px-3 py-1 uppercase tracking-wider transition-all cursor-pointer ${
                   activeTab === "merkle"
-                    ? "border-b-2 border-primary bg-primary/15 text-primary font-bold"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "border-b-2 border-blue-600 dark:border-orange-400 bg-blue-50 dark:bg-orange-500/15 text-blue-700 dark:text-orange-400 font-bold"
+                    : "text-slate-600 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground"
                 }`}
               >
                 Merkle Receipt
               </button>
             </div>
 
-            <div className="flex items-center gap-2 text-primary font-mono text-[10.5px]">
-              <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <div className="flex items-center gap-2 text-blue-700 dark:text-orange-400 font-mono text-[10px]">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-orange-400 animate-pulse" />
               <span className="font-bold">GUARDRAILS ACTIVE</span>
             </div>
           </div>
 
           {/* Sub-HUD Metrics Ribbon */}
-          <div className="grid grid-cols-4 border-b border-border/70 bg-background/60 px-4 py-2 font-mono text-[10.5px] text-muted-foreground">
+          <div className="grid grid-cols-4 border-b border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-[#090D14]/70 px-4 py-2 font-mono text-[10.5px] text-slate-600 dark:text-muted-foreground">
             <div>
-              <span className="block text-[9px] uppercase tracking-wider">POLICY</span>
-              <span className="text-foreground font-semibold">READ-ONLY PROBES</span>
+              <span className="block text-[9px] uppercase tracking-wider text-slate-500 dark:text-muted-foreground/70">POLICY</span>
+              <span className="text-slate-900 dark:text-foreground font-semibold">READ-ONLY PROBES</span>
             </div>
             <div>
-              <span className="block text-[9px] uppercase tracking-wider">CHECKS RUN</span>
-              <span className="text-primary font-bold tabular-nums">{probeChecksCount.toLocaleString()}</span>
+              <span className="block text-[9px] uppercase tracking-wider text-slate-500 dark:text-muted-foreground/70">CHECKS RUN</span>
+              <span className="text-blue-700 dark:text-orange-400 font-bold tabular-nums">{probeChecksCount.toLocaleString()}</span>
             </div>
             <div>
-              <span className="block text-[9px] uppercase tracking-wider">SCOPE LOCK</span>
-              <span className="text-foreground font-semibold">20 DOM / 10 HOST</span>
+              <span className="block text-[9px] uppercase tracking-wider text-slate-500 dark:text-muted-foreground/70">SCOPE LOCK</span>
+              <span className="text-slate-900 dark:text-foreground font-semibold">20 DOM / 10 HOST</span>
             </div>
             <div>
-              <span className="block text-[9px] uppercase tracking-wider">EXPLOITATION</span>
-              <span className="text-primary font-bold">ZERO (PASSIVE)</span>
+              <span className="block text-[9px] uppercase tracking-wider text-slate-500 dark:text-muted-foreground/70">EXPLOITATION</span>
+              <span className="text-emerald-700 dark:text-primary font-bold">ZERO (PASSIVE)</span>
             </div>
           </div>
 
@@ -316,50 +316,50 @@ export function Hero() {
                   <span>PS-011 AUTHORIZED SCOPE</span>
                 </div>
 
-                <div className="space-y-1.5 font-mono text-[11.5px] text-foreground/90">
-                  <div className="flex items-start gap-2 bg-background/60 p-1.5 border-l-2 border-primary/50">
-                    <span className="text-muted-foreground shrink-0 text-[10.5px]">14:02:11</span>
-                    <span className="text-primary font-bold shrink-0">[SCOPE_LOCK]</span>
+                <div className="space-y-1.5 font-mono text-[11.5px] text-slate-800 dark:text-foreground/90">
+                  <div className="flex items-start gap-2 bg-slate-100 dark:bg-background/60 p-1.5 border-l-2 border-blue-500 dark:border-primary/50">
+                    <span className="text-slate-500 dark:text-muted-foreground shrink-0 text-[10.5px]">14:02:11</span>
+                    <span className="text-blue-700 dark:text-primary font-bold shrink-0">[SCOPE_LOCK]</span>
                     <span className="truncate">Validated approved_scope.json: 15 domains, 8 hosts within caps</span>
                   </div>
 
-                  <div className="flex items-start gap-2 bg-primary/10 p-1.5 border-l-2 border-primary">
-                    <span className="text-muted-foreground shrink-0 text-[10.5px]">14:02:12</span>
-                    <span className="text-primary font-bold shrink-0">[DNS_PROBE]</span>
+                  <div className="flex items-start gap-2 bg-blue-50 dark:bg-primary/10 p-1.5 border-l-2 border-blue-600 dark:border-primary">
+                    <span className="text-slate-500 dark:text-muted-foreground shrink-0 text-[10.5px]">14:02:12</span>
+                    <span className="text-blue-700 dark:text-primary font-bold shrink-0">[DNS_PROBE]</span>
                     <span className="truncate">aiori.lab &rarr; A:10.0.1.10, NS:ns-01.aiori.lab, MX:10 mail.aiori.lab (TTL 300)</span>
                   </div>
 
-                  <div className="flex items-start gap-2 bg-destructive/10 p-1.5 border-l-2 border-destructive">
-                    <span className="text-muted-foreground shrink-0 text-[10.5px]">14:02:13</span>
-                    <span className="text-destructive font-bold shrink-0">[TLS_ALERT]</span>
-                    <span className="text-destructive">legacy.aiori.lab:443 certificate expired on 2026-01-01 (RFC 5280)</span>
+                  <div className="flex items-start gap-2 bg-red-50 dark:bg-destructive/10 p-1.5 border-l-2 border-red-600 dark:border-destructive">
+                    <span className="text-slate-500 dark:text-muted-foreground shrink-0 text-[10.5px]">14:02:13</span>
+                    <span className="text-red-700 dark:text-destructive font-bold shrink-0">[TLS_ALERT]</span>
+                    <span className="text-red-700 dark:text-destructive">legacy.aiori.lab:443 certificate expired on 2026-01-01 (RFC 5280)</span>
                   </div>
 
-                  <div className="flex items-start gap-2 bg-amber-500/10 p-1.5 border-l-2 border-amber-500">
-                    <span className="text-muted-foreground shrink-0 text-[10.5px]">14:02:14</span>
-                    <span className="text-amber-500 font-bold shrink-0">[PORT_WARN]</span>
-                    <span className="text-amber-700 dark:text-amber-200">dev-edge.aiori.lab:8080 OPEN (Werkzeug debug console exposed)</span>
+                  <div className="flex items-start gap-2 bg-amber-50 dark:bg-amber-500/10 p-1.5 border-l-2 border-amber-600 dark:border-amber-500">
+                    <span className="text-slate-500 dark:text-muted-foreground shrink-0 text-[10.5px]">14:02:14</span>
+                    <span className="text-amber-700 dark:text-amber-500 font-bold shrink-0">[PORT_WARN]</span>
+                    <span className="text-amber-800 dark:text-amber-200">dev-edge.aiori.lab:8080 OPEN (Werkzeug debug console exposed)</span>
                   </div>
 
-                  <div className="flex items-start gap-2 bg-destructive/10 p-1.5 border-l-2 border-destructive">
-                    <span className="text-muted-foreground shrink-0 text-[10.5px]">14:02:15</span>
-                    <span className="text-destructive font-bold shrink-0">[DANGLING_DNS]</span>
-                    <span className="text-destructive">test-s3.aiori.lab &rarr; Orphaned CNAME to unallocated S3 (NoSuchBucket)</span>
+                  <div className="flex items-start gap-2 bg-red-50 dark:bg-destructive/10 p-1.5 border-l-2 border-red-600 dark:border-destructive">
+                    <span className="text-slate-500 dark:text-muted-foreground shrink-0 text-[10.5px]">14:02:15</span>
+                    <span className="text-red-700 dark:text-destructive font-bold shrink-0">[DANGLING_DNS]</span>
+                    <span className="text-red-700 dark:text-destructive">test-s3.aiori.lab &rarr; Orphaned CNAME to unallocated S3 (NoSuchBucket)</span>
                   </div>
 
-                  <div className="flex items-start gap-2 bg-primary/10 p-1.5 border-l-2 border-primary">
-                    <span className="text-muted-foreground shrink-0 text-[10.5px]">14:02:16</span>
-                    <span className="text-primary font-bold shrink-0">[MERKLE_ROOT]</span>
-                    <span className="text-primary truncate">Chained T1 snapshot hash to Block #1840291 (Receipt verified)</span>
+                  <div className="flex items-start gap-2 bg-emerald-50 dark:bg-primary/10 p-1.5 border-l-2 border-emerald-600 dark:border-primary">
+                    <span className="text-slate-500 dark:text-muted-foreground shrink-0 text-[10.5px]">14:02:16</span>
+                    <span className="text-emerald-700 dark:text-primary font-bold shrink-0">[MERKLE_ROOT]</span>
+                    <span className="text-emerald-800 dark:text-primary truncate">Chained T1 snapshot hash to Block #1840291 (Receipt verified)</span>
                   </div>
                 </div>
 
-                <div className="mt-4 rounded border border-border/80 bg-background/80 p-3">
+                <div className="mt-4 rounded border border-slate-200 dark:border-border/80 bg-slate-50 dark:bg-background/80 p-3">
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="font-bold text-amber-400">PERIMETER HYGIENE SCORE: 68/100 (ELEVATED RISK)</span>
-                    <span className="text-primary font-mono text-[10px] animate-pulse">● Continuous Scan</span>
+                    <span className="font-bold text-amber-700 dark:text-amber-400">PERIMETER HYGIENE SCORE: 68/100 (ELEVATED RISK)</span>
+                    <span className="text-blue-700 dark:text-primary font-mono text-[10px] animate-pulse">● Continuous Scan</span>
                   </div>
-                  <p className="mt-1 text-[10.5px] text-muted-foreground font-sans">
+                  <p className="mt-1 text-[10.5px] text-slate-600 dark:text-muted-foreground font-sans">
                     3 seeded issues detected in current snapshot: 1 expired TLS certificate (-35), 1 unexpected open port (-25), and 1 potential dangling CNAME (-30).
                   </p>
                 </div>
@@ -397,7 +397,7 @@ export function Hero() {
                     <p className="text-[10px] text-muted-foreground mt-0.5">T0: Active / Valid | T1: Expired (-292 days overdue)</p>
                   </div>
                   <div className="border border-amber-500/40 bg-amber-500/10 p-2">
-                    <span className="font-bold text-amber-400">[HIGH DRIFT] NEW_SERVICE: dev-edge.aiori.lab:8080</span>
+                    <span className="font-bold text-amber-700 dark:text-amber-400">[HIGH DRIFT] NEW_SERVICE: dev-edge.aiori.lab:8080</span>
                     <p className="text-[10px] text-muted-foreground mt-0.5">T0: Port 8080 Filtered | T1: Port 8080 OPEN (Werkzeug debug console)</p>
                   </div>
                   <div className="border border-destructive/40 bg-destructive/10 p-2">
