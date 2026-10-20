@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { X } from "lucide-react";
 
 const SAMPLE_COMMANDS = [
   {
@@ -149,9 +150,10 @@ Available Commands:
           <button
             type="button"
             onClick={onClose}
-            className="text-muted-foreground hover:text-foreground text-sm cursor-pointer"
+            aria-label="Close terminal"
+            className="text-muted-foreground hover:text-foreground text-sm cursor-pointer p-0.5 rounded hover:bg-white/10"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
 

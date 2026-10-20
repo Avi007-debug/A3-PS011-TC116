@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { X } from "lucide-react";
 
 interface QaItem {
   id: string;
@@ -164,9 +165,10 @@ export function JudgeDefenseModal({
           <button
             type="button"
             onClick={onClose}
+            aria-label="Close dialog"
             className="flex h-8 w-8 items-center justify-center border border-border text-muted-foreground hover:border-primary hover:text-primary transition-colors cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
 

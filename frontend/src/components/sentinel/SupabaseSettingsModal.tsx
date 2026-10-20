@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { RefreshCw } from "lucide-react";
 import { isSupabaseConfigured, fetchRecentReports } from "@/lib/supabase";
 
 export function SupabaseSettingsModal({
@@ -119,9 +120,10 @@ export function SupabaseSettingsModal({
                 type="button"
                 onClick={loadReports}
                 disabled={loadingReports}
-                className="text-[10px] text-teal-400 hover:text-teal-200 border border-teal-500/40 px-2 py-0.5 uppercase tracking-wider"
+                className="flex items-center gap-1 text-[10px] text-teal-400 hover:text-teal-200 border border-teal-500/40 px-2 py-0.5 uppercase tracking-wider cursor-pointer"
               >
-                {loadingReports ? "PULLING..." : "⚡ REFRESH / PULL"}
+                <RefreshCw className={`h-2.5 w-2.5 ${loadingReports ? "animate-spin" : ""}`} />
+                <span>{loadingReports ? "PULLING..." : "REFRESH / PULL"}</span>
               </button>
             </div>
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { RotateCw, Copy } from "lucide-react";
 import { ATTACK_SCENARIOS } from "@/data/sentinel";
 import { Section, SectionHead, StatusBadge } from "./shared";
 
@@ -201,11 +202,12 @@ export function AttackSandbox() {
               type="button"
               onClick={runSeedSimulation}
               disabled={isSimulating}
-              className={`hover-glow border border-destructive bg-destructive/15 px-4 py-2 font-mono text-xs uppercase tracking-wider text-destructive font-bold cursor-pointer ${
+              className={`hover-glow flex items-center gap-1.5 border border-destructive bg-destructive/15 px-4 py-2 font-mono text-xs uppercase tracking-wider text-destructive font-bold cursor-pointer ${
                 isSimulating ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
-              {isSimulating ? "Probing Target..." : "Replay Seed Check ⚡"}
+              <RotateCw className={`h-3 w-3 ${isSimulating ? "animate-spin" : ""}`} />
+              <span>{isSimulating ? "Probing Target..." : "Replay Seed Check"}</span>
             </button>
           </div>
         </div>
@@ -276,9 +278,10 @@ export function AttackSandbox() {
                 navigator.clipboard?.writeText(customConfig);
                 alert("Remediation snippet copied to clipboard!");
               }}
-              className="hover-glow border border-primary bg-primary/15 px-4 py-2 font-mono text-xs uppercase tracking-wider text-primary font-bold cursor-pointer"
+              className="hover-glow flex items-center gap-1.5 border border-primary bg-primary/15 px-4 py-2 font-mono text-xs uppercase tracking-wider text-primary font-bold cursor-pointer"
             >
-              Copy Directive 📋
+              <Copy className="h-3.5 w-3.5" />
+              <span>Copy Directive</span>
             </button>
           </div>
         </div>

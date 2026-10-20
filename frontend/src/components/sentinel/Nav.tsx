@@ -1,5 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import {
+  Activity,
+  Database,
+  GitCompare,
+  Network,
+  ShieldAlert,
+  FileCheck,
+  Play,
+  Loader2,
+  X,
+  ChevronDown,
+} from "lucide-react";
 import { PROJECT, LIVE_TELEMETRY } from "@/data/sentinel";
 import { backendService, SystemHealth } from "@/services/backendIntegration";
 import { isSupabaseConfigured } from "@/lib/supabase";
@@ -11,7 +23,7 @@ interface NavTab {
   hash?: string;
   badge?: string;
   badgeColor?: "blue" | "amber" | "red" | "emerald";
-  icon: string;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
 const NAV_TABS: NavTab[] = [
@@ -19,7 +31,7 @@ const NAV_TABS: NavTab[] = [
     id: "overview",
     label: "Overview",
     to: "/",
-    icon: "◈",
+    icon: Activity,
   },
   {
     id: "inventory",
@@ -27,7 +39,7 @@ const NAV_TABS: NavTab[] = [
     to: "/capabilities",
     badge: "15",
     badgeColor: "blue",
-    icon: "☵",
+    icon: Database,
   },
   {
     id: "drift",
@@ -35,7 +47,7 @@ const NAV_TABS: NavTab[] = [
     to: "/zero-decrypt",
     badge: "3",
     badgeColor: "amber",
-    icon: "◬",
+    icon: GitCompare,
   },
   {
     id: "topology",
@@ -43,7 +55,7 @@ const NAV_TABS: NavTab[] = [
     to: "/capabilities",
     hash: "topology",
     badgeColor: "emerald",
-    icon: "☶",
+    icon: Network,
   },
   {
     id: "findings",
@@ -51,14 +63,14 @@ const NAV_TABS: NavTab[] = [
     to: "/security",
     badge: "68",
     badgeColor: "red",
-    icon: "⚑",
+    icon: ShieldAlert,
   },
   {
     id: "audit",
     label: "Audit",
     to: "/audit",
     badgeColor: "blue",
-    icon: "⛓",
+    icon: FileCheck,
   },
 ];
 
@@ -292,7 +304,7 @@ export function Nav({
                       : "text-slate-600 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground hover:bg-white/60 dark:hover:bg-white/5"
                   }`}
                 >
-                  <span className="text-[10px] opacity-75">{tab.icon}</span>
+                  <tab.icon className="h-3 w-3 shrink-0 opacity-75" />
                   <span>{tab.label}</span>
                   {tab.badge && (
                     <span
@@ -324,8 +336,12 @@ export function Nav({
               }`}
               title="Execute authorized perimeter discovery scan"
             >
-              <span className={`text-[11px] ${isScanning ? "animate-spin" : ""}`}>
-                {isScanning ? "⟳" : "⚡"}
+              <span className="flex items-center gap-1">
+                {isScanning ? (
+                  <Loader2 className="h-3 w-3 animate-spin text-orange-600 dark:text-orange-400" />
+                ) : (
+                  <Play className="h-2.5 w-2.5 fill-current" />
+                )}
               </span>
               <span>{isScanning ? "Scanning..." : "Run Scan"}</span>
             </button>
@@ -384,7 +400,11 @@ export function Nav({
               aria-label="Toggle Navigation Menu"
             >
               <span>{mobileMenuOpen ? "CLOSE" : "MENU"}</span>
-              <span className="text-[8px] text-blue-600 dark:text-orange-400">{mobileMenuOpen ? "✕" : "▼"}</span>
+              {mobileMenuOpen ? (
+                <X className="h-3 w-3 text-blue-600 dark:text-orange-400" />
+              ) : (
+                <ChevronDown className="h-3 w-3 text-blue-600 dark:text-orange-400" />
+              )}
             </button>
           </div>
         </div>
@@ -427,7 +447,7 @@ export function Nav({
                     }`}
                   >
                     <span className="flex items-center gap-2">
-                      <span className="opacity-70">{tab.icon}</span>
+                      <tab.icon className="h-3.5 w-3.5 shrink-0 opacity-70" />
                       <span>{tab.label}</span>
                     </span>
                     {tab.badge && (
@@ -446,9 +466,10 @@ export function Nav({
                     setMobileMenuOpen(false);
                     handleTriggerScan();
                   }}
-                  className="flex-1 rounded border border-orange-500/40 bg-orange-500/10 p-2 text-center text-orange-700 dark:text-orange-400 font-bold"
+                  className="flex-1 flex items-center justify-center gap-1.5 rounded border border-orange-500/40 bg-orange-500/10 p-2 text-center text-orange-700 dark:text-orange-400 font-bold"
                 >
-                  ⚡ Trigger Scan
+                  <Play className="h-3 w-3 fill-current" />
+                  <span>Trigger Scan</span>
                 </button>
                 {onOpenCli ? (
                   <button

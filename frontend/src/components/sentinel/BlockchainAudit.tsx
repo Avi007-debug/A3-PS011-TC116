@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ShieldCheck, X } from "lucide-react";
 import { PROJECT, LIVE_TELEMETRY } from "@/data/sentinel";
 import { Section, SectionHead } from "./shared";
 
@@ -127,9 +128,10 @@ export function BlockchainAudit() {
                 <button
                   type="button"
                   onClick={() => setActiveLeaf(null)}
-                  className="text-muted-foreground hover:text-foreground text-[10px]"
+                  className="flex items-center gap-1 text-muted-foreground hover:text-foreground text-[10px]"
                 >
-                  Close [✕]
+                  <X className="h-3 w-3" />
+                  <span>Close</span>
                 </button>
               </div>
               <p className="text-[11px] text-foreground/90 font-sans leading-relaxed">
@@ -155,9 +157,10 @@ export function BlockchainAudit() {
               type="button"
               onClick={handleVerify}
               disabled={isVerifying}
-              className="hover-glow border border-primary bg-primary/15 px-4 py-2 font-mono text-xs uppercase tracking-wider text-primary font-bold cursor-pointer"
+              className="hover-glow flex items-center gap-1.5 border border-primary bg-primary/15 px-4 py-2 font-mono text-xs uppercase tracking-wider text-primary font-bold cursor-pointer"
             >
-              {isVerifying ? "Verifying..." : "Verify Merkle Proof 🛡️"}
+              <ShieldCheck className="h-3.5 w-3.5" />
+              <span>{isVerifying ? "Verifying..." : "Verify Merkle Proof"}</span>
             </button>
           </div>
         </div>

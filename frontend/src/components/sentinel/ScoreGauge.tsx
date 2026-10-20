@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
+import { RefreshCw } from "lucide-react";
 import {
   SCORE_BASELINE,
   SCORE_REMEDIATED,
@@ -130,7 +131,8 @@ export function ScoreGauge() {
               }`}
             >
               <span className={`h-1.5 w-1.5 rounded-full ${syncing ? "bg-amber-400 animate-ping" : "bg-teal-400 animate-pulse"}`} />
-              {syncing ? "Auditing..." : "⚡ Live API Audit"}
+              <RefreshCw className={`h-3 w-3 ${syncing ? "animate-spin" : ""}`} />
+              <span>{syncing ? "Auditing..." : "Live API Audit"}</span>
             </button>
           </div>
         }
