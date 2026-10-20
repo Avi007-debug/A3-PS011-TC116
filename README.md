@@ -2,6 +2,10 @@
 
 <div align="center">
 
+<img src="./docs/assets/logo.png" alt="ArgusASM Logo" width="160" />
+<br />
+<br />
+
 [![AIORI Hackathon 2026](https://img.shields.io/badge/AIORI%20Hackathon%202026-Level%202%20Submission-blueviolet?style=for-the-badge&logo=shield)](https://github.com/aiori-hackathon)
 [![Problem Statement](https://img.shields.io/badge/Track-Cybersecurity%20%26%20Infrastructure%20Resilience-00C853?style=for-the-badge&logo=security)](https://github.com/aiori-hackathon)
 [![Problem Code](https://img.shields.io/badge/Problem%20Statement-PS--011-00E5FF?style=for-the-badge)](https://github.com/aiori-hackathon)

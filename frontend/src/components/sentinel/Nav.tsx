@@ -246,12 +246,8 @@ export function Nav({
             to="/"
             className="group flex items-center gap-2.5 font-mono text-sm tracking-tight transition-transform hover:scale-[1.02] z-10"
           >
-            <div className="relative flex h-8 w-8 items-center justify-center overflow-hidden border border-primary/40 bg-surface p-1 shadow-[0_0_10px_rgba(16,185,129,0.3)]">
-              <svg className="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                <circle cx="12" cy="11" r="3" />
-                <circle cx="12" cy="11" r="1" fill="currentColor" />
-              </svg>
+            <div className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded border border-primary/50 bg-surface/90 shadow-[0_0_12px_rgba(20,184,166,0.3)] group-hover:border-primary transition-all">
+              <img src="/logo.png" alt="ArgusASM Logo" className="h-full w-full object-contain" />
             </div>
             <div className="flex flex-col">
               <span className="font-bold tracking-wider text-foreground">

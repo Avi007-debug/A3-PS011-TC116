@@ -31,11 +31,8 @@ export function Footer() {
           {/* Left Column: Project Overview */}
           <div>
             <div className="flex items-center gap-3 font-mono text-sm tracking-tight">
-              <div className="flex h-7 w-7 items-center justify-center border border-primary/40 bg-surface p-1 shadow-[0_0_8px_rgba(16,185,129,0.3)]">
-                <svg className="h-4 w-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  <circle cx="12" cy="11" r="2" />
-                </svg>
+              <div className="flex h-7 w-7 items-center justify-center overflow-hidden rounded border border-primary/50 bg-surface/90 shadow-[0_0_8px_rgba(20,184,166,0.3)]">
+                <img src="/logo.png" alt="ArgusASM Logo" className="h-full w-full object-contain" />
               </div>
               <span className="font-bold text-foreground">
                 ARGUS<span className="text-primary">ASM</span>

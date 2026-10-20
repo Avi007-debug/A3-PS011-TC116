@@ -85,6 +85,9 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
         </div>
 
         <div className="splash-body">
+          <div className="flex justify-center mb-3">
+            <img src="/logo.png" alt="ArgusASM Emblem" className="h-14 w-14 object-contain filter drop-shadow-[0_0_15px_rgba(20,184,166,0.6)]" />
+          </div>
           <pre className="splash-logo" aria-label="ArgusASM ASCII logo">
 {`   ___                         _   ____  __  __ 
   / _ \\  _ __ __ _ _   _ ___   / \\ / ___||  \\/  |
