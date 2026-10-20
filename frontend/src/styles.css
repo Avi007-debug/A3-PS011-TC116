@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * ArgusASM Sentinel design system — dark-only attack surface & threat intelligence console aesthetic.
+ * ArgusASM Sentinel design system - dark-only attack surface & threat intelligence console aesthetic.
  * Base: deep navy/near-black. Accent: electric teal. Risk: muted red.
  */
 
@@ -54,83 +54,85 @@
     "Space Grotesk", "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-code: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
-  --background: oklch(0.16 0.028 265);
-  --foreground: oklch(0.93 0.008 250);
-  --surface: oklch(0.19 0.03 265);
-  --surface-raised: oklch(0.225 0.031 264);
-  --card: oklch(0.195 0.03 265);
-  --card-foreground: oklch(0.93 0.008 250);
-  --popover: oklch(0.195 0.03 265);
-  --popover-foreground: oklch(0.93 0.008 250);
+  /* Near-black graphite & warm off-white editorial palette */
+  --background: oklch(0.11 0.012 250);
+  --foreground: oklch(0.96 0.005 250);
+  --surface: oklch(0.14 0.018 250);
+  --surface-raised: oklch(0.18 0.022 250);
+  --card: oklch(0.14 0.018 250);
+  --card-foreground: oklch(0.96 0.005 250);
+  --popover: oklch(0.14 0.018 250);
+  --popover-foreground: oklch(0.96 0.005 250);
 
-  --primary: oklch(0.76 0.13 183);
-  --primary-foreground: oklch(0.16 0.028 265);
-  --primary-deep: oklch(0.52 0.1 187);
+  /* Fiery Cyber Orange Sentinel Beacon & Electric Teal Accents */
+  --primary: oklch(0.74 0.21 48);          /* Fiery Sentinel Orange #FF7A00 */
+  --primary-foreground: oklch(0.11 0.012 250);
+  --primary-deep: oklch(0.58 0.22 45);     /* Deep Ember Flame */
+  --primary-glow: rgba(255, 122, 0, 0.35);
 
-  --secondary: oklch(0.26 0.03 264);
-  --secondary-foreground: oklch(0.9 0.01 250);
-  --muted: oklch(0.24 0.028 264);
-  --muted-foreground: oklch(0.68 0.02 253);
-  --accent: oklch(0.28 0.04 200);
-  --accent-foreground: oklch(0.93 0.008 250);
+  --secondary: oklch(0.24 0.025 250);
+  --secondary-foreground: oklch(0.92 0.01 250);
+  --muted: oklch(0.22 0.02 250);
+  --muted-foreground: oklch(0.68 0.015 250);
+  --accent: oklch(0.28 0.04 45);
+  --accent-foreground: oklch(0.96 0.005 250);
 
-  --destructive: oklch(0.56 0.17 27);
-  --destructive-foreground: oklch(0.96 0.01 250);
-  --warn: oklch(0.79 0.15 78);
-  --success: oklch(0.68 0.18 145);
+  /* Status Colors */
+  --destructive: oklch(0.58 0.22 27);      /* Controlled Crimson Red */
+  --destructive-foreground: oklch(0.98 0.005 250);
+  --warn: oklch(0.80 0.17 78);             /* Vibrant Amber #FBBC04 */
+  --success: oklch(0.72 0.18 160);         /* Restrained Teal-Green */
 
-  --border: oklch(0.3 0.03 260);
-  --border-strong: oklch(0.42 0.05 210);
-  --input: oklch(0.3 0.03 260);
-  --ring: oklch(0.76 0.13 183);
+  --border: oklch(0.28 0.02 250);
+  --border-strong: oklch(0.42 0.05 48);
+  --input: oklch(0.28 0.02 250);
+  --ring: oklch(0.74 0.21 48);
 
-  /* GDG Google Cyber Brand Colors */
+  /* GDG Google Cyber Brand Palette */
   --gdg-blue: #4285F4;
   --gdg-red: #EA4335;
   --gdg-yellow: #FBBC04;
   --gdg-green: #34A853;
+  --gdg-orange: #FB8C00;
 }
 
-/* --- Light Mode: GDG Enterprise Cybersecurity Aesthetic (Ultra High-Contrast) --- */
+/* --- Light Mode: GDG Enterprise Cybersecurity Aesthetic (Orange-Yellow-Blue-Green) --- */
 html.light,
 [data-theme="light"] {
   color-scheme: light;
 
-  --background: oklch(0.985 0.005 250);      /* Crisp Slate-50 #F8FAFC */
-  --foreground: oklch(0.14 0.03 260);       /* Deep Slate-950 #020617 for bold, crisp text */
-  --surface: oklch(1 0 0);                  /* Pure White Card #FFFFFF */
-  --surface-raised: oklch(0.96 0.008 250);  /* Tech Slate #F1F5F9 */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.14 0.03 260);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.14 0.03 260);
+  --background: #F8FAFC;                   /* Ultra-crisp Slate-50 */
+  --foreground: #090D1A;                   /* Deep high-contrast ink text */
+  --surface: #FFFFFF;                      /* Pure White Card */
+  --surface-raised: #F1F5F9;               /* Slate-100 layer */
+  --card: #FFFFFF;
+  --card-foreground: #090D1A;
+  --popover: #FFFFFF;
+  --popover-foreground: #090D1A;
 
-  /* Deep High-Contrast Google/GDG Cobalt Blue (WCAG AAA > 7.5:1 on white) */
-  --primary: oklch(0.44 0.24 260);          /* Deep Electric Cobalt #1558D6 */
-  --primary-foreground: oklch(1 0 0);
-  --primary-deep: oklch(0.36 0.22 260);     /* Navy Cobalt #0D47A1 */
+  /* GDG Primary: Google Blue & Orange Accent */
+  --primary: #4285F4;                      /* GDG Electric Blue */
+  --primary-foreground: #FFFFFF;
+  --primary-deep: #1A73E8;
+  --primary-glow: rgba(66, 133, 244, 0.25);
 
-  --secondary: oklch(0.93 0.015 250);
-  --secondary-foreground: oklch(0.14 0.03 260);
-  --muted: oklch(0.94 0.008 250);
-  --muted-foreground: oklch(0.32 0.03 260); /* High-contrast Deep Slate-700 #334155 */
-  --accent: oklch(0.92 0.03 250);
-  --accent-foreground: oklch(0.14 0.03 260);
+  --secondary: #EEF2F6;
+  --secondary-foreground: #090D1A;
+  --muted: #F1F5F9;
+  --muted-foreground: #475569;             /* Crisp Slate-600 */
+  --accent: #FEF3C7;                       /* Warm GDG Yellow tint */
+  --accent-foreground: #B45309;
 
-  /* GDG Google Red for Critical Findings */
-  --destructive: oklch(0.50 0.24 25);       /* Deep Crimson Red #C5221F */
-  --destructive-foreground: oklch(1 0 0);
+  /* GDG Distinct Status Palette */
+  --destructive: #EA4335;                  /* GDG Red */
+  --destructive-foreground: #FFFFFF;
+  --warn: #FB8C00;                         /* GDG Fiery Orange */
+  --success: #34A853;                      /* GDG Green */
 
-  /* GDG Google Amber for Warnings */
-  --warn: oklch(0.60 0.20 70);              /* Deep Amber #B06000 */
-
-  /* GDG Google Green for Hardened Posture */
-  --success: oklch(0.48 0.20 145);          /* Deep Forest Green #137333 */
-
-  --border: oklch(0.85 0.015 250);          /* Crisp Slate-300 #CBD5E1 */
-  --border-strong: oklch(0.70 0.035 250);   /* Slate-400 #94A3B8 */
-  --input: oklch(0.85 0.015 250);
-  --ring: oklch(0.44 0.24 260);
+  --border: #E2E8F0;                       /* Crisp light border */
+  --border-strong: #94A3B8;
+  --input: #E2E8F0;
+  --ring: #4285F4;
 }
 
 @layer base {
@@ -220,8 +222,123 @@ html.light,
 
 @utility panel {
   border: 1px solid var(--border);
-  background: color-mix(in oklab, var(--surface) 82%, transparent);
-  backdrop-filter: blur(6px);
+  background: color-mix(in oklab, var(--surface) 86%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+@utility editorial-glass {
+  border: 1px solid color-mix(in oklab, var(--border) 75%, transparent);
+  background: color-mix(in oklab, var(--surface) 88%, transparent);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.4);
+}
+
+@utility spatial-glass {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(135deg, rgba(20, 25, 38, 0.82) 0%, rgba(11, 15, 23, 0.94) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 0 0 1px rgba(255, 122, 0, 0.1),
+    0 20px 48px -12px rgba(0, 0, 0, 0.7),
+    0 0 40px -15px rgba(255, 122, 0, 0.22);
+}
+
+@utility spatial-card {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: color-mix(in oklab, var(--surface) 86%, transparent);
+  backdrop-filter: blur(12px);
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.25s cubic-bezier(0.2, 0, 0, 1), border-color 0.2s ease;
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 122, 0, 0.45);
+    box-shadow:
+      0 0 0 1px rgba(255, 122, 0, 0.25),
+      0 20px 40px -10px rgba(0, 0, 0, 0.7),
+      0 0 35px -5px rgba(255, 122, 0, 0.25);
+  }
+}
+
+@utility orange-glow-screen {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 850px;
+    height: 550px;
+    background: radial-gradient(circle, rgba(255, 122, 0, 0.18) 0%, rgba(251, 188, 4, 0.08) 40%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(65px);
+  }
+}
+
+@utility editorial-card {
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--surface) 85%, transparent);
+  backdrop-filter: blur(8px);
+  transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+  &:hover {
+    border-color: color-mix(in oklab, var(--primary) 50%, transparent);
+    box-shadow: 0 0 25px -5px color-mix(in oklab, var(--primary) 20%, transparent);
+  }
+}
+
+/* --- Light Mode Refined High-Contrast Overrides (GDG Enterprise Cybersecurity) --- */
+html.light .editorial-glass,
+html.light .panel,
+html.light .editorial-card,
+html.light .spatial-card {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-color: #E2E8F0 !important;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(226, 232, 240, 0.7) !important;
+  color: #0F172A !important;
+}
+
+html.light .spatial-glass {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%) !important;
+  border-color: #CBD5E1 !important;
+  box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.08), 0 0 0 1px #E2E8F0 !important;
+  color: #0F172A !important;
+}
+
+html.light .orange-glow-screen::before {
+  background: radial-gradient(circle, rgba(251, 140, 0, 0.10) 0%, rgba(66, 133, 244, 0.06) 50%, transparent 70%) !important;
+}
+
+/* Smooth animated transitions between dark and light themes */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              fill 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              stroke 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-delay: 0s !important;
+}
+
+@keyframes page-transition-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-transition-wrap {
+  animation: page-transition-fade 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
 }
 
 @utility hover-glow {
@@ -479,11 +596,11 @@ html.light,
   top: 0;
   left: 0;
   z-index: 8000;
-  height: 2px;
-  background: linear-gradient(90deg, oklch(0.52 0.1 187), oklch(0.76 0.13 183), oklch(0.52 0.1 187));
+  height: 2.5px;
+  background: linear-gradient(90deg, #FF7A00, #FBBC04, #4285F4, #34A853);
   background-size: 200% 100%;
   border-radius: 0 999px 999px 0;
-  box-shadow: 0 0 10px oklch(0.76 0.13 183 / 0.6);
+  box-shadow: 0 0 12px rgba(255, 122, 0, 0.7);
   transition: width 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
   animation: loader-bar-shimmer 1.2s linear infinite;
 }
