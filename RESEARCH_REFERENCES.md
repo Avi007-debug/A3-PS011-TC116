@@ -1,6 +1,6 @@
 # ArgusASM: Academic & Technical Research References
 **Problem Statement PS-011: Authorised Attack-Surface Inventory & Drift Sentinel**  
-*AIORI Hackathon 2026 — Track: Cybersecurity & Infrastructure Resilience*
+*AIORI Hackathon 2026 - Track: Cybersecurity & Infrastructure Resilience*
 
 This document outlines the foundational standards, RFC specifications, and peer-reviewed research informing the architecture, probe design, and drift detection engines of **ArgusASM**.
 
@@ -10,7 +10,7 @@ This document outlines the foundational standards, RFC specifications, and peer-
 
 | Standard / RFC | Title / Focus | Relevance to ArgusASM | Implementation Reference |
 | :--- | :--- | :--- | :--- |
-| **RFC 1035** | *Domain Names — Implementation and Specification* (Mockapetris, 1987) | Standardizes authoritative DNS query mechanisms, zone records (A, AAAA, CNAME, MX, TXT, NS), and TTL handling. | `backend/engine/probes/dns_probe.py` |
+| **RFC 1035** | *Domain Names - Implementation and Specification* (Mockapetris, 1987) | Standardizes authoritative DNS query mechanisms, zone records (A, AAAA, CNAME, MX, TXT, NS), and TTL handling. | `backend/engine/probes/dns_probe.py` |
 | **RFC 5280** | *Internet X.509 Public Key Infrastructure Certificate and CRL Profile* (Cooper et al., 2008) | Defines certificate field parsing, ASN.1 structures, validity period checking (`notBefore` / `notAfter`), and Subject Alternative Names (SANs). | `backend/engine/probes/tls_probe.py` |
 | **RFC 8446** | *The Transport Layer Security (TLS) Protocol Version 1.3* (Rescorla, 2018) | Modern cryptographic handshake analysis, forward secrecy, and deprecated cipher detection (TLS 1.0 / 1.1 retirement). | `backend/engine/probes/tls_probe.py` |
 | **FIRST CVSS v3.1** | *Common Vulnerability Scoring System v3.1: Specification Document* (FIRST, 2019) | Calibrated deduction methodology for Perimeter Hygiene scoring: Expired TLS (-35), Open Port (-25), Dangling DNS (-30). | `backend/engine/scoring_engine.py` |

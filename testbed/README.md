@@ -1,4 +1,4 @@
-# ArgusASM — Local Isolated Testbed Environment
+# ArgusASM - Local Isolated Testbed Environment
 **Problem Statement PS-011: Authorised Attack-Surface Inventory & Drift Sentinel**
 
 This testbed allows evaluators to simulate an enterprise network perimeter with the 3 seeded test faults locally and without internet connectivity.

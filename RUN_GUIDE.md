@@ -1,6 +1,6 @@
-# ArgusASM — Complete Run & Operational Guide
+# ArgusASM - Complete Run & Operational Guide
 **Problem Statement PS-011: Authorised Attack-Surface Inventory & Drift Sentinel**  
-*AIORI Hackathon 2026 — Track: Cybersecurity & Infrastructure Resilience*
+*AIORI Hackathon 2026 - Track: Cybersecurity & Infrastructure Resilience*
 
 ---
 
@@ -98,7 +98,7 @@ VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1Ni...
 | `GET /api/inventory` | GET | Runs 4 active probes across scope and compiles the full asset inventory. |
 | `GET /api/diff` | GET | Compares $T_0$ Baseline vs $T_1$ Current snapshot to detect stateful drift. |
 | `GET /api/findings` | GET | Surfaces categorized security findings with CVSS score deductions. |
-| `GET /api/score` | GET | Computes 0–100 Perimeter Hygiene Score for baseline and current state. |
+| `GET /api/score` | GET | Computes 0-100 Perimeter Hygiene Score for baseline and current state. |
 | `GET /api/ledger/receipt` | GET | Generates cryptographic SHA-256 Merkle root audit trail receipt. |
 | `POST /api/scan` | POST | Triggers an immediate perimeter re-scan across approved targets. |
 | `POST /api/simulate/remediation` | POST | Generates safe, copy-pasteable remediation commands (Certbot, DNS, UFW). |

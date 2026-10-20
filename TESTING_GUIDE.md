@@ -1,6 +1,6 @@
-# ArgusASM — Comprehensive Testing & Demonstration Guide
+# ArgusASM - Comprehensive Testing & Demonstration Guide
 **Problem Statement PS-011: Authorised Attack-Surface Inventory & Drift Sentinel**  
-*AIORI Hackathon 2026 — Track: Cybersecurity & Infrastructure Resilience*
+*AIORI Hackathon 2026 - Track: Cybersecurity & Infrastructure Resilience*
 
 ---
 
