@@ -847,3 +847,30 @@
   /* Removed glow — replaced with grid texture */
   position: relative;
 }
+
+/* ─── HUD Panel Animations ───────────────────────────────────────── */
+
+@keyframes hud-expand-in {
+  0%   { opacity: 0; transform: scaleX(0.5) scaleY(0.9); filter: blur(10px); }
+  70%  { opacity: 0.9; transform: scaleX(0.99) scaleY(1); filter: blur(1px); }
+  100% { opacity: 1; transform: scaleX(1) scaleY(1); filter: blur(0); }
+}
+
+@keyframes hud-pixel-out {
+  0%   { opacity: 1; transform: scale(1);    filter: blur(0px)    brightness(1);   }
+  25%  { opacity: 0.9; transform: scale(1);  filter: blur(0px)    brightness(2);   }
+  50%  { opacity: 0.6; transform: scaleX(0.7) scaleY(0.9); filter: blur(2px) brightness(3);   }
+  75%  { opacity: 0.3; transform: scaleX(0.3) scaleY(0.5); filter: blur(6px) brightness(4);   }
+  100% { opacity: 0; transform: scaleX(0) scaleY(0.05); filter: blur(12px) brightness(5); }
+}
+
+.hud-panel-enter {
+  animation: hud-expand-in 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: right center;
+}
+
+.hud-panel-exit {
+  animation: hud-pixel-out 0.28s steps(7, end) forwards;
+  transform-origin: right center;
+  pointer-events: none;
+}

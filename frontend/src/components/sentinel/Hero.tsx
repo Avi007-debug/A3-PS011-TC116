@@ -132,9 +132,31 @@ function NetworkCanvas() {
   return <canvas ref={ref} aria-hidden="true" className="absolute inset-0 h-full w-full opacity-65" />;
 }
 
-export function Hero() {
+export function Hero({
+  panelOpen,
+  setPanelOpen,
+}: {
+  panelOpen: boolean;
+  setPanelOpen: (v: boolean | ((prev: boolean) => boolean)) => void;
+}) {
   const [activeTab, setActiveTab] = useState<"stream" | "probes" | "diff" | "merkle">("stream");
   const [probeChecksCount, setProbeChecksCount] = useState(148);
+  const [panelMounted, setPanelMounted] = useState(false);
+  const [panelPhase, setPanelPhase] = useState<"enter" | "exit">("enter");
+
+  // Drive mount/unmount with animation phases
+  useEffect(() => {
+    if (panelOpen) {
+      setPanelMounted(true);
+      setPanelPhase("enter");
+    } else {
+      if (panelMounted) {
+        setPanelPhase("exit");
+        const t = setTimeout(() => setPanelMounted(false), 320); // match exit duration
+        return () => clearTimeout(t);
+      }
+    }
+  }, [panelOpen]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -142,6 +164,7 @@ export function Hero() {
     }, 2400);
     return () => clearInterval(interval);
   }, []);
+
 
   return (
     <section className="relative overflow-hidden orange-glow-screen px-5 pb-24 pt-28 sm:px-8 lg:px-12">
@@ -152,7 +175,13 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+      <div
+        className="relative mx-auto grid w-full max-w-6xl gap-10 lg:items-start"
+        style={{
+          gridTemplateColumns: panelOpen ? "1.4fr 0.6fr" : "3fr 1fr",
+          transition: "grid-template-columns 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        }}
+      >
         {/* Left Column: Mission, Value Prop, CTAs */}
         <div className="flex flex-col justify-between">
           <div>
@@ -204,34 +233,13 @@ export function Hero() {
               </Link>
             </div>
           </div>
-
-          {/* Key Metric Indicators */}
-          <div className="mt-10 grid grid-cols-2 gap-3 border-t border-border/80 pt-6 sm:grid-cols-4 font-mono">
-            <div className="bg-surface border border-border p-3">
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Approved Scope</p>
-              <p className="mt-1 text-xl font-bold tabular-nums text-foreground">
-                {LIVE_TELEMETRY.approvedDomains} / {LIVE_TELEMETRY.maxDomains} Domains
-              </p>
-            </div>
-            <div className="bg-surface border border-border p-3">
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Monitored Hosts</p>
-              <p className="mt-1 text-xl font-bold tabular-nums text-primary">
-                {LIVE_TELEMETRY.approvedHosts} / {LIVE_TELEMETRY.maxHosts} Hosts
-              </p>
-            </div>
-            <div className="bg-surface border border-border p-3">
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Active Probes</p>
-              <p className="mt-1 text-xl font-bold tabular-nums text-foreground">4/4 Documented</p>
-            </div>
-            <div className="bg-surface border border-border p-3">
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Drift Detected</p>
-              <p className="mt-1 text-xl font-bold tabular-nums text-warn">{LIVE_TELEMETRY.driftEventsDetected} Faults</p>
-            </div>
-          </div>
         </div>
 
-        {/* Right Column: Live Interactive Telemetry Console */}
-        <div className="flex min-h-[560px] flex-col overflow-hidden border border-border bg-surface">
+        {/* Right Column: Animated HUD Panel or Round Button */}
+        {panelMounted ? (
+          <div className={panelPhase === "enter" ? "hud-panel-enter" : "hud-panel-exit"}>
+            <div className="flex min-h-[560px] flex-col overflow-hidden border border-border bg-surface">
+
           {/* Console Header / Tabs */}
           <div className="flex items-center justify-between border-b border-border bg-surface-raised px-3.5 py-2 text-[11px] font-mono">
             <div className="flex flex-wrap items-center gap-0">
@@ -281,9 +289,21 @@ export function Hero() {
               </button>
             </div>
 
-            <div className="flex items-center gap-2 text-success font-mono text-[10px]">
-              <span className="h-1.5 w-1.5 bg-success" />
-              <span className="font-bold">GUARDRAILS ACTIVE</span>
+            <div className="flex items-center gap-3 font-mono text-[10px]">
+              <span className="flex items-center gap-1.5 text-success">
+                <span className="h-1.5 w-1.5 bg-success" />
+                <span className="font-bold">GUARDRAILS ACTIVE</span>
+              </span>
+              <button
+                type="button"
+                onClick={() => setPanelOpen(false)}
+                className="flex items-center gap-1 border border-border-strong px-2 py-0.5 text-muted-foreground hover:text-primary hover:border-primary transition-colors cursor-pointer"
+                title="Hide Live Perimeter Console"
+                aria-label="Close panel"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><polyline points="9 18 15 12 9 6" /></svg>
+                <span className="text-[9px] uppercase tracking-wider">Hide</span>
+              </button>
             </div>
           </div>
 
@@ -430,7 +450,75 @@ AIORI Hackathon 2026 · Problem Statement PS-011`}
             )}
           </div>
         </div>
+          </div>
+        ) : (
+          /* Round button shown when panel is not mounted */
+          <div className="hidden lg:flex items-center justify-center min-h-[400px]">
+            <button
+              type="button"
+              onClick={() => setPanelOpen(true)}
+              style={{
+                width: "96px",
+                height: "96px",
+                borderRadius: "50%",
+                background: "var(--surface-raised)",
+                border: "2px solid var(--primary)",
+                color: "var(--primary)",
+                cursor: "pointer",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px",
+                boxShadow: "0 0 24px rgba(252,238,10,0.15), 0 0 0 4px rgba(252,238,10,0.05)",
+              }}
+              title="Open Live Perimeter Console"
+              aria-label="Open Live Perimeter Panel"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+              <span style={{
+                fontFamily: "JetBrains Mono, monospace",
+                fontSize: "7px",
+                fontWeight: "700",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                lineHeight: 1,
+              }}>LIVE HUD</span>
+            </button>
+          </div>
+        )}
       </div>
+
+      {/* Key Metric Indicators — full width, always same size */}
+      <div className="relative mx-auto mt-10 grid w-full max-w-6xl grid-cols-2 gap-3 border-t border-border/80 pt-6 sm:grid-cols-4 font-mono">
+        <div className="bg-surface border border-border p-3">
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Approved Scope</p>
+          <p className="mt-1 text-xl font-bold tabular-nums text-foreground">
+            {LIVE_TELEMETRY.approvedDomains} / {LIVE_TELEMETRY.maxDomains} Domains
+          </p>
+        </div>
+        <div className="bg-surface border border-border p-3">
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Monitored Hosts</p>
+          <p className="mt-1 text-xl font-bold tabular-nums text-primary">
+            {LIVE_TELEMETRY.approvedHosts} / {LIVE_TELEMETRY.maxHosts} Hosts
+          </p>
+        </div>
+        <div className="bg-surface border border-border p-3">
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Active Probes</p>
+          <p className="mt-1 text-xl font-bold tabular-nums text-foreground">4/4 Documented</p>
+        </div>
+        <div className="bg-surface border border-border p-3">
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Drift Detected</p>
+          <p className="mt-1 text-xl font-bold tabular-nums text-warn">{LIVE_TELEMETRY.driftEventsDetected} Faults</p>
+        </div>
+      </div>
+
     </section>
+
   );
 }
+
+
+

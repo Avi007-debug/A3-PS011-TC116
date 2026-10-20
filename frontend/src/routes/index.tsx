@@ -74,6 +74,7 @@ function HomePage() {
   const [isQaOpen, setIsQaOpen] = useState(false);
   const [isSupabaseOpen, setIsSupabaseOpen] = useState(false);
   const [activeCliCmd, setActiveCliCmd] = useState<string | undefined>(undefined);
+  const [panelOpen, setPanelOpen] = useState(false);
 
   const handleOpenCliWithCmd = (cmd?: string) => {
     setActiveCliCmd(cmd);
@@ -88,9 +89,11 @@ function HomePage() {
         onOpenSupabase={() => setIsSupabaseOpen(true)}
       />
 
+
       <main>
         {/* Hero Section */}
-        <Hero />
+        <Hero panelOpen={panelOpen} setPanelOpen={setPanelOpen} />
+
 
         {/* Problem vs Solution Section */}
         <ProblemSolution />
