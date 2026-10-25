@@ -1,20 +1,25 @@
 """
 ArgusASM FastAPI Backend API Server
 Autonomous Attack-Surface Inventory & Drift Sentinel
-AIORI Hackathon 2026 · Problem Statement PS-011 · Track: Cybersecurity & Infrastructure Resilience
+AIORI Hackathon 2026 - Problem Statement PS-011 - Track: Cybersecurity & Infrastructure Resilience
 """
 
+import time
+from typing import List, Optional, Dict, Any
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional, Dict, Any
-import time
 
 from backend.engine.scope_engine import ScopeSafetyEnforcer
 from backend.engine.scoring_engine import PerimeterHygieneScorer
 from backend.engine.merkle_audit import MerkleAuditLedger
 from backend.engine.drift_engine import StatefulDriftEngine
 from backend.engine.remediation import RemediationAdvisor
+from backend.engine.request_ledger import RequestLedger
+from backend.engine.kill_switch import ArgusKillSwitch
+from backend.engine.hitl_gate import HitlGovernanceEngine
+from backend.engine.snapshot_engine import SnapshotEngine
+from backend.engine.orchestrator import ProbeOrchestrator
 from backend.engine.probes.dns_probe import DNSInventoryProbe
 from backend.engine.probes.tls_probe import TLSCertificateInspector
 from backend.engine.probes.service_probe import PermittedPortAuditor
@@ -26,7 +31,7 @@ app = FastAPI(
     version="1.0.0-prod",
 )
 
-# Enable CORS for local Vite dev server
+# Enable CORS for local Vite dev server and external evaluators
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -41,12 +46,22 @@ scoring_engine = PerimeterHygieneScorer()
 merkle_ledger = MerkleAuditLedger()
 drift_engine = StatefulDriftEngine()
 remediation_advisor = RemediationAdvisor()
+request_ledger = RequestLedger()
+kill_switch = ArgusKillSwitch()
+hitl_engine = HitlGovernanceEngine()
+snapshot_engine = SnapshotEngine()
+orchestrator = ProbeOrchestrator()
+
 dns_probe = DNSInventoryProbe()
 tls_probe = TLSCertificateInspector()
 port_auditor = PermittedPortAuditor()
 dangling_probe = DanglingDNSDetector()
 
+# Seed baseline snapshots on startup if not present
+snapshot_engine.seed_baseline_snapshots()
 
+
+# Request Models
 class ScanRequest(BaseModel):
     scope_file: Optional[str] = "approved_scope.json"
     include_dns: bool = True
@@ -60,6 +75,21 @@ class RemediationRequest(BaseModel):
     target: str
 
 
+class KillSwitchRequest(BaseModel):
+    action: str  # "activate" or "deactivate"
+    reason: Optional[str] = "Operator emergency action"
+    operator: Optional[str] = "sec_ops_lead"
+
+
+class HitlDecisionRequest(BaseModel):
+    approval_id: str
+    reviewer_id: str
+    justification: str
+
+
+# ==========================================
+# Root & Telemetry
+# ==========================================
 @app.get("/")
 def get_root():
     """Service status and hackathon alignment metadata."""
@@ -70,7 +100,9 @@ def get_root():
         "hackathon": "AIORI Hackathon 2026",
         "problem_statement": "PS-011",
         "track": "Cybersecurity & Infrastructure Resilience",
-        "guardrails": "Max 20 Domains / 10 Hosts · Strict Non-Exploitation",
+        "guardrails": "Max 20 Domains / 10 Hosts - Strict Non-Exploitation",
+        "scope_sha256": scope_enforcer.scope_sha256,
+        "kill_switch_active": kill_switch.is_active(),
     }
 
 
@@ -78,6 +110,7 @@ def get_root():
 def get_live_telemetry():
     """Returns real-time perimeter monitoring telemetry."""
     scope_data = scope_enforcer.get_scope_summary()
+    t1_snap = snapshot_engine.get_snapshot("T1") or {}
     return {
         "status": "ONLINE",
         "scope_summary": "SCOPE: 20 DOMAINS / 10 HOSTS",
@@ -85,20 +118,26 @@ def get_live_telemetry():
         "approved_hosts_count": scope_data["total_hosts"],
         "drift_status": "DRIFT DETECTED",
         "active_checks_count": 4,
-        "hygiene_score": 68,
+        "hygiene_score": t1_snap.get("hygiene_score", 68),
         "block_height": 1840291,
-        "merkle_root": "0x7c4f9a3e2b1d8e5f6a0c4b2e8d1a3f5c7e9b0d2a4f6c8e1a3b5d7f9c1e3a5b7d",
+        "merkle_root": t1_snap.get("merkle_root", "0x86fafc721f323779adf8424b441502945e50a4a9efdaf567f4a19b23f17a9e1b"),
+        "kill_switch_status": kill_switch.get_status(),
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
 
 
+# ==========================================
+# Scope & Inventory
+# ==========================================
 @app.get("/api/scope")
+@app.get("/api/v1/scope")
 def get_approved_scope():
     """Returns approved scope definitions and safety caps."""
     return scope_enforcer.get_scope_summary()
 
 
 @app.get("/api/inventory")
+@app.get("/api/v1/inventory")
 def get_asset_inventory():
     """Returns full catalog of discovered assets with probe details."""
     scope = scope_enforcer.get_scope_summary()
@@ -129,16 +168,41 @@ def get_asset_inventory():
     }
 
 
+# ==========================================
+# Drift Engine & Snapshots
+# ==========================================
 @app.get("/api/diff")
-def get_drift_diff():
-    """Stateful delta between Baseline T0 and Current T1 snapshots."""
-    return drift_engine.compute_drift(
-        baseline={"snapshot_id": "SNAP-T0-BASELINE"},
-        current={"snapshot_id": "SNAP-T1-CURRENT"},
-    )
+@app.get("/api/v1/drift")
+def get_drift_diff(
+    baseline: str = Query("T0", description="Baseline snapshot ID or state"),
+    current: str = Query("T1", description="Current snapshot ID or state"),
+):
+    """Stateful delta between Baseline and Current snapshots."""
+    snap_base = snapshot_engine.get_snapshot(baseline) or {"snapshot_id": f"SNAP-{baseline}"}
+    snap_curr = snapshot_engine.get_snapshot(current) or {"snapshot_id": f"SNAP-{current}"}
+    return drift_engine.compute_drift(baseline=snap_base, current=snap_curr)
 
 
+@app.get("/api/v1/snapshots")
+def list_snapshots():
+    """Lists all versioned perimeter snapshots."""
+    return snapshot_engine.list_snapshots()
+
+
+@app.get("/api/v1/snapshots/{state_id}")
+def get_snapshot(state_id: str):
+    """Retrieves single snapshot JSON by state ID (T0, T1, T2)."""
+    snap = snapshot_engine.get_snapshot(state_id)
+    if not snap:
+        raise HTTPException(status_code=404, detail=f"Snapshot '{state_id}' not found.")
+    return snap
+
+
+# ==========================================
+# Findings & Scoring
+# ==========================================
 @app.get("/api/findings")
+@app.get("/api/v1/findings")
 def get_findings():
     """Returns list of detected security findings and seeded issues."""
     findings = [
@@ -174,7 +238,7 @@ def get_findings():
             "title": "Potential Dangling CNAME (AWS S3 NoSuchBucket)",
             "cvss": 8.1,
             "fp_confidence": "HIGH",
-            "description": "Orphaned CNAME pointing to deleted S3 bucket. Candidate for subdomain takeover.",
+            "description": "Orphaned CNAME pointing to deleted S3 bucket. Potential dangling DNS candidate.",
             "evidence": {"cname": "aiori-test-bucket-deprecated.s3.amazonaws.com", "http_status": 404},
             "remediation_ready": True,
         },
@@ -188,6 +252,7 @@ def get_findings():
 
 
 @app.get("/api/score")
+@app.get("/api/v1/score")
 def get_hygiene_score():
     """Computes Perimeter Hygiene Score based on detected findings."""
     findings_resp = get_findings()
@@ -195,6 +260,7 @@ def get_hygiene_score():
 
 
 @app.get("/api/ledger/receipt")
+@app.get("/api/v1/merkle/receipt")
 def get_merkle_receipt():
     """SHA-256 Merkle root attestation receipt for snapshot integrity."""
     return merkle_ledger.generate_snapshot_receipt({
@@ -204,21 +270,99 @@ def get_merkle_receipt():
     })
 
 
-@app.post("/api/scan")
-def trigger_scan(req: ScanRequest):
-    """Triggers an authorized perimeter scan within approved scope."""
-    scope = scope_enforcer.get_scope_summary()
+# ==========================================
+# Request Ledger (R-1) & Safety
+# ==========================================
+@app.get("/api/v1/ledger")
+def get_request_ledger(
+    limit: int = Query(50, description="Max entries to return"),
+    status: Optional[str] = Query(None, description="Filter by status (EXECUTED, ScopeViolation)"),
+):
+    """Returns outbound network probe audit ledger entries."""
     return {
-        "status": "COMPLETED",
-        "targets_scanned": scope["total_domains"] + scope["total_hosts"],
-        "checks_executed": ["DNS", "TLS", "PORTS", "DANGLING_DNS"],
-        "drift_detected": True,
-        "new_findings_count": 3,
-        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "entries": request_ledger.get_entries(limit=limit, status_filter=status),
+        "stats": request_ledger.get_stats(),
     }
 
 
+@app.get("/api/v1/ledger/stats")
+def get_ledger_stats():
+    """Returns statistical metrics on outbound probing and blocked violations."""
+    return request_ledger.get_stats()
+
+
+# ==========================================
+# Emergency Kill Switch (R-7)
+# ==========================================
+@app.get("/api/v1/killswitch")
+def get_killswitch_status():
+    """Returns current operational status of the emergency kill switch."""
+    return kill_switch.get_status()
+
+
+@app.post("/api/v1/killswitch")
+def trigger_killswitch(req: KillSwitchRequest):
+    """Engages or disengages the emergency probe kill switch."""
+    if req.action.lower() == "activate":
+        return kill_switch.activate(reason=req.reason or "Manual trigger", operator=req.operator or "sec_ops")
+    elif req.action.lower() == "deactivate":
+        return kill_switch.deactivate(operator=req.operator or "sec_ops")
+    else:
+        raise HTTPException(status_code=400, detail="Invalid action. Use 'activate' or 'deactivate'.")
+
+
+# ==========================================
+# Human-in-the-Loop (HITL) Governance Gate
+# ==========================================
+@app.get("/api/v1/hitl/pending")
+def get_pending_hitl():
+    """Lists critical actions awaiting Human-in-the-Loop review and authorization."""
+    return {
+        "pending_reviews": hitl_engine.get_pending_reviews(),
+        "total_pending": len(hitl_engine.get_pending_reviews()),
+    }
+
+
+@app.get("/api/v1/hitl/all")
+def get_all_hitl():
+    """Lists full history of Human-in-the-Loop reviews and sign-offs."""
+    return {
+        "history": hitl_engine.get_all_reviews(),
+    }
+
+
+@app.post("/api/v1/hitl/approve")
+def approve_hitl(req: HitlDecisionRequest):
+    """Authorizes a high-criticality action via human sign-off."""
+    try:
+        return hitl_engine.approve_action(req.approval_id, req.reviewer_id, req.justification)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+@app.post("/api/v1/hitl/reject")
+def reject_hitl(req: HitlDecisionRequest):
+    """Rejects a high-criticality action via human sign-off."""
+    try:
+        return hitl_engine.reject_action(req.approval_id, req.reviewer_id, req.justification)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+# ==========================================
+# Probing & Remediation Execution
+# ==========================================
+@app.post("/api/scan")
+@app.post("/api/v1/scan")
+def trigger_scan(req: ScanRequest):
+    """Triggers an authorized perimeter scan within approved scope."""
+    if kill_switch.is_active():
+        raise HTTPException(status_code=423, detail="Scan blocked: Emergency kill switch is engaged.")
+    return orchestrator.scan_all_approved()
+
+
 @app.post("/api/simulate/remediation")
+@app.post("/api/v1/remediation/simulate")
 def simulate_remediation(req: RemediationRequest):
     """Generates non-destructive remediation snippet for a finding."""
     return remediation_advisor.generate_remediation(req.category, req.target)
