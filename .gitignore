@@ -33,6 +33,10 @@ venv/
 *.pkl
 *.joblib
 *.onnx
+*.db
+*.sqlite
+*.sqlite3
+data/
 
 # Network Captures & Test Dumps
 *.pcap
