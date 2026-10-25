@@ -4,6 +4,12 @@
   "version": "1.0.0",
   "hackathon": "AIORI Hackathon 2026",
   "problem_statement": "PS-011",
+  "owner": "AIORI Infrastructure & Security Operations",
+  "authorization_ref": "AIORI-2026-PS011-AUTH-001",
+  "validity_window": {
+    "start": "2026-10-01T00:00:00Z",
+    "expires": "2026-11-30T23:59:59Z"
+  },
   "scope_policy": {
     "max_allowed_domains": 20,
     "max_allowed_hosts": 10,
@@ -29,13 +35,86 @@
     { "domain": "internal.aiori.lab", "role": "staging", "owner": "Platform Eng", "zone": "authoritative" }
   ],
   "approved_hosts": [
-    { "ip": "10.0.1.10", "hostname": "gw-01.aiori.lab", "role": "gateway", "approved_ports": [22, 80, 443] },
-    { "ip": "10.0.1.11", "hostname": "api-01.aiori.lab", "role": "api", "approved_ports": [80, 443] },
-    { "ip": "10.0.1.12", "hostname": "auth-01.aiori.lab", "role": "auth", "approved_ports": [443] },
-    { "ip": "10.0.1.13", "hostname": "ns-01.aiori.lab", "role": "dns", "approved_ports": [53] },
-    { "ip": "10.0.1.14", "hostname": "cdn-01.aiori.lab", "role": "edge", "approved_ports": [80, 443] },
-    { "ip": "10.0.1.20", "hostname": "staging-node.aiori.lab", "role": "staging", "approved_ports": [80, 443] },
-    { "ip": "10.0.1.25", "hostname": "shadow-test.aiori.lab", "role": "testbed", "approved_ports": [80, 443], "notes": "Port 8080 opened during T1 drift" },
-    { "ip": "10.0.1.30", "hostname": "legacy-box.aiori.lab", "role": "legacy", "approved_ports": [443], "notes": "Expired cert test target" }
+    {
+      "ip": "10.0.1.10",
+      "hostname": "gw-01.aiori.lab",
+      "role": "gateway",
+      "approved_ports": [22, 80, 443],
+      "expected_services": [
+        { "port": 22, "protocol": "tcp", "service": "ssh" },
+        { "port": 80, "protocol": "tcp", "service": "http" },
+        { "port": 443, "protocol": "tcp", "service": "https" }
+      ]
+    },
+    {
+      "ip": "10.0.1.11",
+      "hostname": "api-01.aiori.lab",
+      "role": "api",
+      "approved_ports": [80, 443],
+      "expected_services": [
+        { "port": 80, "protocol": "tcp", "service": "http" },
+        { "port": 443, "protocol": "tcp", "service": "https" }
+      ]
+    },
+    {
+      "ip": "10.0.1.12",
+      "hostname": "auth-01.aiori.lab",
+      "role": "auth",
+      "approved_ports": [443],
+      "expected_services": [
+        { "port": 443, "protocol": "tcp", "service": "https" }
+      ]
+    },
+    {
+      "ip": "10.0.1.13",
+      "hostname": "ns-01.aiori.lab",
+      "role": "dns",
+      "approved_ports": [53],
+      "expected_services": [
+        { "port": 53, "protocol": "udp", "service": "dns" },
+        { "port": 53, "protocol": "tcp", "service": "dns" }
+      ]
+    },
+    {
+      "ip": "10.0.1.14",
+      "hostname": "cdn-01.aiori.lab",
+      "role": "edge",
+      "approved_ports": [80, 443],
+      "expected_services": [
+        { "port": 80, "protocol": "tcp", "service": "http" },
+        { "port": 443, "protocol": "tcp", "service": "https" }
+      ]
+    },
+    {
+      "ip": "10.0.1.20",
+      "hostname": "staging-node.aiori.lab",
+      "role": "staging",
+      "approved_ports": [80, 443],
+      "expected_services": [
+        { "port": 80, "protocol": "tcp", "service": "http" },
+        { "port": 443, "protocol": "tcp", "service": "https" }
+      ]
+    },
+    {
+      "ip": "10.0.1.25",
+      "hostname": "shadow-test.aiori.lab",
+      "role": "testbed",
+      "approved_ports": [80, 443],
+      "expected_services": [
+        { "port": 80, "protocol": "tcp", "service": "http" },
+        { "port": 443, "protocol": "tcp", "service": "https" }
+      ],
+      "notes": "Port 8080 opened during T1 drift without authorization"
+    },
+    {
+      "ip": "10.0.1.30",
+      "hostname": "legacy-box.aiori.lab",
+      "role": "legacy",
+      "approved_ports": [443],
+      "expected_services": [
+        { "port": 443, "protocol": "tcp", "service": "https" }
+      ],
+      "notes": "Expired cert test target"
+    }
   ]
 }
