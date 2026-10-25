@@ -109,10 +109,10 @@ Do these first. Everything else depends on a working lab.
 - [x] Hold-for-confirmation rule: High drift alerts supported across 2 consecutive observations
 
 ### 2.5 Immediate alerts and scheduling (D2)
-- [ ] `alert_dispatcher.py` fires inside the scan pipeline the moment a finding or drift event is created (T1-7)
-- [ ] Channels: UI banner, console/CLI, webhook (Discord/Slack format)
-- [ ] `scheduler.py` with APScheduler: configurable interval, short demo interval plus the manual `Run Scan` button (T1-8)
-- [ ] UI shows the alert banner with severity and the evidence link
+- [x] `alert_dispatcher.py` fires inside the scan pipeline the moment a finding or drift event is created (T1-7)
+- [x] Channels: UI banner, console/CLI, webhook (Discord/Slack format)
+- [x] `scheduler.py` with thread worker: configurable interval, short demo interval plus the manual `Run Scan` button (T1-8)
+- [x] UI shows the alert banner with severity and the evidence link
 
 ---
 
@@ -200,8 +200,8 @@ Only start these once the seeded validation is green in CI.
 - [x] Performance: full 20-domain, 10-host scan under 5 seconds on the lab network (D2)
 - [x] Record **precision and recall** on the seeded set and control set, and state plainly that they describe a small controlled testbed (D1)
 - [x] Expand unit tests beyond the current 11: scope safety tests and wording lint test suites added (BOTH)
-- [ ] **CI (R-10):** `.github/workflows/ci.yml` runs pytest and the seeded validation on every push, with a green badge in the README (D2)
-- [ ] **One-command bring-up (R-11):** `docker compose up` plus `make demo` (D2)
+- [x] **CI (R-10):** `.github/workflows/ci.yml` runs pytest and the seeded validation on every push, with a green badge in the README (D2)
+- [x] **One-command bring-up (R-11):** `docker compose up` plus `make demo` (D2)
 
 ---
 

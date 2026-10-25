@@ -15,14 +15,36 @@
 
 ---
 
-### 🌟 Key Links & Submissions Highlights
+> **LIVE WORKING DEMO:** [https://argus-asm-aiori.vercel.app](https://argus-asm-aiori.vercel.app) *(Local Demo: `http://localhost:5173`)*  
+> **OFFICIAL SUBMISSION DOSSIER:** [`docs/HACKATHON_SUBMISSION_DOSSIER.md`](./docs/HACKATHON_SUBMISSION_DOSSIER.md) *(7-Section PS-011 Technical Specification)*
+
+### Key Submission Links
 
 | Resource | Direct Link | Description |
 | :--- | :--- | :--- |
-| 📺 **Video (Intro & Implementation Plan)** | [![YouTube Video](https://img.shields.io/badge/YouTube-Watch%20Video-red?style=for-the-badge&logo=youtube)](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) | [**Watch Introduction & Implementation Plan Video on YouTube**](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) - Complete project introduction, PS-011 alignment, architecture, and Level 2 implementation schedule. |
-| 📊 **Presentation (Google Slides)** | [![Google Slides](https://img.shields.io/badge/Google%20Slides-ArgusASM%20Presentation-F4B400?style=for-the-badge&logo=googleslides)](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) | [**Live Google Slides Presentation Deck**](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) - Initial phase presentation slides covering system design, scope boundaries, and implementation plan. |
-| 📑 **Initial Phase Plan & Deck (PDF)** | [`ArgusASM_AIORI.pdf`](./ArgusASM_AIORI.pdf) | **Initial Phase Presentation Deck & Implementation Plan (PDF)** - Exported presentation deck containing the master plan in the root directory. |
-| 📋 **Hackathon Guidelines & Format** | [`docs/hackathon-format/Proposed-structure-hackathon.pdf`](./docs/hackathon-format/Proposed-structure-hackathon.pdf) | **Official Hackathon Submission Structure Specification** |
+| **Intro Video** | [Watch Video on YouTube](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) | Project introduction, PS-011 alignment, architecture, and Level 2 schedule. |
+| **Live Presentation Deck** | [Google Slides Deck](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) | System design, scope boundaries, and implementation plan. |
+| **Technical Submission Dossier** | [`docs/HACKATHON_SUBMISSION_DOSSIER.md`](./docs/HACKATHON_SUBMISSION_DOSSIER.md) | Authoritative 7-section specification for hackathon evaluators. |
+| **Operational Safety Policy** | [`docs/safety-policy.md`](./docs/safety-policy.md) | Cross-reference matrix mapping PS-011 rules to code lines and unit tests. |
+| **Run & Operational Guide** | [`docs/RUN_GUIDE.md`](./docs/RUN_GUIDE.md) | Quickstart, Docker lab testbed commands, and step-by-step demo. |
+| **Testing Guide** | [`docs/TESTING_GUIDE.md`](./docs/TESTING_GUIDE.md) | Instructions for executing all 19 pytest tests and seeded validation runner. |
+
+---
+
+## 2-Minute Evaluator Quickstart Checklist
+
+Follow these exact steps to verify ArgusASM's empirical performance:
+
+| Step | Action to Perform | Expected Outcome |
+| :--- | :--- | :--- |
+| **1. Run Validation** | In terminal, run: `python tests/seeded_validation.py` *(or `make demo`)* | **10/10 Checks Pass (100% Success)**. 100% recall on 3 seeds, 100% precision on Host A control, ASCII Precision/Recall table printed. |
+| **2. Run Tests** | In terminal, run: `python -m pytest tests/ -v` *(or `make test`)* | **19/19 Tests Pass** in <0.5s. Verifies scope caps, 0-network-call rejections, kill switch, and non-offensive wording lint. |
+| **3. Open HUD** | Start backend (`uvicorn backend.app:app --port 8000`) and frontend (`cd frontend && npm run dev`), open `http://localhost:5173` | **Top Telemetry Strip** displays `SCOPE: 20 DOMAINS / 10 HOSTS`, sub-millisecond wire latency, and live check counter. |
+| **4. Check Baseline ($T_0$)** | Run `python testbed/run_scenarios.py --state T0` and click "Run Scan" | Perimeter Hygiene Score is **96/100 (Clean)**. All certificates valid, zero unapproved ports. |
+| **5. Inject Drift ($T_1$)** | Run `python testbed/run_scenarios.py --state T1` and click "Run Scan" | Real-time alerts fire. Score drops to **68/100 (Elevated Risk)** with the 3 seeds detected (-35 expired TLS, -25 port 8080, -30 dangling S3). |
+| **6. HITL Governance** | Open Sentinel Console drawer and click **"HITL Gate"** tab | All 3 critical findings are queued under `PENDING OPERATOR SIGN-OFF`. Click "Sign-off" to authorize. |
+| **7. Verify Merkle Chain** | Open **"Merkle Receipt"** tab or navigate to `/audit` | SHA-256 Merkle root displayed with `VERIFIED_TAMPER_FREE` status chained to baseline root. |
+| **8. Time-Travel ($T_2$)** | Run `python testbed/run_scenarios.py --state T2` and scrub slider to $T_2$ | Score recovers to **96/100 (Hardened)**. Verified resolution of all 3 seeds. |
 
 ---
 
