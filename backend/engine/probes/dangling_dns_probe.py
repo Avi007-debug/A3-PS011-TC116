@@ -8,7 +8,7 @@ Identifies orphaned CNAME records pointing to decommissioned cloud providers:
 
 Safety Guarantee: Strictly read-only passive inspection.
 Never attempts to register or claim third-party resources.
-Findings are presented as takeover-risk candidates requiring manual/authorized verification.
+Findings are presented as potential dangling DNS candidates with confidence level.
 """
 
 import time
@@ -71,7 +71,7 @@ class DanglingDNSDetector:
                 "confidence": res["confidence"],
                 "fingerprint_evidence": res["fingerprint_matched"],
                 "http_status": res["http_status"],
-                "safety_note": "Finding flagged as Takeover Risk Candidate. Verification required. No active claim attempted.",
+                "safety_note": "Finding flagged as potential dangling DNS candidate. Verification required. No active claim attempted.",
                 "recommended_action": res["recommended_action"],
             }
 
