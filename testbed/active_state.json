@@ -1,0 +1,27 @@
+{
+  "name": "T1 Drifted State (3 Seeds Injected)",
+  "timestamp": "2026-10-20T04:30:00Z",
+  "description": "Stateful drift: 1 expired certificate, 1 unapproved open port (8080), 1 dangling S3 CNAME.",
+  "seeds_active": [
+    "TEST-SEED-01",
+    "TEST-SEED-02",
+    "TEST-SEED-03"
+  ],
+  "expected_score": 68,
+  "seeds": {
+    "legacy.aiori.lab": {
+      "expired_cert": true,
+      "valid_until": "2026-01-01T00:00:00Z"
+    },
+    "dev-edge.aiori.lab": {
+      "port_8080_open": true,
+      "service": "Werkzeug/2.3.8 debug console"
+    },
+    "test-s3.aiori.lab": {
+      "dangling_s3": true,
+      "cname": "aiori-dormant-bucket.s3.amazonaws.com"
+    }
+  },
+  "applied_at": "2026-10-25T07:46:43.670864+00:00",
+  "state_id": "T1"
+}
