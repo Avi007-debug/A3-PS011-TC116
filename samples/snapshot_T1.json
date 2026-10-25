@@ -1,0 +1,99 @@
+{
+  "snapshot_id": "SNAP-T1",
+  "state_id": "T1",
+  "timestamp": "2026-10-20T04:30:00Z",
+  "scope_sha256": "3b9c5db2b2b8938222b9b947c9e05ba869c0d38e2d4211116669910ddbb1b04b",
+  "authorization_ref": "AIORI-2026-PS011-AUTH-001",
+  "hygiene_score": 68,
+  "hygiene_rating": "ELEVATED_RISK",
+  "merkle_root": "0x86fafc721f323779adf8424b441502945e50a4a9efdaf567f4a19b23f17a9e1b",
+  "previous_merkle_root": "0x4e2d1a3b5c7e9f0b2d4f6a8c0e1a3b5d7f9c1e3a5b7d9f1a3c5e7b9d1f3a5b7d",
+  "total_assets": 15,
+  "total_findings": 3,
+  "score_breakdown": {
+    "base_score": 100,
+    "total_deductions": 32,
+    "hygiene_score": 68,
+    "rating": "ELEVATED_RISK",
+    "deductions_by_category": {
+      "EXPIRED_TLS": -35,
+      "UNEXPECTED_PORT": -25,
+      "DANGLING_DNS": -30
+    }
+  },
+  "assets": [
+    {
+      "domain": "legacy.aiori.lab",
+      "ip": "10.0.1.30",
+      "role": "testbed",
+      "open_ports": [443],
+      "tls_valid": false,
+      "tls_days_remaining": -292,
+      "cname": null,
+      "status": "CRITICAL_DRIFT"
+    },
+    {
+      "domain": "dev-edge.aiori.lab",
+      "ip": "10.0.1.25",
+      "role": "testbed",
+      "open_ports": [80, 443, 8080],
+      "unexpected_ports": [8080],
+      "service_banner": "Werkzeug/2.3.8 debug console",
+      "status": "HIGH_DRIFT"
+    },
+    {
+      "domain": "test-s3.aiori.lab",
+      "ip": null,
+      "role": "testbed",
+      "cname": "aiori-test-bucket-deprecated.s3.amazonaws.com",
+      "status": "HIGH_DRIFT"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-SEED-01",
+      "category": "EXPIRED_TLS",
+      "severity": "CRITICAL",
+      "target": "legacy.aiori.lab:443",
+      "title": "Expired TLS Certificate (X.509 RFC 5280)",
+      "cvss": 7.5,
+      "fp_confidence": "HIGH",
+      "evidence": {
+        "notAfter": "2026-01-01T00:00:00Z",
+        "issuer": "Let's Encrypt Authority X3",
+        "days_overdue": 292
+      },
+      "hitl_status": "PENDING_OPERATOR_SIGN_OFF"
+    },
+    {
+      "finding_id": "FIND-SEED-02",
+      "category": "UNEXPECTED_PORT",
+      "severity": "HIGH",
+      "target": "dev-edge.aiori.lab:8080",
+      "title": "Unauthorized Open Port 8080 (Werkzeug Debug Console)",
+      "cvss": 6.5,
+      "fp_confidence": "HIGH",
+      "evidence": {
+        "port": 8080,
+        "banner": "Werkzeug/2.3.8 Python/3.11.8",
+        "whitelist": [22, 53, 80, 443]
+      },
+      "hitl_status": "PENDING_OPERATOR_SIGN_OFF"
+    },
+    {
+      "finding_id": "FIND-SEED-03",
+      "category": "DANGLING_DNS",
+      "severity": "HIGH",
+      "target": "test-s3.aiori.lab",
+      "title": "Potential Dangling DNS Candidate (AWS S3 NoSuchBucket)",
+      "cvss": 8.1,
+      "fp_confidence": "HIGH",
+      "evidence": {
+        "cname": "aiori-test-bucket-deprecated.s3.amazonaws.com",
+        "http_status": 404,
+        "body_fingerprint": "<Code>NoSuchBucket</Code>"
+      },
+      "hitl_status": "PENDING_OPERATOR_SIGN_OFF"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "snapshot_id": "SNAP-T2",
+  "state_id": "T2",
+  "timestamp": "2026-10-20T05:00:00Z",
+  "scope_sha256": "3b9c5db2b2b8938222b9b947c9e05ba869c0d38e2d4211116669910ddbb1b04b",
+  "authorization_ref": "AIORI-2026-PS011-AUTH-001",
+  "hygiene_score": 96,
+  "hygiene_rating": "HARDENED",
+  "merkle_root": "0x1f3a5b7d9c2e4f6a8b0d2e4f6a8c0e1a3b5d7f9c1e3a5b7d9f1a3c5e7b9d1f3a",
+  "previous_merkle_root": "0x86fafc721f323779adf8424b441502945e50a4a9efdaf567f4a19b23f17a9e1b",
+  "total_assets": 15,
+  "total_findings": 0,
+  "score_breakdown": {
+    "base_score": 100,
+    "total_deductions": 4,
+    "hygiene_score": 96,
+    "rating": "HARDENED"
+  },
+  "remediations_verified": [
+    {
+      "seed_id": "TEST-SEED-01",
+      "target": "legacy.aiori.lab:443",
+      "action": "Certbot renewal executed; valid until 2027-08-01",
+      "status": "CONFIRMED_REMEDIATED"
+    },
+    {
+      "seed_id": "TEST-SEED-02",
+      "target": "dev-edge.aiori.lab:8080",
+      "action": "Host firewall rule 'ufw deny 8080/tcp' enforced; port closed",
+      "status": "CONFIRMED_REMEDIATED"
+    },
+    {
+      "seed_id": "TEST-SEED-03",
+      "target": "test-s3.aiori.lab",
+      "action": "Orphaned CNAME purged from authoritative DNS zone file",
+      "status": "CONFIRMED_REMEDIATED"
+    }
+  ],
+  "assets": [
+    {
+      "domain": "legacy.aiori.lab",
+      "ip": "10.0.1.30",
+      "role": "testbed",
+      "open_ports": [443],
+      "tls_valid": true,
+      "tls_days_remaining": 280,
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "dev-edge.aiori.lab",
+      "ip": "10.0.1.25",
+      "role": "testbed",
+      "open_ports": [80, 443],
+      "unexpected_ports": [],
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "test-s3.aiori.lab",
+      "ip": null,
+      "role": "testbed",
+      "cname": null,
+      "status": "HEALTHY"
+    }
+  ],
+  "findings": []
+}

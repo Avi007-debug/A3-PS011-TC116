@@ -1,0 +1,77 @@
+{
+  "snapshot_id": "SNAP-T0",
+  "state_id": "T0",
+  "timestamp": "2026-10-20T04:00:00Z",
+  "scope_sha256": "3b9c5db2b2b8938222b9b947c9e05ba869c0d38e2d4211116669910ddbb1b04b",
+  "authorization_ref": "AIORI-2026-PS011-AUTH-001",
+  "hygiene_score": 96,
+  "hygiene_rating": "HARDENED",
+  "merkle_root": "0x4e2d1a3b5c7e9f0b2d4f6a8c0e1a3b5d7f9c1e3a5b7d9f1a3c5e7b9d1f3a5b7d",
+  "previous_merkle_root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "total_assets": 15,
+  "total_findings": 0,
+  "score_breakdown": {
+    "base_score": 100,
+    "total_deductions": 4,
+    "hygiene_score": 96,
+    "rating": "HARDENED",
+    "deductions_by_category": {
+      "EXPIRED_TLS": 0,
+      "UNEXPECTED_PORT": 0,
+      "DANGLING_DNS": 0,
+      "NEAR_EXPIRY_TLS": 4
+    }
+  },
+  "assets": [
+    {
+      "domain": "aiori.lab",
+      "ip": "10.0.1.10",
+      "role": "production",
+      "open_ports": [22, 80, 443],
+      "tls_valid": true,
+      "tls_days_remaining": 72,
+      "cname": null,
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "api.aiori.lab",
+      "ip": "10.0.1.11",
+      "role": "production",
+      "open_ports": [80, 443],
+      "tls_valid": true,
+      "tls_days_remaining": 31,
+      "cname": null,
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "legacy.aiori.lab",
+      "ip": "10.0.1.30",
+      "role": "testbed",
+      "open_ports": [443],
+      "tls_valid": true,
+      "tls_days_remaining": 60,
+      "cname": null,
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "dev-edge.aiori.lab",
+      "ip": "10.0.1.25",
+      "role": "testbed",
+      "open_ports": [80, 443],
+      "tls_valid": true,
+      "tls_days_remaining": 90,
+      "cname": null,
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "test-s3.aiori.lab",
+      "ip": null,
+      "role": "testbed",
+      "open_ports": [],
+      "tls_valid": false,
+      "cname": "api.aiori.lab",
+      "status": "HEALTHY"
+    }
+  ],
+  "findings": []
+}

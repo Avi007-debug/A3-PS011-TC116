@@ -1,0 +1,67 @@
+{
+  "report_title": "ArgusASM Stateful Perimeter Drift Report (T0 Baseline vs T1 Drift)",
+  "hackathon": "AIORI Hackathon 2026",
+  "problem_statement": "PS-011",
+  "authorization_ref": "AIORI-2026-PS011-AUTH-001",
+  "generated_at": "2026-10-25T13:50:00Z",
+  "baseline_snapshot": {
+    "snapshot_id": "SNAP-T0",
+    "timestamp": "2026-10-20T04:00:00Z",
+    "hygiene_score": 96,
+    "merkle_root": "0x4e2d1a3b5c7e9f0b2d4f6a8c0e1a3b5d7f9c1e3a5b7d9f1a3c5e7b9d1f3a5b7d"
+  },
+  "current_snapshot": {
+    "snapshot_id": "SNAP-T1",
+    "timestamp": "2026-10-20T04:30:00Z",
+    "hygiene_score": 68,
+    "merkle_root": "0x86fafc721f323779adf8424b441502945e50a4a9efdaf567f4a19b23f17a9e1b"
+  },
+  "drift_summary": {
+    "total_events": 3,
+    "critical_count": 1,
+    "high_count": 2,
+    "medium_count": 0,
+    "score_impact": "-28 points (from 96 to 68)"
+  },
+  "drift_events": [
+    {
+      "event_id": "DRIFT-001",
+      "type": "EXPIRED_CERT",
+      "severity": "CRITICAL",
+      "target": "legacy.aiori.lab:443",
+      "title": "TLS Certificate Expired on legacy.aiori.lab",
+      "cvss": 7.5,
+      "baseline_state": "Valid until 2026-01-01 (Active during T0)",
+      "current_state": "Expired (-292 days overdue)",
+      "evidence": "X.509 notAfter: 2026-01-01T00:00:00Z. Issuer: Let's Encrypt Authority X3.",
+      "remediation_directive": "certbot certonly --standalone -d legacy.aiori.lab && systemctl reload nginx",
+      "hitl_governance": "AWAITING_OPERATOR_SIGN_OFF"
+    },
+    {
+      "event_id": "DRIFT-002",
+      "type": "NEW_SERVICE",
+      "severity": "HIGH",
+      "target": "dev-edge.aiori.lab:8080",
+      "title": "Unexpected Port 8080 (Werkzeug Debug Console) Appeared",
+      "cvss": 6.5,
+      "baseline_state": "Port 8080 CLOSED / Filtered during T0",
+      "current_state": "Port 8080 OPEN (Banner: Werkzeug/2.3.8 Python/3.11.8)",
+      "evidence": "TCP SYN to 10.0.1.25:8080 returned SYN-ACK. HTTP GET returned debug console banner.",
+      "remediation_directive": "sudo ufw deny 8080/tcp",
+      "hitl_governance": "AWAITING_OPERATOR_SIGN_OFF"
+    },
+    {
+      "event_id": "DRIFT-003",
+      "type": "DANGLING_DNS_CANDIDATE",
+      "severity": "HIGH",
+      "target": "test-s3.aiori.lab",
+      "title": "Potential Dangling CNAME (AWS S3 NoSuchBucket)",
+      "cvss": 8.1,
+      "baseline_state": "CNAME pointed to active test bucket during T0",
+      "current_state": "Target bucket deprovisioned. Returns HTTP 404 NoSuchBucket",
+      "evidence": "CNAME -> aiori-test-bucket-deprecated.s3.amazonaws.com. Response body matches NoSuchBucket XML.",
+      "remediation_directive": "aws route53 change-resource-record-sets --hosted-zone-id Z1234567890 --change-batch '...'",
+      "hitl_governance": "AWAITING_OPERATOR_SIGN_OFF"
+    }
+  ]
+}
