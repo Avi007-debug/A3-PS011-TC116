@@ -20,6 +20,8 @@ from backend.engine.kill_switch import ArgusKillSwitch
 from backend.engine.hitl_gate import HitlGovernanceEngine
 from backend.engine.snapshot_engine import SnapshotEngine
 from backend.engine.orchestrator import ProbeOrchestrator
+from backend.engine.alert_dispatcher import alert_dispatcher
+from backend.engine.scheduler import argus_scheduler
 from backend.engine.probes.dns_probe import DNSInventoryProbe
 from backend.engine.probes.tls_probe import TLSCertificateInspector
 from backend.engine.probes.service_probe import PermittedPortAuditor
@@ -366,3 +368,43 @@ def trigger_scan(req: ScanRequest):
 def simulate_remediation(req: RemediationRequest):
     """Generates non-destructive remediation snippet for a finding."""
     return remediation_advisor.generate_remediation(req.category, req.target)
+
+
+# ==========================================
+# Alerts & Scheduling
+# ==========================================
+@app.get("/api/v1/alerts")
+def get_alerts(limit: int = Query(20, description="Max alerts to return")):
+    """Returns recent perimeter alerts and webhook payload preview."""
+    recent = alert_dispatcher.get_recent_alerts(limit)
+    preview = alert_dispatcher.format_slack_discord_payload(recent[0]) if recent else None
+    return {
+        "total_alerts": len(recent),
+        "alerts": recent,
+        "webhook_embed_preview": preview,
+    }
+
+
+@app.get("/api/v1/scheduler")
+def get_scheduler_status():
+    """Returns current status of background recurring scan scheduler."""
+    return argus_scheduler.get_status()
+
+
+@app.post("/api/v1/scheduler/trigger")
+def trigger_scheduled_scan():
+    """Triggers an immediate out-of-band scan via scheduler."""
+    return argus_scheduler.trigger_now()
+
+
+@app.post("/api/v1/scheduler/start")
+def start_scheduler(interval_seconds: Optional[int] = Query(None, description="Optional scan interval in seconds")):
+    """Starts recurring background scan scheduler."""
+    return argus_scheduler.start(interval_seconds)
+
+
+@app.post("/api/v1/scheduler/stop")
+def stop_scheduler():
+    """Stops recurring background scan scheduler."""
+    return argus_scheduler.stop()
+
