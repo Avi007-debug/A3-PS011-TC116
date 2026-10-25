@@ -10,17 +10,30 @@ $TTL 300
 @           IN  NS      ns-01.aiori.lab.
 @           IN  NS      ns-02.aiori.lab.
 @           IN  A       10.0.1.10
-@           IN  AAAA    2001:db8::10
+@           IN  AAAA    fd00:aiori::10
 @           IN  MX  10  mail.aiori.lab.
 @           IN  TXT     "v=spf1 include:_spf.aiori.lab ~all"
+@           IN  TXT     "aiori-verification=7f82b9a4"
 
 ns-01       IN  A       10.0.1.53
 ns-02       IN  A       10.0.1.54
-api         IN  A       10.0.1.15
-vpn         IN  A       10.0.1.20
+api         IN  A       10.0.1.11
+portal      IN  A       10.0.1.14
 mail        IN  A       10.0.1.25
-legacy      IN  A       10.0.2.10
-dev-edge    IN  A       10.0.2.20
+staging     IN  A       10.0.1.20
+legacy      IN  A       10.0.1.30
+dev-edge    IN  A       10.0.1.25
+mock-s3     IN  A       10.0.1.40
 
+; CNAME chains and aliases
 docs        IN  CNAME   api.aiori.lab.
+cdn         IN  CNAME   portal.aiori.lab.
+
+; Seed 3: Dangling S3 CNAME
 test-s3     IN  CNAME   aiori-dormant-bucket.s3.us-east-1.amazonaws.com.
+
+; Second Dangling Case: Target returning NXDOMAIN
+dangling-nx IN  CNAME   nonexistent-bucket-target.aiori.lab.
+
+; FP Control: Wildcard DNS entry
+*.wildcard  IN  A       10.0.1.99

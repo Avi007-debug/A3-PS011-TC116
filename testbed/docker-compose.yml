@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # 1. Authoritative CoreDNS Container (RFC 1035 zone server)
   coredns:
     image: coredns/coredns:1.11.1
     container_name: argus_coredns
@@ -16,25 +17,59 @@ services:
         ipv4_address: 10.0.1.53
     restart: unless-stopped
 
-  api_gateway:
+  # 2. Host A (Control): Healthy Production Nginx (valid cert on 443, port 80)
+  host_a_healthy:
     image: nginx:alpine
-    container_name: argus_api_gateway
+    container_name: argus_host_a
+    volumes:
+      - ./nginx/nginx-host-a.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
     ports:
       - "8081:80"
+      - "8443:443"
     networks:
       argus_net:
-        ipv4_address: 10.0.1.15
+        ipv4_address: 10.0.1.11
     restart: unless-stopped
 
-  dev_edge:
+  # 3. Host B (Seed 1): Legacy Nginx with Expired Certificate (legacy.aiori.lab)
+  host_b_legacy:
+    image: nginx:alpine
+    container_name: argus_host_b
+    volumes:
+      - ./nginx/nginx-host-b.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    ports:
+      - "8444:443"
+    networks:
+      argus_net:
+        ipv4_address: 10.0.1.30
+    restart: unless-stopped
+
+  # 4. Host C (Seed 2): Dev Edge Host with Unapproved Port 8080 (dev-edge.aiori.lab)
+  host_c_dev:
     image: python:3.11-alpine
-    container_name: argus_dev_edge
-    command: python -m http.server 8080
+    container_name: argus_host_c
+    command: sh -c "python -m http.server 8080"
     ports:
       - "8080:8080"
     networks:
       argus_net:
-        ipv4_address: 10.0.2.20
+        ipv4_address: 10.0.1.25
+    restart: unless-stopped
+
+  # 5. Mock Cloud S3 Container (Seed 3): Returns NoSuchBucket XML error on HTTP
+  mock_s3_service:
+    image: python:3.11-alpine
+    container_name: argus_mock_s3
+    volumes:
+      - ./mock_s3/s3_server.py:/app/s3_server.py:ro
+    command: python /app/s3_server.py 80
+    ports:
+      - "9000:80"
+    networks:
+      argus_net:
+        ipv4_address: 10.0.1.40
     restart: unless-stopped
 
 networks:
