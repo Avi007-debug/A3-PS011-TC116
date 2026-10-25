@@ -139,7 +139,12 @@ export function Hero({
   panelOpen: boolean;
   setPanelOpen: (v: boolean | ((prev: boolean) => boolean)) => void;
 }) {
-  const [activeTab, setActiveTab] = useState<"stream" | "probes" | "diff" | "merkle">("stream");
+  const [activeTab, setActiveTab] = useState<"stream" | "probes" | "diff" | "merkle" | "hitl">("stream");
+  const [hitlApprovals, setHitlApprovals] = useState<Record<string, "PENDING" | "APPROVED" | "REJECTED">>({
+    "HITL-001": "PENDING",
+    "HITL-002": "PENDING",
+    "HITL-003": "PENDING",
+  });
   const [probeChecksCount, setProbeChecksCount] = useState(148);
   const [panelMounted, setPanelMounted] = useState(false);
   const [panelPhase, setPanelPhase] = useState<"enter" | "exit">("enter");
@@ -286,6 +291,21 @@ export function Hero({
                 }`}
               >
                 Merkle Receipt
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("hitl")}
+                className={`px-3 py-1.5 font-sans font-semibold uppercase tracking-[0.06em] text-[10px] transition-colors cursor-pointer border-b-2 flex items-center gap-1.5 ${
+                  activeTab === "hitl"
+                    ? "border-b-amber-500 text-amber-600 dark:text-amber-400 bg-surface"
+                    : "border-b-transparent text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" />
+                <span>HITL Gate</span>
+                <span className="border border-amber-500/40 bg-amber-500/10 px-1 py-0.2 text-[9px] text-amber-500 font-bold">
+                  {Object.values(hitlApprovals).filter((v) => v === "PENDING").length}
+                </span>
               </button>
             </div>
 
@@ -448,6 +468,141 @@ AIORI Hackathon 2026 · Problem Statement PS-011`}
                 </pre>
               </div>
             )}
+
+            {activeTab === "hitl" && (
+              <div className="space-y-3">
+                <div className="flex justify-between items-center text-[10.5px] uppercase tracking-wider text-amber-500 border-b border-border pb-1">
+                  <span>Human-in-the-Loop (HITL) Governance Queue</span>
+                  <span className="text-muted-foreground">Zero Autonomous Disruption</span>
+                </div>
+
+                <p className="text-[10.5px] text-muted-foreground leading-snug">
+                  High-criticality perimeter findings and remediation actions require explicit operator sign-off before production dispatch.
+                </p>
+
+                <div className="space-y-2 font-mono text-[11px]">
+                  {/* Item 1: TLS Renewal */}
+                  <div className="border border-border bg-surface p-2.5 space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <span className="bg-destructive/15 text-destructive text-[9.5px] font-bold px-1.5 py-0.5 border border-destructive/30">
+                          CRITICAL
+                        </span>
+                        <span className="font-bold text-foreground">legacy.aiori.lab:443</span>
+                      </div>
+                      <span
+                        className={`text-[9.5px] font-bold px-1.5 py-0.5 border ${
+                          hitlApprovals["HITL-001"] === "APPROVED"
+                            ? "bg-success/15 text-success border-success/40"
+                            : "bg-amber-500/15 text-amber-500 border-amber-500/40"
+                        }`}
+                      >
+                        {hitlApprovals["HITL-001"] === "APPROVED" ? "AUTHORIZED BY HUMAN" : "PENDING OPERATOR SIGN-OFF"}
+                      </span>
+                    </div>
+                    <p className="text-muted-foreground text-[10px]">
+                      Action: ACME certificate renewal & Nginx reload (Remediates -35 score drop)
+                    </p>
+                    <div className="flex gap-2 pt-1 border-t border-border/50">
+                      <button
+                        type="button"
+                        onClick={() => setHitlApprovals((prev) => ({ ...prev, "HITL-001": "APPROVED" }))}
+                        className="bg-primary/15 text-primary border border-primary/40 px-2 py-0.5 text-[9.5px] font-bold hover:bg-primary/25 cursor-pointer"
+                      >
+                        Sign-off (Authorize)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setHitlApprovals((prev) => ({ ...prev, "HITL-001": "REJECTED" }))}
+                        className="bg-surface text-muted-foreground border border-border px-2 py-0.5 text-[9.5px] hover:text-foreground cursor-pointer"
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Item 2: Port 8080 */}
+                  <div className="border border-border bg-surface p-2.5 space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <span className="bg-amber-500/15 text-amber-500 text-[9.5px] font-bold px-1.5 py-0.5 border border-amber-500/30">
+                          HIGH
+                        </span>
+                        <span className="font-bold text-foreground">dev-edge.aiori.lab:8080</span>
+                      </div>
+                      <span
+                        className={`text-[9.5px] font-bold px-1.5 py-0.5 border ${
+                          hitlApprovals["HITL-002"] === "APPROVED"
+                            ? "bg-success/15 text-success border-success/40"
+                            : "bg-amber-500/15 text-amber-500 border-amber-500/40"
+                        }`}
+                      >
+                        {hitlApprovals["HITL-002"] === "APPROVED" ? "AUTHORIZED BY HUMAN" : "PENDING OPERATOR SIGN-OFF"}
+                      </span>
+                    </div>
+                    <p className="text-muted-foreground text-[10px]">
+                      Action: Host firewall drop rule `ufw deny 8080/tcp` (Remediates -25 score drop)
+                    </p>
+                    <div className="flex gap-2 pt-1 border-t border-border/50">
+                      <button
+                        type="button"
+                        onClick={() => setHitlApprovals((prev) => ({ ...prev, "HITL-002": "APPROVED" }))}
+                        className="bg-primary/15 text-primary border border-primary/40 px-2 py-0.5 text-[9.5px] font-bold hover:bg-primary/25 cursor-pointer"
+                      >
+                        Sign-off (Authorize)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setHitlApprovals((prev) => ({ ...prev, "HITL-002": "REJECTED" }))}
+                        className="bg-surface text-muted-foreground border border-border px-2 py-0.5 text-[9.5px] hover:text-foreground cursor-pointer"
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Item 3: Dangling S3 */}
+                  <div className="border border-border bg-surface p-2.5 space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <span className="bg-amber-500/15 text-amber-500 text-[9.5px] font-bold px-1.5 py-0.5 border border-amber-500/30">
+                          HIGH
+                        </span>
+                        <span className="font-bold text-foreground">test-s3.aiori.lab</span>
+                      </div>
+                      <span
+                        className={`text-[9.5px] font-bold px-1.5 py-0.5 border ${
+                          hitlApprovals["HITL-003"] === "APPROVED"
+                            ? "bg-success/15 text-success border-success/40"
+                            : "bg-amber-500/15 text-amber-500 border-amber-500/40"
+                        }`}
+                      >
+                        {hitlApprovals["HITL-003"] === "APPROVED" ? "AUTHORIZED BY HUMAN" : "PENDING OPERATOR SIGN-OFF"}
+                      </span>
+                    </div>
+                    <p className="text-muted-foreground text-[10px]">
+                      Action: Delete orphaned CNAME record in authoritative zone (Remediates -30 score drop)
+                    </p>
+                    <div className="flex gap-2 pt-1 border-t border-border/50">
+                      <button
+                        type="button"
+                        onClick={() => setHitlApprovals((prev) => ({ ...prev, "HITL-003": "APPROVED" }))}
+                        className="bg-primary/15 text-primary border border-primary/40 px-2 py-0.5 text-[9.5px] font-bold hover:bg-primary/25 cursor-pointer"
+                      >
+                        Sign-off (Authorize)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setHitlApprovals((prev) => ({ ...prev, "HITL-003": "REJECTED" }))}
+                        className="bg-surface text-muted-foreground border border-border px-2 py-0.5 text-[9.5px] hover:text-foreground cursor-pointer"
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
           </div>
@@ -491,7 +646,7 @@ AIORI Hackathon 2026 · Problem Statement PS-011`}
         )}
       </div>
 
-      {/* Key Metric Indicators — full width, always same size */}
+      {/* Key Metric Indicators - full width, always same size */}
       <div className="relative mx-auto mt-10 grid w-full max-w-6xl grid-cols-2 gap-3 border-t border-border/80 pt-6 sm:grid-cols-4 font-mono">
         <div className="bg-surface border border-border p-3">
           <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Approved Scope</p>

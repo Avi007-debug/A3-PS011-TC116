@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RotateCw, Copy } from "lucide-react";
+import { RotateCw, Copy, ShieldAlert, CheckCircle2, UserCheck } from "lucide-react";
 import { ATTACK_SCENARIOS } from "@/data/sentinel";
 import { Section, SectionHead, StatusBadge } from "./shared";
 
@@ -85,6 +85,13 @@ export function AttackSandbox() {
 
   const [selectedPreset, setSelectedPreset] = useState(REMEDIATION_PRESETS[0]!.id);
   const [customConfig, setCustomConfig] = useState(REMEDIATION_PRESETS[0]!.config);
+  const [hitlApprovals, setHitlApprovals] = useState<
+    Record<string, { status: "PENDING" | "APPROVED" | "REJECTED"; operator?: string; timestamp?: string }>
+  >({
+    "preset-dangling-cname": { status: "PENDING" },
+    "preset-certbot-renew": { status: "PENDING" },
+    "preset-port-block": { status: "PENDING" },
+  });
 
   const activeSeed =
     ATTACK_SCENARIOS.find((a) => a.id === selectedSeed) ?? ATTACK_SCENARIOS[0]!;
@@ -264,6 +271,77 @@ export function AttackSandbox() {
                     <li key={i}>{f}</li>
                   ))}
                 </ul>
+              </div>
+
+              {/* Human-in-the-Loop (HITL) Governance Gate */}
+              <div className="border border-amber-500/40 bg-amber-500/10 p-3 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 text-amber-500 text-[10.5px] font-bold uppercase tracking-wider">
+                    <ShieldAlert className="h-3.5 w-3.5" />
+                    <span>Human-in-the-Loop Governance Gate</span>
+                  </div>
+                  <span
+                    className={`text-[9.5px] font-bold px-2 py-0.5 border ${
+                      hitlApprovals[selectedPreset]?.status === "APPROVED"
+                        ? "bg-success/20 text-success border-success/40"
+                        : "bg-amber-500/20 text-amber-500 border-amber-500/40"
+                    }`}
+                  >
+                    {hitlApprovals[selectedPreset]?.status === "APPROVED"
+                      ? "AUTHORIZED BY OPERATOR"
+                      : "AWAITING HUMAN SIGN-OFF"}
+                  </span>
+                </div>
+
+                <p className="text-muted-foreground text-[10.5px] leading-snug">
+                  High-criticality changes cannot execute autonomously. A verified security operator must review the directive and authorize execution.
+                </p>
+
+                {hitlApprovals[selectedPreset]?.status === "APPROVED" ? (
+                  <div className="flex items-center gap-2 text-success text-[10px] font-mono border-t border-success/30 pt-1.5">
+                    <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
+                    <span>
+                      Signed off by <strong>{hitlApprovals[selectedPreset]?.operator}</strong> at{" "}
+                      {hitlApprovals[selectedPreset]?.timestamp}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 pt-1 border-t border-amber-500/30">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setHitlApprovals((prev) => ({
+                          ...prev,
+                          [selectedPreset]: {
+                            status: "APPROVED",
+                            operator: "OP-SEC-LEAD (AIORI-2026)",
+                            timestamp: new Date().toLocaleTimeString(),
+                          },
+                        }))
+                      }
+                      className="hover-glow flex items-center gap-1.5 border border-amber-500 bg-amber-500/20 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-amber-500 font-bold cursor-pointer"
+                    >
+                      <UserCheck className="h-3 w-3" />
+                      <span>Authorize Remediation (Operator Sign-off)</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setHitlApprovals((prev) => ({
+                          ...prev,
+                          [selectedPreset]: {
+                            status: "REJECTED",
+                            operator: "OP-SEC-LEAD",
+                            timestamp: new Date().toLocaleTimeString(),
+                          },
+                        }))
+                      }
+                      className="border border-border bg-surface px-2.5 py-1 font-mono text-[10px] text-muted-foreground hover:text-foreground cursor-pointer"
+                    >
+                      Suppress / FP
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

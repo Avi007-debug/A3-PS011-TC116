@@ -12,9 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as CapabilitiesRouteImport } from './routes/capabilities'
+import { Route as DriftRouteImport } from './routes/drift'
 import { Route as QaRouteImport } from './routes/qa'
 import { Route as SecurityRouteImport } from './routes/security'
-import { Route as ZeroDecryptRouteImport } from './routes/zero-decrypt'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -31,6 +31,11 @@ const CapabilitiesRoute = CapabilitiesRouteImport.update({
   path: '/capabilities',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DriftRoute = DriftRouteImport.update({
+  id: '/drift',
+  path: '/drift',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QaRoute = QaRouteImport.update({
   id: '/qa',
   path: '/qa',
@@ -41,60 +46,54 @@ const SecurityRoute = SecurityRouteImport.update({
   path: '/security',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ZeroDecryptRoute = ZeroDecryptRouteImport.update({
-  id: '/zero-decrypt',
-  path: '/zero-decrypt',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/audit': typeof AuditRoute
   '/capabilities': typeof CapabilitiesRoute
+  '/drift': typeof DriftRoute
   '/qa': typeof QaRoute
   '/security': typeof SecurityRoute
-  '/zero-decrypt': typeof ZeroDecryptRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/audit': typeof AuditRoute
   '/capabilities': typeof CapabilitiesRoute
+  '/drift': typeof DriftRoute
   '/qa': typeof QaRoute
   '/security': typeof SecurityRoute
-  '/zero-decrypt': typeof ZeroDecryptRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/audit': typeof AuditRoute
   '/capabilities': typeof CapabilitiesRoute
+  '/drift': typeof DriftRoute
   '/qa': typeof QaRoute
   '/security': typeof SecurityRoute
-  '/zero-decrypt': typeof ZeroDecryptRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    '/' | '/audit' | '/capabilities' | '/qa' | '/security' | '/zero-decrypt'
+  fullPaths: '/' | '/audit' | '/capabilities' | '/drift' | '/qa' | '/security'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/audit' | '/capabilities' | '/qa' | '/security' | '/zero-decrypt'
+  to: '/' | '/audit' | '/capabilities' | '/drift' | '/qa' | '/security'
   id:
     | '__root__'
     | '/'
     | '/audit'
     | '/capabilities'
+    | '/drift'
     | '/qa'
     | '/security'
-    | '/zero-decrypt'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuditRoute: typeof AuditRoute
   CapabilitiesRoute: typeof CapabilitiesRoute
+  DriftRoute: typeof DriftRoute
   QaRoute: typeof QaRoute
   SecurityRoute: typeof SecurityRoute
-  ZeroDecryptRoute: typeof ZeroDecryptRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -120,6 +119,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CapabilitiesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/drift': {
+      id: '/drift'
+      path: '/drift'
+      fullPath: '/drift'
+      preLoaderRoute: typeof DriftRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/qa': {
       id: '/qa'
       path: '/qa'
@@ -134,13 +140,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/zero-decrypt': {
-      id: '/zero-decrypt'
-      path: '/zero-decrypt'
-      fullPath: '/zero-decrypt'
-      preLoaderRoute: typeof ZeroDecryptRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -148,9 +147,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuditRoute: AuditRoute,
   CapabilitiesRoute: CapabilitiesRoute,
+  DriftRoute: DriftRoute,
   QaRoute: QaRoute,
   SecurityRoute: SecurityRoute,
-  ZeroDecryptRoute: ZeroDecryptRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
