@@ -253,16 +253,16 @@ export function OsintInvestigationDossier() {
               {item.type === "screenshot" ? (
                 /* Screenshot Preview Thumbnail */
                 <div className="mb-3 rounded overflow-hidden border border-border dark:border-[#212f47] relative group">
-                  <div className="h-32 bg-slate-900 dark:bg-[#0c1421] p-3 text-[10px] font-mono text-cyan-400 dark:text-[#58a6ff] overflow-hidden">
-                    <div className="flex items-center justify-between border-b border-slate-700 dark:border-[#1a253a] pb-1 mb-2 text-slate-400 dark:text-[#8b949e]">
+                  <div className="h-32 bg-slate-100 dark:bg-[#0c1421] p-3 text-[10px] font-mono text-primary dark:text-[#58a6ff] overflow-hidden">
+                    <div className="flex items-center justify-between border-b border-slate-300 dark:border-[#1a253a] pb-1 mb-2 text-slate-600 dark:text-[#8b949e]">
                       <span>Werkzeug Debug Console</span>
-                      <span className="text-[#f85149]">PORT 8080</span>
+                      <span className="text-red-600 dark:text-[#f85149] font-bold">PORT 8080</span>
                     </div>
-                    <pre className="text-[9px] text-slate-300 dark:text-[#8b949e] whitespace-pre-wrap">
+                    <pre className="text-[9px] text-slate-700 dark:text-[#8b949e] whitespace-pre-wrap">
                       {item.previewContent}
                     </pre>
                   </div>
-                  <div className="absolute inset-0 bg-[#0c1421]/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                  <div className="absolute inset-0 bg-slate-900/30 dark:bg-[#0c1421]/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                     <button
                       onClick={() => setActiveModalEvidence(item)}
                       className="px-3 py-1 bg-primary dark:bg-[#58a6ff] text-white text-xs font-bold rounded flex items-center gap-1 shadow-lg"

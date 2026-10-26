@@ -100,8 +100,14 @@ export function CyberDefendCascade() {
       t += 0.025;
       ctx.clearRect(0, 0, w, h);
 
+      const isLight =
+        document.documentElement.classList.contains("light") ||
+        document.documentElement.getAttribute("data-theme") === "light";
+
       // Background Grid Lines
-      ctx.strokeStyle = "rgba(0, 245, 212, 0.05)";
+      ctx.strokeStyle = isLight
+        ? "rgba(2, 132, 199, 0.08)"
+        : "rgba(0, 245, 212, 0.05)";
       ctx.lineWidth = 1;
       for (let y = 10; y < h; y += 20) {
         ctx.beginPath();
@@ -111,11 +117,17 @@ export function CyberDefendCascade() {
       }
 
       // Draw 3 Oscillating Spectral Wave layers
-      const waveConfigs = [
-        { amp: 18, freq: 0.015, speed: 1.0, color: "rgba(0, 245, 212, 0.7)", width: 2 },
-        { amp: 12, freq: 0.025, speed: -1.2, color: "rgba(0, 180, 216, 0.5)", width: 1.5 },
-        { amp: 22, freq: 0.012, speed: 0.8, color: "rgba(255, 0, 85, 0.4)", width: 1.5 },
-      ];
+      const waveConfigs = isLight
+        ? [
+            { amp: 18, freq: 0.015, speed: 1.0, color: "rgba(2, 132, 199, 0.9)", width: 2 },
+            { amp: 12, freq: 0.025, speed: -1.2, color: "rgba(14, 165, 233, 0.75)", width: 1.5 },
+            { amp: 22, freq: 0.012, speed: 0.8, color: "rgba(225, 29, 72, 0.75)", width: 1.5 },
+          ]
+        : [
+            { amp: 18, freq: 0.015, speed: 1.0, color: "rgba(0, 245, 212, 0.7)", width: 2 },
+            { amp: 12, freq: 0.025, speed: -1.2, color: "rgba(0, 180, 216, 0.5)", width: 1.5 },
+            { amp: 22, freq: 0.012, speed: 0.8, color: "rgba(255, 0, 85, 0.4)", width: 1.5 },
+          ];
 
       waveConfigs.forEach((wc) => {
         ctx.beginPath();
@@ -313,7 +325,7 @@ export function CyberDefendCascade() {
             </div>
 
             {/* Canvas Luminous Wave */}
-            <div className="relative h-28 w-full bg-slate-900 dark:bg-[#040810] border border-slate-700 dark:border-[#142232] overflow-hidden flex items-center justify-center">
+            <div className="relative h-28 w-full bg-white dark:bg-[#040810] border border-border dark:border-[#142232] overflow-hidden flex items-center justify-center shadow-xs">
               <canvas
                 ref={canvasRef}
                 width={500}
@@ -432,25 +444,24 @@ export function CyberDefendCascade() {
                   <rect
                     width="180"
                     height="95"
-                    fill="#050e18"
-                    stroke="#1d3550"
+                    className="fill-white dark:fill-[#050e18] stroke-slate-300 dark:stroke-[#1d3550] shadow-md"
                     strokeWidth="1"
                     rx="3"
                   />
-                  <text x="12" y="20" fill="#00f5d4" fontSize="10" fontWeight="bold">
+                  <text x="12" y="20" className="fill-primary dark:fill-[#00f5d4]" fontSize="10" fontWeight="bold">
                     ANOMALY DETECTION
                   </text>
-                  <text x="12" y="38" fill="#718b9e" fontSize="8.5">
-                    Service availability: <tspan fill="#e1ebf0">29.3%</tspan>
+                  <text x="12" y="38" className="fill-slate-600 dark:fill-[#718b9e]" fontSize="8.5">
+                    Service availability: <tspan className="fill-slate-900 dark:fill-[#e1ebf0]" fontWeight="bold">29.3%</tspan>
                   </text>
-                  <text x="12" y="54" fill="#718b9e" fontSize="8.5">
-                    P95 resolution: <tspan fill="#e1ebf0">44 MHz / ms</tspan>
+                  <text x="12" y="54" className="fill-slate-600 dark:fill-[#718b9e]" fontSize="8.5">
+                    P95 resolution: <tspan className="fill-slate-900 dark:fill-[#e1ebf0]" fontWeight="bold">44 MHz / ms</tspan>
                   </text>
-                  <text x="12" y="70" fill="#718b9e" fontSize="8.5">
-                    Overload (24h): <tspan fill="#ffb703">41 min</tspan>
+                  <text x="12" y="70" className="fill-slate-600 dark:fill-[#718b9e]" fontSize="8.5">
+                    Overload (24h): <tspan className="fill-amber-600 dark:fill-[#ffb703]" fontWeight="bold">41 min</tspan>
                   </text>
-                  <text x="12" y="86" fill="#718b9e" fontSize="8.5">
-                    Active alerts: <tspan fill="#ff0055" fontWeight="bold">+34</tspan>
+                  <text x="12" y="86" className="fill-slate-600 dark:fill-[#718b9e]" fontSize="8.5">
+                    Active alerts: <tspan className="fill-red-600 dark:fill-[#ff0055]" fontWeight="bold">+34</tspan>
                   </text>
                 </g>
               </svg>

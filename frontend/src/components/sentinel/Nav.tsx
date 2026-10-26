@@ -141,14 +141,15 @@ export function Nav({
       document.documentElement.classList.add("theme-transitioning");
       setTimeout(() => {
         document.documentElement.classList.remove("theme-transitioning");
-      }, 420);
+      }, 550);
     }
+    // Switch theme halfway through the downward beam sweep (220ms)
     setTimeout(() => {
       setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-    }, 120);
+    }, 220);
     setTimeout(() => {
       setIsGlitching(false);
-    }, 450);
+    }, 550);
   };
 
   useEffect(() => {
@@ -219,12 +220,18 @@ export function Nav({
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      {/* Cyberpunk Glitch Transition Overlay */}
+      {/* Futuristic Cyber Scanning Theme Transition Overlay */}
       {isGlitching && (
-        <div className="glitch-active-overlay" aria-hidden="true">
-          <div className="glitch-slice-1" />
-          <div className="glitch-slice-2" />
-          <div className="glitch-crt-lines" />
+        <div className="cyber-scan-overlay" aria-hidden="true">
+          <div className="cyber-scan-lines" />
+          <div className="cyber-scan-beam" />
+          <div className="cyber-scan-hud">
+            <span className="cyber-scan-dot" />
+            <span>CALIBRATING OPTICAL SPECTRUM // SCANNING PERIMETER</span>
+            <span className="text-white bg-[#00f5d4]/20 border border-[#00f5d4]/40 px-1.5 py-0.2 text-[9px]">
+              {theme === "dark" ? "LIGHT MODE" : "DARK MODE"}
+            </span>
+          </div>
         </div>
       )}
 

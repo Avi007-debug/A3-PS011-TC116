@@ -161,103 +161,115 @@ html.theme-transitioning *::after {
               box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* ─── Cyberpunk Theme Glitch Animation ───────────────────────────── */
-@keyframes cyber-glitch-flicker {
+/* ─── Futuristic Cyber Scanning Theme Transition ─────────────────── */
+@keyframes cyber-scanner-sweep {
   0% {
-    opacity: 0.95;
-    filter: invert(0.7) hue-rotate(90deg) contrast(1.6);
-    transform: translate(-3px, 2px) skewX(1.5deg);
-  }
-  20% {
-    opacity: 0.85;
-    filter: invert(0) hue-rotate(0deg) contrast(1.2);
-    transform: translate(3px, -2px) skewX(-1.5deg);
-  }
-  40% {
-    opacity: 0.95;
-    filter: invert(0.8) hue-rotate(180deg) contrast(1.8);
-    transform: translate(-2px, -3px) skewX(2deg);
-  }
-  60% {
-    opacity: 0.75;
-    filter: invert(0.2) hue-rotate(45deg);
-    transform: translate(3px, 1px) skewX(-1deg);
-  }
-  80% {
-    opacity: 0.9;
-    filter: invert(0.3) hue-rotate(270deg) contrast(1.3);
-    transform: translate(-1px, 2px);
-  }
-  100% {
+    top: -6%;
     opacity: 0;
-    filter: none;
-    transform: none;
   }
-}
-
-@keyframes glitch-horizontal-slice {
-  0% {
-    clip-path: inset(12% 0 78% 0);
-    transform: translateX(-16px);
+  8% {
+    opacity: 1;
   }
-  20% {
-    clip-path: inset(42% 0 40% 0);
-    transform: translateX(18px);
-  }
-  40% {
-    clip-path: inset(68% 0 18% 0);
-    transform: translateX(-14px);
-  }
-  60% {
-    clip-path: inset(28% 0 58% 0);
-    transform: translateX(12px);
-  }
-  80% {
-    clip-path: inset(82% 0 6% 0);
-    transform: translateX(-6px);
+  92% {
+    opacity: 1;
   }
   100% {
-    clip-path: inset(0 0 0 0);
-    transform: translateX(0);
+    top: 106%;
+    opacity: 0;
   }
 }
 
-.glitch-active-overlay {
+@keyframes cyber-scan-flicker {
+  0%, 100% { opacity: 0.12; }
+  25% { opacity: 0.45; }
+  50% { opacity: 0.25; }
+  75% { opacity: 0.5; }
+}
+
+@keyframes cyber-scan-noise {
+  0% { transform: translateX(-50%) translateY(0); }
+  20% { transform: translateX(calc(-50% - 4px)) translateY(1px); }
+  40% { transform: translateX(calc(-50% + 5px)) translateY(-1px); }
+  60% { transform: translateX(calc(-50% - 2px)) translateY(0); }
+  80% { transform: translateX(calc(-50% + 2px)) translateY(1px); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
+
+.cyber-scan-overlay {
   position: fixed;
   inset: 0;
   z-index: 99999;
   pointer-events: none;
   overflow: hidden;
-  background: rgba(0, 245, 212, 0.05);
+  background: rgba(0, 245, 212, 0.03);
 }
 
-.glitch-slice-1 {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(rgba(255, 0, 85, 0.22), transparent 70%);
-  animation: glitch-horizontal-slice 0.42s steps(4, end) forwards;
-  mix-blend-mode: color-dodge;
-}
-
-.glitch-slice-2 {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(transparent 30%, rgba(0, 245, 212, 0.25) 100%);
-  animation: glitch-horizontal-slice 0.42s steps(5, start) reverse forwards;
-  mix-blend-mode: screen;
-}
-
-.glitch-crt-lines {
+.cyber-scan-lines {
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.12) 0px,
-    rgba(255, 255, 255, 0.12) 1px,
-    transparent 2px,
-    transparent 4px
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 245, 212, 0.07) 3px,
+    rgba(0, 245, 212, 0.07) 4px
   );
-  animation: cyber-glitch-flicker 0.42s ease-out forwards;
+  animation: cyber-scan-flicker 0.55s steps(6) forwards;
+}
+
+.cyber-scan-beam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, #00f5d4 15%, #ffffff 50%, #00f5d4 85%, transparent 100%);
+  box-shadow: 0 0 12px #ffffff,
+              0 0 24px #00f5d4,
+              0 0 45px #0284c7,
+              0 0 70px rgba(0, 245, 212, 0.85);
+  animation: cyber-scanner-sweep 0.55s cubic-bezier(0.25, 0.9, 0.25, 1) forwards;
+}
+
+.cyber-scan-beam::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  height: 90px;
+  background: linear-gradient(to top, rgba(0, 245, 212, 0.25), rgba(2, 132, 199, 0.1) 60%, transparent);
+  pointer-events: none;
+}
+
+.cyber-scan-hud {
+  position: fixed;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 18px;
+  border: 1px solid #00f5d4;
+  background: rgba(3, 7, 8, 0.95);
+  box-shadow: 0 0 25px rgba(0, 245, 212, 0.45);
+  backdrop-filter: blur(8px);
+  font-family: var(--font-code);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #00f5d4;
+  animation: cyber-scan-noise 0.55s ease forwards;
+}
+
+.cyber-scan-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00f5d4;
+  box-shadow: 0 0 8px #00f5d4;
+  animation: ping 0.5s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
 /* ─── Base Layer ────────────────────────────────────────────────── */
