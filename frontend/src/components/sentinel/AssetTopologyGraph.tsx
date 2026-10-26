@@ -188,9 +188,9 @@ export function AssetTopologyGraph() {
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
         {/* Left: SVG Watchfield Visualizer */}
-        <div className="relative overflow-hidden rounded border border-slate-200 dark:border-white/10 bg-slate-50/90 dark:bg-[#0A0D15] p-4 shadow-xl backdrop-blur-md">
+        <div className="relative overflow-hidden rounded border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0A0D15] p-4 shadow-xl backdrop-blur-md">
           {/* Subtle Grid Lines */}
-          <div className="pointer-events-none absolute inset-0 grid-bg opacity-25" />
+          <div className="pointer-events-none absolute inset-0 grid-bg opacity-10 dark:opacity-25" />
 
           {/* SVG Diagram Canvas */}
           <svg viewBox="0 0 1000 360" className="w-full h-auto">
@@ -212,25 +212,25 @@ export function AssetTopologyGraph() {
                     y2={tgt.y}
                     stroke={
                       link.status === "critical"
-                        ? "rgba(220, 38, 38, 0.65)"
+                        ? "rgba(220, 38, 38, 0.75)"
                         : link.status === "warning"
-                          ? "rgba(217, 119, 6, 0.65)"
-                          : "rgba(37, 99, 235, 0.45)"
+                          ? "rgba(217, 119, 6, 0.75)"
+                          : "rgba(2, 132, 199, 0.55)"
                     }
-                    strokeWidth={isHighlighted ? 2.5 : 1.2}
+                    strokeWidth={isHighlighted ? 2.5 : 1.5}
                     strokeDasharray={isHighlighted ? "none" : "4 4"}
                   />
                   {/* Subtle Signal Dot along line */}
                   <circle
                     cx={(src.x + tgt.x) / 2}
                     cy={(src.y + tgt.y) / 2}
-                    r={2}
+                    r={2.5}
                     fill={
                       link.status === "critical"
                         ? "#DC2626"
                         : link.status === "warning"
                           ? "#D97706"
-                          : "#2563EB"
+                          : "#0284C7"
                     }
                     className="animate-pulse"
                   />
@@ -275,8 +275,8 @@ export function AssetTopologyGraph() {
                         : isWarning
                           ? "#D97706"
                           : isSelected
-                            ? "#2563EB"
-                            : "rgba(100, 116, 139, 0.4)"
+                            ? "#0284C7"
+                            : "rgba(100, 116, 139, 0.5)"
                     }
                     strokeWidth={isSelected ? 2.5 : 1.5}
                   />
@@ -291,7 +291,7 @@ export function AssetTopologyGraph() {
                         ? "#DC2626"
                         : isWarning
                           ? "#D97706"
-                          : "#2563EB"
+                          : "#0284C7"
                     }
                   />
 
@@ -300,9 +300,9 @@ export function AssetTopologyGraph() {
                     x={node.x}
                     y={node.y + 30}
                     textAnchor="middle"
-                    className={`font-mono text-[10.5px] font-bold ${
+                    className={`font-mono text-[11px] font-bold ${
                       isSelected
-                        ? "fill-blue-600 dark:fill-orange-400"
+                        ? "fill-blue-600 dark:fill-orange-400 font-extrabold"
                         : isCritical
                           ? "fill-red-600 dark:fill-destructive"
                           : isWarning
@@ -314,9 +314,9 @@ export function AssetTopologyGraph() {
                   </text>
                   <text
                     x={node.x}
-                    y={node.y + 42}
+                    y={node.y + 43}
                     textAnchor="middle"
-                    className="font-mono text-[8.5px] fill-slate-500 dark:fill-muted-foreground uppercase"
+                    className="font-mono text-[9px] font-semibold fill-slate-600 dark:fill-muted-foreground uppercase"
                   >
                     {node.sublabel}
                   </text>
@@ -343,7 +343,7 @@ export function AssetTopologyGraph() {
         </div>
 
         {/* Right: Selected Node Evidence Dossier Card */}
-        <div className="flex flex-col justify-between rounded border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#0E131F]/90 p-5 shadow-xl backdrop-blur-md font-mono text-slate-900 dark:text-foreground">
+        <div className="flex flex-col justify-between rounded border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0E131F]/90 p-5 shadow-xl backdrop-blur-md font-mono text-slate-900 dark:text-foreground">
           <div>
             {/* Header / ID Badge */}
             <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-3">
@@ -383,25 +383,25 @@ export function AssetTopologyGraph() {
             </div>
 
             {/* Evidence Findings Block */}
-            <div className="mt-4 border border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-background/80 p-3.5">
+            <div className="mt-4 border border-slate-200 dark:border-white/10 bg-slate-50/90 dark:bg-background/80 p-3.5">
               <span className="text-[10.5px] uppercase text-blue-700 dark:text-primary font-bold block mb-1.5">
                 [Audited Probe Evidence]
               </span>
-              <p className="text-xs text-slate-800 dark:text-foreground/90 font-mono leading-relaxed">
+              <p className="text-xs text-slate-900 dark:text-foreground/90 font-mono leading-relaxed">
                 {selectedNode.evidence}
               </p>
             </div>
 
             {/* Advisory Remediation Command */}
             {selectedNode.remediation && (
-              <div className="mt-4 border border-teal-500/30 dark:border-teal-500/20 bg-teal-50/80 dark:bg-teal-500/5 p-3.5">
+              <div className="mt-4 border border-emerald-500/30 dark:border-teal-500/20 bg-emerald-50/70 dark:bg-teal-500/5 p-3.5">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10.5px] uppercase text-teal-800 dark:text-teal-400 font-bold">
+                  <span className="text-[10.5px] uppercase text-emerald-800 dark:text-teal-400 font-bold">
                     Safe Remediation Fix
                   </span>
                   <span className="text-[9px] text-slate-500 dark:text-muted-foreground uppercase">Advisory Only</span>
                 </div>
-                <code className="text-[11px] font-mono text-emerald-900 dark:text-teal-200 bg-emerald-100/70 dark:bg-black/50 border border-emerald-200 dark:border-emerald-500/20 p-2 block overflow-x-auto rounded select-all">
+                <code className="text-[11px] font-mono text-emerald-950 dark:text-teal-200 bg-white dark:bg-black/50 border border-emerald-300 dark:border-emerald-500/20 p-2.5 block overflow-x-auto rounded select-all shadow-xs">
                   {selectedNode.remediation}
                 </code>
               </div>

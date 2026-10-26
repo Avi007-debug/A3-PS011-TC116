@@ -140,7 +140,7 @@ export function ScoreGauge() {
 
       <div ref={ref} className="mt-12 grid gap-10 lg:grid-cols-[340px_1fr] lg:items-start">
         {/* Left: Animated Score Dial */}
-        <div className="editorial-glass relative flex flex-col items-center p-8 text-center rounded border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#070A10]/95 shadow-xl">
+        <div className="relative flex flex-col items-center p-8 text-center rounded border border-slate-200 dark:border-white/10 bg-white dark:bg-[#070A10]/95 shadow-xl">
           <div className="absolute top-4 left-4">
             <StatusBadge
               status={value >= 90 ? "HARDENED" : value >= 70 ? "ACCEPTABLE" : "ELEVATED_RISK"}
@@ -226,9 +226,9 @@ export function ScoreGauge() {
               return (
                 <div
                   key={item.key}
-                  className={`editorial-card p-4 rounded transition-all border ${
+                  className={`p-4 rounded transition-all border ${
                     isCompromised
-                      ? "border-destructive/60 bg-destructive/10 shadow-[0_0_15px_rgba(239,68,68,0.15)]"
+                      ? "border-red-300 dark:border-destructive/60 bg-red-50/90 dark:bg-destructive/10 shadow-[0_0_15px_rgba(239,68,68,0.1)]"
                       : "border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B0F17]/80 shadow-xs"
                   }`}
                 >
@@ -243,7 +243,7 @@ export function ScoreGauge() {
                     </div>
                     <span
                       className={`font-mono text-lg font-bold ${
-                        isCompromised ? "text-destructive" : "text-emerald-700 dark:text-teal-400"
+                        isCompromised ? "text-red-600 dark:text-destructive" : "text-emerald-700 dark:text-teal-400"
                       }`}
                     >
                       {currentScore} / 25

@@ -5,6 +5,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#000000" />
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("argus_theme");
+        var isLight = saved === "light" || (!saved && window.matchMedia("(prefers-color-scheme: light)").matches);
+        if (isLight) {
+          document.documentElement.classList.remove("dark");
+          document.documentElement.classList.add("light");
+          document.documentElement.setAttribute("data-theme", "light");
+        } else {
+          document.documentElement.classList.remove("light");
+          document.documentElement.classList.add("dark");
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    })();
+  </script>
   <title>ArgusASM - Autonomous Attack-Surface Inventory & Drift Sentinel</title>
   <meta name="description"
     content="ArgusASM: Continuous Visibility. Zero Exploitation. Provable Drift. Autonomous attack-surface inventory & drift sentinel for AIORI Hackathon 2026 PS-011." />

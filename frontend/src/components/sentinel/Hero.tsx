@@ -348,7 +348,7 @@ export function Hero({
           </div>
 
           {/* Console Tab Contents */}
-          <div className="flex-1 p-4 font-mono text-[11.5px] leading-relaxed overflow-y-auto bg-[#000000]">
+          <div className="flex-1 p-4 font-mono text-[11.5px] leading-relaxed overflow-y-auto bg-surface-raised/40 dark:bg-[#000000] border-t border-border">
             {activeTab === "stream" && (
               <div className="space-y-3">
                 <div className="flex items-center justify-between border-b border-border pb-1.5 text-[10.5px] uppercase tracking-wider text-muted-foreground">

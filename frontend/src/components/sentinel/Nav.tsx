@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   Activity,
@@ -11,6 +11,9 @@ import {
   Loader2,
   X,
   ChevronDown,
+  Radio,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { PROJECT, LIVE_TELEMETRY } from "@/data/sentinel";
 import { backendService, SystemHealth } from "@/services/backendIntegration";
@@ -19,7 +22,7 @@ import { isSupabaseConfigured } from "@/lib/supabase";
 interface NavTab {
   id: string;
   label: string;
-  to: "/" | "/capabilities" | "/drift" | "/security" | "/audit" | "/qa";
+  to: "/" | "/soc" | "/capabilities" | "/drift" | "/security" | "/audit" | "/qa";
   hash?: string;
   badge?: string;
   badgeColor?: "blue" | "amber" | "red" | "emerald";
@@ -32,6 +35,14 @@ const NAV_TABS: NavTab[] = [
     label: "Overview",
     to: "/",
     icon: Activity,
+  },
+  {
+    id: "hud",
+    label: "SOC HUD",
+    to: "/soc",
+    badge: "LIVE",
+    badgeColor: "emerald",
+    icon: Radio,
   },
   {
     id: "inventory",
@@ -96,8 +107,49 @@ export function Nav({
   // Live Backend Connection State
   const [health, setHealth] = useState<SystemHealth>(backendService.getHealth());
 
-
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
+
+  const [theme, setTheme] = useState<"dark" | "light">(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("argus_theme");
+      if (saved === "light" || saved === "dark") return saved;
+      if (window.matchMedia("(prefers-color-scheme: light)").matches) return "light";
+    }
+    return "dark";
+  });
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      if (theme === "light") {
+        document.documentElement.classList.add("light");
+        document.documentElement.classList.remove("dark");
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.classList.remove("light");
+        document.documentElement.classList.add("dark");
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+      localStorage.setItem("argus_theme", theme);
+    }
+  }, [theme]);
+
+  const [isGlitching, setIsGlitching] = useState(false);
+
+  const toggleTheme = () => {
+    setIsGlitching(true);
+    if (typeof document !== "undefined") {
+      document.documentElement.classList.add("theme-transitioning");
+      setTimeout(() => {
+        document.documentElement.classList.remove("theme-transitioning");
+      }, 420);
+    }
+    setTimeout(() => {
+      setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+    }, 120);
+    setTimeout(() => {
+      setIsGlitching(false);
+    }, 450);
+  };
 
   useEffect(() => {
     const unsub = backendService.subscribe((h) => {
@@ -105,8 +157,6 @@ export function Nav({
     });
     return unsub;
   }, []);
-
-  // Dark-only mode â€” no toggleTheme needed
 
 
   const handleNavClick = (e: React.MouseEvent, tab: NavTab) => {
@@ -169,6 +219,15 @@ export function Nav({
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
+      {/* Cyberpunk Glitch Transition Overlay */}
+      {isGlitching && (
+        <div className="glitch-active-overlay" aria-hidden="true">
+          <div className="glitch-slice-1" />
+          <div className="glitch-slice-2" />
+          <div className="glitch-crt-lines" />
+        </div>
+      )}
+
       {/* Top Telemetry HUD Strip */}
       <div className="border-b border-border bg-surface px-4 py-1 font-mono text-[10px] text-muted-foreground">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 overflow-x-auto whitespace-nowrap">
@@ -234,8 +293,8 @@ export function Nav({
         aria-label="Primary"
         className={`border-b transition-colors duration-150 ${
           scrolled
-            ? "border-border-strong bg-surface"
-            : "border-border bg-[#000000]"
+            ? "border-border-strong bg-surface/95 backdrop-blur-md"
+            : "border-border bg-surface/90 backdrop-blur-sm dark:bg-[#000000]"
         }`}
       >
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:px-8">
@@ -341,6 +400,21 @@ export function Nav({
               </button>
             ) : null}
 
+            {/* Theme Toggle Button (Dark / Light) */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="flex h-8 w-8 items-center justify-center border border-border-strong bg-surface text-foreground hover:border-primary hover:text-primary transition-all cursor-pointer"
+              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-4 w-4 text-primary transition-transform duration-300 hover:rotate-45" />
+              ) : (
+                <Moon className="h-4 w-4 text-primary transition-transform duration-300 hover:-rotate-12" />
+              )}
+            </button>
+
             {/* Mobile Menu Button */}
             <button
               type="button"
@@ -433,6 +507,16 @@ export function Nav({
                     &gt;_ CLI
                   </button>
                 ) : null}
+                <button
+                  type="button"
+                  onClick={() => {
+                    toggleTheme();
+                  }}
+                  className="w-full flex items-center justify-center gap-2 border border-border-strong p-2 text-center text-foreground font-bold hover:border-primary hover:text-primary transition-colors"
+                >
+                  {theme === "dark" ? <Sun className="h-4 w-4 text-primary" /> : <Moon className="h-4 w-4 text-primary" />}
+                  <span>Switch to {theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+                </button>
               </div>
             </div>
           </div>
