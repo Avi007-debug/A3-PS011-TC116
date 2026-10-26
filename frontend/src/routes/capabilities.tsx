@@ -62,18 +62,30 @@ function CapabilitiesPage() {
             </p>
 
             <div className="mt-6 flex flex-wrap gap-4 font-mono text-xs">
-              <div className="border border-border bg-background/80 px-3 py-1.5">
-                <span className="text-muted-foreground mr-2">TIER 1:</span>
-                <strong className="text-primary">Core Probes & Scope (3)</strong>
-              </div>
-              <div className="border border-border bg-background/80 px-3 py-1.5">
-                <span className="text-muted-foreground mr-2">TIER 2:</span>
-                <strong className="text-primary">Topology & Time-Travel (3)</strong>
-              </div>
-              <div className="border border-border bg-background/80 px-3 py-1.5">
-                <span className="text-muted-foreground mr-2">TIER 3:</span>
-                <strong className="text-primary">Merkle Audit & FP Filter (3)</strong>
-              </div>
+              <a
+                href="#features"
+                className="hover-glow border border-border bg-background/80 px-3 py-1.5 transition-all hover:border-primary hover:bg-surface-raised cursor-pointer group flex items-center gap-1.5"
+                title="Jump to Tier 1: Core Probes & Scope Guardrails"
+              >
+                <span className="text-muted-foreground group-hover:text-primary transition-colors">TIER 1:</span>
+                <strong className="text-primary group-hover:underline">Core Probes & Scope (3) ↓</strong>
+              </a>
+              <a
+                href="#topology"
+                className="hover-glow border border-border bg-background/80 px-3 py-1.5 transition-all hover:border-primary hover:bg-surface-raised cursor-pointer group flex items-center gap-1.5"
+                title="Jump to Tier 2: Interactive Asset Relationship Graph"
+              >
+                <span className="text-muted-foreground group-hover:text-primary transition-colors">TIER 2:</span>
+                <strong className="text-primary group-hover:underline">Topology & Time-Travel (3) ↓</strong>
+              </a>
+              <a
+                href="#pipeline"
+                className="hover-glow border border-border bg-background/80 px-3 py-1.5 transition-all hover:border-primary hover:bg-surface-raised cursor-pointer group flex items-center gap-1.5"
+                title="Jump to Tier 3: 5-Stage Sentinel Architecture Pipeline"
+              >
+                <span className="text-muted-foreground group-hover:text-primary transition-colors">TIER 3:</span>
+                <strong className="text-primary group-hover:underline">5-Stage Pipeline Architecture ↓</strong>
+              </a>
             </div>
           </div>
         </div>

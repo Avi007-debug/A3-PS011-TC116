@@ -60,28 +60,46 @@ function DriftTimelinePage() {
             </p>
 
             <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
-              <div className="border border-border bg-background/80 p-3">
-                <span className="text-muted-foreground block text-[10.5px]">BASELINE STATE</span>
-                <strong className="text-primary text-base">T0 Clean (96 pts)</strong>
-              </div>
-              <div className="border border-border bg-background/80 p-3">
-                <span className="text-muted-foreground block text-[10.5px]">CURRENT SNAPSHOT</span>
-                <strong className="text-amber-700 dark:text-amber-400 text-base">T1 Drift (68 pts)</strong>
-              </div>
-              <div className="border border-border bg-background/80 p-3">
-                <span className="text-muted-foreground block text-[10.5px]">DETECTED DRIFTS</span>
-                <strong className="text-destructive text-base">3 Fault Events</strong>
-              </div>
-              <div className="border border-border bg-background/80 p-3">
-                <span className="text-muted-foreground block text-[10.5px]">PROVENANCE</span>
-                <strong className="text-primary text-base">SHA-256 Merkle Chain</strong>
-              </div>
+              <a
+                href="#time-travel"
+                onClick={() => setTimeTravelStep("T0")}
+                className="hover-glow border border-border bg-background/80 p-3 transition-all hover:border-primary hover:bg-surface-raised cursor-pointer group"
+                title="Inspect T0 Clean Baseline Snapshot"
+              >
+                <span className="text-muted-foreground group-hover:text-primary transition-colors block text-[10.5px]">BASELINE STATE</span>
+                <strong className="text-primary text-base group-hover:underline">T0 Clean (96 pts) ↓</strong>
+              </a>
+              <a
+                href="#time-travel"
+                onClick={() => setTimeTravelStep("T1")}
+                className="hover-glow border border-border bg-background/80 p-3 transition-all hover:border-primary hover:bg-surface-raised cursor-pointer group"
+                title="Inspect T1 Drift Event Snapshot"
+              >
+                <span className="text-muted-foreground group-hover:text-primary transition-colors block text-[10.5px]">CURRENT SNAPSHOT</span>
+                <strong className="text-amber-700 dark:text-amber-400 text-base group-hover:underline">T1 Drift (68 pts) ↓</strong>
+              </a>
+              <a
+                href="#classify"
+                className="hover-glow border border-border bg-background/80 p-3 transition-all hover:border-primary hover:bg-surface-raised cursor-pointer group"
+                title="Jump to Multi-Probe Profiling & Attribution"
+              >
+                <span className="text-muted-foreground group-hover:text-primary transition-colors block text-[10.5px]">DETECTED DRIFTS</span>
+                <strong className="text-destructive text-base group-hover:underline">3 Fault Events ↓</strong>
+              </a>
+              <a
+                href="/audit#ledger"
+                className="hover-glow border border-border bg-background/80 p-3 transition-all hover:border-primary hover:bg-surface-raised cursor-pointer group"
+                title="Jump to SHA-256 Merkle Provenance Ledger"
+              >
+                <span className="text-muted-foreground group-hover:text-primary transition-colors block text-[10.5px]">PROVENANCE</span>
+                <strong className="text-primary text-base group-hover:underline">SHA-256 Chain ↗</strong>
+              </a>
             </div>
           </div>
         </div>
 
         {/* Time-Travel Historical Scrubber Control */}
-        <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:px-12">
+        <div id="time-travel" className="mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:px-12">
           <div className="panel border border-primary/50 bg-surface/90 p-6 shadow-xl font-mono">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/80 pb-4">
               <div>

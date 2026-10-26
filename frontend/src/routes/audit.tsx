@@ -62,18 +62,30 @@ function AuditPage() {
             </p>
 
             <div className="mt-6 flex flex-wrap gap-4 font-mono text-xs">
-              <div className="border border-border bg-background/80 px-3 py-1.5">
-                <span className="text-muted-foreground mr-2">LEDGER:</span>
-                <strong className="text-foreground">SHA-256 Merkle Audit Chain</strong>
-              </div>
-              <div className="border border-border bg-background/80 px-3 py-1.5">
-                <span className="text-muted-foreground mr-2">ATTESTATION:</span>
-                <strong className="text-primary">Verified Tamper-Free</strong>
-              </div>
-              <div className="border border-border bg-background/80 px-3 py-1.5">
-                <span className="text-muted-foreground mr-2">COMPLIANCE:</span>
-                <strong className="text-primary font-bold">PS-011 Audit Standard</strong>
-              </div>
+              <a
+                href="#ledger"
+                className="hover-glow border border-border bg-background/80 px-3 py-1.5 transition-all hover:border-primary hover:bg-surface-raised cursor-pointer group flex items-center gap-1.5"
+                title="Jump to Merkle Tree Blockchain Audit Visualizer"
+              >
+                <span className="text-muted-foreground group-hover:text-primary transition-colors">LEDGER:</span>
+                <strong className="text-foreground group-hover:underline">SHA-256 Merkle Audit Chain ↓</strong>
+              </a>
+              <a
+                href="#dossier"
+                className="hover-glow border border-border bg-background/80 px-3 py-1.5 transition-all hover:border-primary hover:bg-surface-raised cursor-pointer group flex items-center gap-1.5"
+                title="Jump to OSINT Evidence Dossier & Cryptographic Receipts"
+              >
+                <span className="text-muted-foreground group-hover:text-primary transition-colors">ATTESTATION:</span>
+                <strong className="text-primary group-hover:underline">Verified Tamper-Free ↓</strong>
+              </a>
+              <a
+                href="#roadmap"
+                className="hover-glow border border-border bg-background/80 px-3 py-1.5 transition-all hover:border-primary hover:bg-surface-raised cursor-pointer group flex items-center gap-1.5"
+                title="Jump to PS-011 Audit Compliance Roadmap"
+              >
+                <span className="text-muted-foreground group-hover:text-primary transition-colors">COMPLIANCE:</span>
+                <strong className="text-primary font-bold group-hover:underline">PS-011 Audit Standard ↓</strong>
+              </a>
             </div>
           </div>
         </div>
@@ -82,7 +94,7 @@ function AuditPage() {
         <BlockchainAudit />
 
         {/* Forensics Evidence Dossier & Raw Probe Captures (Image 2) */}
-        <section className="px-5 py-8 sm:px-8 lg:px-12 bg-background border-t border-border/80">
+        <section id="dossier" className="px-5 py-8 sm:px-8 lg:px-12 bg-background border-t border-border/80">
           <div className="mx-auto max-w-6xl">
             <div className="mb-4">
               <span className="border border-primary/40 bg-primary/10 px-2 py-0.5 text-xs font-bold text-primary uppercase tracking-wider font-mono">

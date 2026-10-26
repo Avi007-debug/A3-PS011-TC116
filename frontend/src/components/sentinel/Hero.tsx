@@ -648,26 +648,42 @@ AIORI Hackathon 2026 · Problem Statement PS-011`}
 
       {/* Key Metric Indicators - full width, always same size */}
       <div className="relative mx-auto mt-10 grid w-full max-w-6xl grid-cols-2 gap-3 border-t border-border/80 pt-6 sm:grid-cols-4 font-mono">
-        <div className="bg-surface border border-border p-3">
-          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Approved Scope</p>
-          <p className="mt-1 text-xl font-bold tabular-nums text-foreground">
-            {LIVE_TELEMETRY.approvedDomains} / {LIVE_TELEMETRY.maxDomains} Domains
+        <Link
+          to="/capabilities"
+          className="hover-glow bg-surface border border-border p-3 transition-all hover:border-primary cursor-pointer group"
+          title="Inspect Approved Scope Domains in Asset Inventory"
+        >
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground group-hover:text-primary transition-colors">Approved Scope</p>
+          <p className="mt-1 text-xl font-bold tabular-nums text-foreground group-hover:underline">
+            {LIVE_TELEMETRY.approvedDomains} / {LIVE_TELEMETRY.maxDomains} Domains ↗
           </p>
-        </div>
-        <div className="bg-surface border border-border p-3">
-          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Monitored Hosts</p>
-          <p className="mt-1 text-xl font-bold tabular-nums text-primary">
-            {LIVE_TELEMETRY.approvedHosts} / {LIVE_TELEMETRY.maxHosts} Hosts
+        </Link>
+        <a
+          href="/capabilities#topology"
+          className="hover-glow bg-surface border border-border p-3 transition-all hover:border-primary cursor-pointer group"
+          title="Inspect Monitored Hosts in Topology Graph"
+        >
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground group-hover:text-primary transition-colors">Monitored Hosts</p>
+          <p className="mt-1 text-xl font-bold tabular-nums text-primary group-hover:underline">
+            {LIVE_TELEMETRY.approvedHosts} / {LIVE_TELEMETRY.maxHosts} Hosts ↗
           </p>
-        </div>
-        <div className="bg-surface border border-border p-3">
-          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Active Probes</p>
-          <p className="mt-1 text-xl font-bold tabular-nums text-foreground">4/4 Documented</p>
-        </div>
-        <div className="bg-surface border border-border p-3">
-          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Drift Detected</p>
-          <p className="mt-1 text-xl font-bold tabular-nums text-warn">{LIVE_TELEMETRY.driftEventsDetected} Faults</p>
-        </div>
+        </a>
+        <a
+          href="/capabilities#features"
+          className="hover-glow bg-surface border border-border p-3 transition-all hover:border-primary cursor-pointer group"
+          title="Inspect the 4 Documented Inspection Probes"
+        >
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground group-hover:text-primary transition-colors">Active Probes</p>
+          <p className="mt-1 text-xl font-bold tabular-nums text-foreground group-hover:underline">4/4 Documented ↗</p>
+        </a>
+        <Link
+          to="/drift"
+          className="hover-glow bg-surface border border-border p-3 transition-all hover:border-warn cursor-pointer group"
+          title="Inspect 3 Detected Seeded Faults on Drift Timeline"
+        >
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground group-hover:text-warn transition-colors">Drift Detected</p>
+          <p className="mt-1 text-xl font-bold tabular-nums text-warn group-hover:underline">{LIVE_TELEMETRY.driftEventsDetected} Faults ↗</p>
+        </Link>
       </div>
 
     </section>

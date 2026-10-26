@@ -435,8 +435,11 @@ export function CyberDefendCascade() {
                 <circle cx="95" cy="260" r="2.5" fill="#00f5d4" />
                 <circle cx="210" cy="260" r="2.5" fill="#00b4d8" />
                 <circle cx="225" cy="260" r="2.5" fill="#486581" />
-                <circle cx="320" cy="260" r="3.5" fill="#ff0055" className="animate-ping opacity-80" />
                 <circle cx="320" cy="260" r="3" fill="#ff0055" />
+                <circle cx="320" cy="260" r="3" fill="none" stroke="#ff0055" strokeWidth="1">
+                  <animate attributeName="r" values="3;8" dur="1.8s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.9;0" dur="1.8s" repeatCount="indefinite" />
+                </circle>
                 <circle cx="350" cy="260" r="2.5" fill="#ff0055" />
 
                 {/* Floating Telemetry Callout Box (Image 3 Style) */}

@@ -61,18 +61,30 @@ function SecurityPage() {
             </p>
 
             <div className="mt-6 flex flex-wrap gap-4 font-mono text-xs">
-              <div className="border border-border bg-background/80 px-3 py-1.5">
-                <span className="text-muted-foreground mr-2">HYGIENE SCORE:</span>
-                <strong className="text-amber-700 dark:text-amber-400 font-bold">68 / 100 (Elevated Risk)</strong>
-              </div>
-              <div className="border border-border bg-background/80 px-3 py-1.5">
-                <span className="text-muted-foreground mr-2">SEEDED ISSUES:</span>
-                <strong className="text-primary">3 / 3 Verified</strong>
-              </div>
-              <div className="border border-border bg-background/80 px-3 py-1.5">
-                <span className="text-muted-foreground mr-2">SAFETY GUARANTEE:</span>
-                <strong className="text-primary font-bold">Zero Exploitation (Read-Only)</strong>
-              </div>
+              <a
+                href="#score"
+                className="hover-glow border border-border bg-background/80 px-3 py-1.5 transition-all hover:border-primary hover:bg-surface-raised cursor-pointer group flex items-center gap-1.5"
+                title="Jump to 0-100 Perimeter Hygiene Scoring Engine"
+              >
+                <span className="text-muted-foreground group-hover:text-primary transition-colors">HYGIENE SCORE:</span>
+                <strong className="text-amber-700 dark:text-amber-400 font-bold group-hover:underline">68 / 100 (Elevated Risk) ↓</strong>
+              </a>
+              <a
+                href="#sandbox"
+                className="hover-glow border border-border bg-background/80 px-3 py-1.5 transition-all hover:border-primary hover:bg-surface-raised cursor-pointer group flex items-center gap-1.5"
+                title="Jump to Seeded-Fault Detection Sandbox & Remediation Advisor"
+              >
+                <span className="text-muted-foreground group-hover:text-primary transition-colors">SEEDED ISSUES:</span>
+                <strong className="text-primary group-hover:underline">3 / 3 Verified ↓</strong>
+              </a>
+              <a
+                href="#pqc"
+                className="hover-glow border border-border bg-background/80 px-3 py-1.5 transition-all hover:border-primary hover:bg-surface-raised cursor-pointer group flex items-center gap-1.5"
+                title="Jump to Certificate & Key Posture Matrix"
+              >
+                <span className="text-muted-foreground group-hover:text-primary transition-colors">SAFETY GUARANTEE:</span>
+                <strong className="text-primary font-bold group-hover:underline">Zero Exploitation (Read-Only) ↓</strong>
+              </a>
             </div>
           </div>
         </div>

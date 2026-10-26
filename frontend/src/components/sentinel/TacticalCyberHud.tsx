@@ -887,11 +887,17 @@ export function TacticalCyberHud() {
                   />
 
                   {/* Threat Pin Markers */}
-                  <circle cx="65" cy="50" r="3" fill="#00f5d4" className="animate-ping opacity-75" />
                   <circle cx="65" cy="50" r="2.5" fill="#00f5d4" />
+                  <circle cx="65" cy="50" r="2.5" fill="none" stroke="#00f5d4" strokeWidth="0.8">
+                    <animate attributeName="r" values="2.5;6" dur="2s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.8;0" dur="2s" repeatCount="indefinite" />
+                  </circle>
                   <circle cx="145" cy="35" r="2.5" fill="#00f5d4" />
-                  <circle cx="220" cy="45" r="3" fill="#ff0055" className="animate-ping opacity-75" />
                   <circle cx="220" cy="45" r="2.5" fill="#ff0055" />
+                  <circle cx="220" cy="45" r="2.5" fill="none" stroke="#ff0055" strokeWidth="0.8">
+                    <animate attributeName="r" values="2.5;6" dur="1.6s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.9;0" dur="1.6s" repeatCount="indefinite" />
+                  </circle>
                 </svg>
               </div>
 
