@@ -80,7 +80,7 @@ function SocPage() {
                   }`}
                 >
                   <Radio className="h-3.5 w-3.5" />
-                  <span>[01] Tactical HUD</span>
+                  <span>[01] Tactical Threat HUD</span>
                 </button>
                 <button
                   onClick={() => setActiveView("cascade")}
@@ -91,7 +91,7 @@ function SocPage() {
                   }`}
                 >
                   <Activity className="h-3.5 w-3.5" />
-                  <span>[02] Downlink Cascade</span>
+                  <span>[02] Probe Telemetry & Anomalies</span>
                 </button>
                 <button
                   onClick={() => setActiveView("osint")}
@@ -102,7 +102,7 @@ function SocPage() {
                   }`}
                 >
                   <Layers className="h-3.5 w-3.5" />
-                  <span>[03] OSINT Forensics</span>
+                  <span>[03] Forensic Evidence Dossier</span>
                 </button>
               </div>
             </div>
