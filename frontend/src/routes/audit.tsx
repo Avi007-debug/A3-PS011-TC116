@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/sentinel/Nav";
 import { BlockchainAudit } from "@/components/sentinel/BlockchainAudit";
+import { OsintInvestigationDossier } from "@/components/sentinel/OsintInvestigationDossier";
 import { Roadmap } from "@/components/sentinel/Roadmap";
 import { Team } from "@/components/sentinel/Team";
 import { Footer } from "@/components/sentinel/Footer";
@@ -79,6 +80,24 @@ function AuditPage() {
 
         {/* Blockchain Audit & Merkle Proof Visualizer */}
         <BlockchainAudit />
+
+        {/* Forensics Evidence Dossier & Raw Probe Captures (Image 2) */}
+        <section className="px-5 py-8 sm:px-8 lg:px-12 bg-background border-t border-border/80">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-4">
+              <span className="border border-primary/40 bg-primary/10 px-2 py-0.5 text-xs font-bold text-primary uppercase tracking-wider font-mono">
+                Cryptographic Evidence Dossier
+              </span>
+              <h2 className="text-2xl font-bold font-mono tracking-tight text-foreground mt-2">
+                OSINT Probe Captures & Forensics Receipts
+              </h2>
+              <p className="text-sm text-muted-foreground mt-1">
+                Raw DNS zone transfer grabs, X.509 TLS handshake certificates, and HTTP response headers anchored with SHA-256 hashes.
+              </p>
+            </div>
+            <OsintInvestigationDossier />
+          </div>
+        </section>
 
         {/* Engineering Roadmap */}
         <Roadmap />

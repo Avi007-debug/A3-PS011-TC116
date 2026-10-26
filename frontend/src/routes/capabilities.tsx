@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/sentinel/Nav";
 import { Features } from "@/components/sentinel/Features";
 import { AssetTopologyGraph } from "@/components/sentinel/AssetTopologyGraph";
+import { CyberDefendCascade } from "@/components/sentinel/CyberDefendCascade";
 import { Architecture } from "@/components/sentinel/Architecture";
 import { TechStack } from "@/components/sentinel/TechStack";
 import { Footer } from "@/components/sentinel/Footer";
@@ -77,6 +78,13 @@ function CapabilitiesPage() {
             </div>
           </div>
         </div>
+
+        {/* CyberDefend Telemetry & Anomaly Downlink Cascade (Image 3) */}
+        <section className="px-5 py-8 sm:px-8 lg:px-12 bg-background border-b border-border/80">
+          <div className="mx-auto max-w-6xl">
+            <CyberDefendCascade />
+          </div>
+        </section>
 
         {/* Technical Capabilities Explorer */}
         <Features onRunCli={handleOpenCliWithCmd} />

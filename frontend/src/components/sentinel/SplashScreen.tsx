@@ -50,8 +50,8 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
       const stepIdx = Math.min(Math.floor((elapsed / duration) * STEPS.length), STEPS.length - 1);
       setActiveStep(stepIdx);
 
-      if (elapsed >= 1100 && phase === "scan") {
-        setPhase("reveal");
+      if (elapsed >= 1100) {
+        setPhase((prev) => (prev === "scan" ? "reveal" : prev));
       }
 
       if (elapsed >= duration) {
@@ -67,7 +67,7 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
     }, 30);
 
     return () => clearInterval(interval);
-  }, [onComplete, phase]);
+  }, [onComplete]);
 
   // Canvas radar animation: technical grid, connected nodes, circular scanning arc
   useEffect(() => {
