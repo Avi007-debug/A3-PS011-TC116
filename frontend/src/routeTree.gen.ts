@@ -15,6 +15,7 @@ import { Route as CapabilitiesRouteImport } from './routes/capabilities'
 import { Route as DriftRouteImport } from './routes/drift'
 import { Route as QaRouteImport } from './routes/qa'
 import { Route as SecurityRouteImport } from './routes/security'
+import { Route as SocRouteImport } from './routes/soc'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const SecurityRoute = SecurityRouteImport.update({
   path: '/security',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SocRoute = SocRouteImport.update({
+  id: '/soc',
+  path: '/soc',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/drift': typeof DriftRoute
   '/qa': typeof QaRoute
   '/security': typeof SecurityRoute
+  '/soc': typeof SocRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/drift': typeof DriftRoute
   '/qa': typeof QaRoute
   '/security': typeof SecurityRoute
+  '/soc': typeof SocRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,12 +79,14 @@ export interface FileRoutesById {
   '/drift': typeof DriftRoute
   '/qa': typeof QaRoute
   '/security': typeof SecurityRoute
+  '/soc': typeof SocRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/audit' | '/capabilities' | '/drift' | '/qa' | '/security'
+  fullPaths:
+    '/' | '/audit' | '/capabilities' | '/drift' | '/qa' | '/security' | '/soc'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/audit' | '/capabilities' | '/drift' | '/qa' | '/security'
+  to: '/' | '/audit' | '/capabilities' | '/drift' | '/qa' | '/security' | '/soc'
   id:
     | '__root__'
     | '/'
@@ -85,6 +95,7 @@ export interface FileRouteTypes {
     | '/drift'
     | '/qa'
     | '/security'
+    | '/soc'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -94,6 +105,7 @@ export interface RootRouteChildren {
   DriftRoute: typeof DriftRoute
   QaRoute: typeof QaRoute
   SecurityRoute: typeof SecurityRoute
+  SocRoute: typeof SocRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -140,6 +152,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/soc': {
+      id: '/soc'
+      path: '/soc'
+      fullPath: '/soc'
+      preLoaderRoute: typeof SocRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -150,6 +169,7 @@ const rootRouteChildren: RootRouteChildren = {
   DriftRoute: DriftRoute,
   QaRoute: QaRoute,
   SecurityRoute: SecurityRoute,
+  SocRoute: SocRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

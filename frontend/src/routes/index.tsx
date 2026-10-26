@@ -28,9 +28,19 @@ export const Route = createFileRoute("/")({
 
 const EXPLORE_PORTALS = [
   {
+    to: "/soc" as const,
+    badge: "Tactical HUD",
+    num: "01",
+    accentClass: "border-l-primary",
+    title: "SOC Operations Center & Radar",
+    desc: "Autonomous Security Operations Center console with 11-axis key indicators spider chart, radial network map with breach trajectory, global threat traffic arcs, and live events feed.",
+    metrics: "11 Attack Vectors · Live Radial Mesh",
+    cta: "Launch Tactical SOC →",
+  },
+  {
     to: "/capabilities" as const,
     badge: "PS-011 Inventory",
-    num: "01",
+    num: "02",
     accentClass: "border-l-success",
     title: "Asset Inventory & 4 Probes",
     desc: "Catalog approved domains, hosts, and authoritative DNS records. Inspect TLS certificates and audit permitted service ports with zero intrusive exploitation.",
@@ -40,7 +50,7 @@ const EXPLORE_PORTALS = [
   {
     to: "/drift" as const,
     badge: "Stateful Delta",
-    num: "02",
+    num: "03",
     accentClass: "border-l-warn",
     title: "Drift Timeline & Snapshot Diff",
     desc: "Compare baseline snapshot T0 with subsequent scans. Inspect additions, removals, expired certs, and unexpected open services with historical timeline scrubbing.",
@@ -50,22 +60,12 @@ const EXPLORE_PORTALS = [
   {
     to: "/security" as const,
     badge: "Hygiene Scoring",
-    num: "03",
+    num: "04",
     accentClass: "border-l-primary",
     title: "Perimeter Hygiene & Seeded Findings",
     desc: "Evaluate the 0-100 posture score with CVSS-weighted deductions. Validate detection of expired certs, shadow port 8080, and dangling S3 CNAMEs with safe fix advisories.",
     metrics: "68 / 100 Score · CVSS 3.1 Rubric",
     cta: "View Posture & Findings →",
-  },
-  {
-    to: "/audit" as const,
-    badge: "Cryptographic Provenance",
-    num: "04",
-    accentClass: "border-l-primary",
-    title: "Merkle Baseline Ledger & Audit Trail",
-    desc: "Anchor inventory baseline snapshots to an immutable SHA-256 Merkle tree to mathematically certify evidence integrity and timestamps for AIORI evaluators.",
-    metrics: "SHA-256 Merkle Chain · Tamper-Free Proof",
-    cta: "Verify Merkle Proofs →",
   },
 ];
 
@@ -89,11 +89,39 @@ function HomePage() {
         onOpenSupabase={() => setIsSupabaseOpen(true)}
       />
 
-
       <main>
         {/* Hero Section */}
         <Hero panelOpen={panelOpen} setPanelOpen={setPanelOpen} />
 
+        {/* Tactical SOC Command Center Portal Bar */}
+        <section className="border-y border-primary/20 dark:border-[#00f5d4]/20 bg-sky-50/70 dark:bg-[#020609] py-8 px-5 sm:px-8 lg:px-12 transition-colors">
+          <div className="mx-auto max-w-6xl flex flex-wrap items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center border border-primary dark:border-[#00f5d4] bg-primary/10 dark:bg-[#00f5d4]/10 text-primary dark:text-[#00f5d4] shadow-[0_0_20px_rgba(2,132,199,0.15)] dark:shadow-[0_0_20px_rgba(0,245,212,0.3)]">
+                <span className="font-mono font-bold text-lg text-primary dark:text-[#00f5d4] animate-pulse">SOC</span>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-primary dark:text-[#00f5d4]">
+                  <span className="inline-block h-2 w-2 rounded-full bg-primary dark:bg-[#00f5d4] animate-ping" />
+                  Dedicated Tactical Operations Center
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold font-mono tracking-tight text-foreground dark:text-white mt-0.5">
+                  ArgusASM Security Operations Center (SOC)
+                </h3>
+                <p className="text-xs sm:text-sm text-muted-foreground font-sans max-w-xl">
+                  Interactive spider radar indicators, radial attack-surface map, global threat flight arcs, and real-time event logs are available in the dedicated SOC.
+                </p>
+              </div>
+            </div>
+
+            <Link
+              to="/soc"
+              className="inline-flex items-center gap-2 border border-primary dark:border-[#00f5d4] bg-primary/15 dark:bg-[#00f5d4]/15 px-6 py-3 font-mono text-xs uppercase tracking-widest text-primary dark:text-[#00f5d4] font-bold hover:bg-primary dark:hover:bg-[#00f5d4] hover:text-white dark:hover:text-black transition-all shadow-[0_0_20px_rgba(2,132,199,0.15)] dark:shadow-[0_0_25px_rgba(0,245,212,0.25)]"
+            >
+              Enter SOC Console →
+            </Link>
+          </div>
+        </section>
 
         {/* Problem vs Solution Section */}
         <ProblemSolution />
