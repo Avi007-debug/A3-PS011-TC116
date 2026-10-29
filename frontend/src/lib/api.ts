@@ -129,3 +129,54 @@ export async function verifyChain() {
   }
   return null;
 }
+
+export async function acknowledgeFinding(
+  findingId: string,
+  action: "accept" | "false_positive",
+  reason: string,
+  reviewer: string = "operator"
+) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/findings/${encodeURIComponent(findingId)}/ack`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action, reason, reviewer }),
+    });
+    if (res.ok) return await res.json();
+  } catch {
+    // Graceful offline fallback
+  }
+  return null;
+}
+
+export async function fetchAcknowledgedFindings() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/findings/acknowledged`);
+    if (res.ok) return await res.json();
+  } catch {
+    // Graceful offline fallback
+  }
+  return null;
+}
+
+export async function fetchFpCalibrationSummary() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/fp/calibration`);
+    if (res.ok) return await res.json();
+  } catch {
+    // Graceful offline fallback
+  }
+  return null;
+}
+
+export async function unacknowledgeFinding(findingId: string) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/findings/${encodeURIComponent(findingId)}/ack`, {
+      method: "DELETE",
+    });
+    if (res.ok) return await res.json();
+  } catch {
+    // Graceful offline fallback
+  }
+  return null;
+}

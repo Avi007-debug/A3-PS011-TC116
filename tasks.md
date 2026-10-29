@@ -133,17 +133,17 @@ Do these first. Everything else depends on a working lab.
 
 ## 4. P1: False positives and calibration (the evaluators asked for this)
 
-- [ ] **`fp_engine.py` (T1-10, R-2):** every finding carries `confidence` (High, Medium, Low), `fp_risk` and the list of signals that fired (D1)
-- [ ] Wildcard DNS detection: resolve a random non-existent label first, tag matching results, lower confidence (D1)
-- [ ] CDN or reverse-proxy detection via CNAME, IP ownership patterns and `Server`/`Via` headers (D1)
-- [ ] Staging self-signed handling: use the host role in `approved_scope.json`, report "self-signed on staging" with reduced severity (D1)
-- [ ] Generic 404 rule: need provider-specific text **and** a matching provider domain, otherwise Low or Medium (D1)
-- [ ] Dangling confidence table implemented exactly as in the plan section 10.1 (NXDOMAIN plus provider pattern is High; pattern only is Medium; generic 404 or CDN-fronted is Low) (D2)
-- [ ] Per-asset expected-services list in the scope file (port 8080 is fine on a host that lists it) (D1)
-- [ ] Transient failure handling: retry once, then confirm over two observations (D2)
-- [ ] **Baseline acknowledgement workflow (R-3):** `POST /api/v1/findings/{id}/ack` with `accept` (becomes new baseline) or `false_positive` (with a reason). Suppressed findings do not count toward the score and stay in history (D2 backend, D1 UI)
-- [ ] UI: dedicated False Positives section listing the FP classes, which findings were downgraded and why (D1)
-- [ ] Score deduction caps per class exactly as in plan section 8.3, with the breakdown shown beside the number (D1) **(partial: score exists, caps and suppression to verify)**
+- [x] **`fp_engine.py` (T1-10, R-2):** every finding carries `confidence` (High, Medium, Low), `fp_risk` and the list of signals that fired (D1)
+- [x] Wildcard DNS detection: resolve a random non-existent label first, tag matching results, lower confidence (D1)
+- [x] CDN or reverse-proxy detection via CNAME, IP ownership patterns and `Server`/`Via` headers (D1)
+- [x] Staging self-signed handling: use the host role in `approved_scope.json`, report "self-signed on staging" with reduced severity (D1)
+- [x] Generic 404 rule: need provider-specific text **and** a matching provider domain, otherwise Low or Medium (D1)
+- [x] Dangling confidence table implemented exactly as in the plan section 10.1 (NXDOMAIN plus provider pattern is High; pattern only is Medium; generic 404 or CDN-fronted is Low) (D2)
+- [x] Per-asset expected-services list in the scope file (port 8080 is fine on a host that lists it) (D1)
+- [x] Transient failure handling: retry once, then confirm over two observations (D2)
+- [x] **Baseline acknowledgement workflow (R-3):** `POST /api/v1/findings/{id}/ack` with `accept` (becomes new baseline) or `false_positive` (with a reason). Suppressed findings do not count toward the score and stay in history (D2 backend, D1 UI)
+- [x] UI: dedicated False Positives section listing the FP classes, which findings were downgraded and why (D1)
+- [x] Score deduction caps per class exactly as in plan section 8.3, with the breakdown shown beside the number (D1)
 
 ---
 

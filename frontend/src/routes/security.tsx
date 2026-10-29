@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/sentinel/Nav";
 import { ScoreGauge } from "@/components/sentinel/ScoreGauge";
 import { AttackSandbox } from "@/components/sentinel/AttackSandbox";
+import { FalsePositiveMatrix } from "@/components/sentinel/FalsePositiveMatrix";
 import { PqcMatrix } from "@/components/sentinel/PqcMatrix";
 import { Footer } from "@/components/sentinel/Footer";
 import { CliTerminalModal } from "@/components/sentinel/CliTerminalModal";
@@ -94,6 +95,9 @@ function SecurityPage() {
 
         {/* Seeded Fault Harness & Safe Remediation Advisor */}
         <AttackSandbox />
+
+        {/* False-Positive Calibration & Baseline Acknowledgement Engine */}
+        <FalsePositiveMatrix />
 
         {/* Certificate & Key Posture Matrix */}
         <PqcMatrix />
