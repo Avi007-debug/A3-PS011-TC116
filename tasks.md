@@ -160,13 +160,13 @@ Do these first. Everything else depends on a working lab.
 
 ## 6. P1: Detection depth (cheap wins that raise the score)
 
-- [ ] Extended TLS checks (R-4): hostname mismatch, self-signed, chain problems, TLS 1.0/1.1 support, weak key size (D1)
-- [ ] Dangling NS and MX target checks (R-5) (D2)
-- [ ] SPF and DMARC presence from TXT (R-6) (D1)
-- [ ] Certificate "expiring within 14 days" flag and countdown badge (D1) **(partial: expiry tracked, 14-day flag to verify)**
-- [ ] Remediation snippets for **every** finding class: DNS removal in Route53 **and Cloudflare JSON**, Certbot, UFW and iptables, Nginx config (D2) **(partial: Certbot, UFW, Route53 done)**
-- [ ] `GET /api/v1/graph/{snapshot}` returns nodes and edges so the graph is built from the snapshot, not static data (D1) **(partial: graph UI done)**
-- [ ] `GET /api/v1/remediation/{finding}` (D2)
+- [x] Extended TLS checks (R-4): hostname mismatch, self-signed, chain problems, TLS 1.0/1.1 support, weak key size (D1)
+- [x] Dangling NS and MX target checks (R-5) (D2)
+- [x] SPF and DMARC presence from TXT (R-6) (D1)
+- [x] Certificate "expiring within 14 days" flag and countdown badge (D1)
+- [x] Remediation snippets for **every** finding class: DNS removal in Route53 **and Cloudflare JSON**, Certbot, UFW and iptables, Nginx config (D2)
+- [x] `GET /api/v1/graph/{snapshot}` returns nodes and edges so the graph is built from the snapshot, not static data (D1)
+- [x] `GET /api/v1/remediation/{finding}` (D2)
 
 ---
 

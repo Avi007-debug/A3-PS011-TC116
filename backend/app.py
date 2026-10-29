@@ -23,6 +23,7 @@ from backend.engine.orchestrator import ProbeOrchestrator
 from backend.engine.fp_engine import FalsePositiveCalibrationEngine
 from backend.engine.alert_dispatcher import alert_dispatcher
 from backend.engine.scheduler import argus_scheduler
+from backend.engine.graph_engine import PerimeterGraphEngine
 from backend.engine.probes.dns_probe import DNSInventoryProbe
 from backend.engine.probes.tls_probe import TLSCertificateInspector
 from backend.engine.probes.service_probe import PermittedPortAuditor
@@ -55,6 +56,7 @@ hitl_engine = HitlGovernanceEngine()
 snapshot_engine = SnapshotEngine()
 orchestrator = ProbeOrchestrator()
 fp_engine = FalsePositiveCalibrationEngine()
+graph_engine = PerimeterGraphEngine()
 
 dns_probe = DNSInventoryProbe()
 tls_probe = TLSCertificateInspector()
@@ -472,6 +474,26 @@ def trigger_scan(req: ScanRequest):
 def simulate_remediation(req: RemediationRequest):
     """Generates non-destructive remediation snippet for a finding."""
     return remediation_advisor.generate_remediation(req.category, req.target)
+
+
+@app.get("/api/v1/remediation/{finding_id}")
+def get_remediation_by_finding(finding_id: str):
+    """Retrieves safe remediation directives for a specific finding (Tasks Section 6)."""
+    t1_snap = snapshot_engine.get_snapshot("T1") or {}
+    findings = t1_snap.get("findings", [])
+    return remediation_advisor.get_remediation_by_finding_id(finding_id, findings=findings)
+
+
+@app.get("/api/graph/{snapshot_id}")
+@app.get("/api/v1/graph/{snapshot_id}")
+def get_snapshot_graph(snapshot_id: str):
+    """Returns node-link topology graph dynamically built from a snapshot (Tasks Section 6)."""
+    snap = snapshot_engine.get_snapshot(snapshot_id)
+    if not snap:
+        snap = snapshot_engine.get_snapshot("T1")
+    if not snap:
+        raise HTTPException(status_code=404, detail=f"Snapshot '{snapshot_id}' not found.")
+    return graph_engine.build_graph_from_snapshot(snap)
 
 
 # ==========================================

@@ -180,3 +180,37 @@ export async function unacknowledgeFinding(findingId: string) {
   }
   return null;
 }
+
+export async function fetchSnapshotGraph(snapshotId: string = "T1") {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/graph/${encodeURIComponent(snapshotId)}`);
+    if (res.ok) return await res.json();
+  } catch {
+    // Graceful offline fallback
+  }
+  return null;
+}
+
+export async function fetchRemediation(findingId: string) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/remediation/${encodeURIComponent(findingId)}`);
+    if (res.ok) return await res.json();
+  } catch {
+    // Graceful offline fallback
+  }
+  return null;
+}
+
+export async function executeCli(command: string) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/cli/execute`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ command }),
+    });
+    if (res.ok) return await res.json();
+  } catch {
+    // Graceful offline fallback
+  }
+  return null;
+}

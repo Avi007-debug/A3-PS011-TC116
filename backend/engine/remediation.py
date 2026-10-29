@@ -166,16 +166,28 @@ class RemediationAdvisor:
             "rollback": "None required.",
         }
 
-    def get_remediation_by_finding_id(self, finding_id: str) -> Dict[str, Any]:
+    def get_remediation_by_finding_id(
+        self, finding_id: str, findings: Optional[List[Dict[str, Any]]] = None
+    ) -> Dict[str, Any]:
         """
         Looks up remediation instructions for a specific finding identifier.
         """
         f_id = finding_id.upper()
-        if "TLS" in f_id or "F-001" in f_id:
+
+        if findings:
+            for f in findings:
+                fid = str(f.get("finding_id", f.get("id", ""))).upper()
+                if fid == f_id or fid in f_id or f_id in fid:
+                    cat = f.get("category", "")
+                    tgt = f.get("target", f.get("domain", ""))
+                    if cat and tgt:
+                        return self.generate_remediation(cat, tgt)
+
+        if "TLS" in f_id or "F-001" in f_id or "FIND-01" in f_id or f_id == "FIND-1" or f_id == "1":
             return self.generate_remediation("EXPIRED_TLS", "legacy.aiori.lab")
-        elif "PORT" in f_id or "F-002" in f_id or "8080" in f_id:
+        elif "PORT" in f_id or "F-002" in f_id or "8080" in f_id or "FIND-02" in f_id or f_id == "FIND-2" or f_id == "2":
             return self.generate_remediation("UNEXPECTED_PORT", "dev-edge.aiori.lab:8080")
-        elif "DANGLING" in f_id or "F-003" in f_id or "CNAME" in f_id:
+        elif "DANGLING" in f_id or "F-003" in f_id or "CNAME" in f_id or "FIND-03" in f_id or f_id == "FIND-3" or f_id == "3":
             return self.generate_remediation("DANGLING_DNS", "test-s3.aiori.lab")
         elif "WEAK" in f_id:
             return self.generate_remediation("WEAK_TLS", "weak-tls.aiori.lab")

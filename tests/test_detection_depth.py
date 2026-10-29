@@ -107,3 +107,70 @@ def test_comprehensive_remediation_generation():
     # 5. Lookup by finding ID
     rem_f1 = advisor.get_remediation_by_finding_id("FIND-TLS-legacy.aiori.lab")
     assert rem_f1["category"] == "EXPIRED_TLS"
+
+
+def test_dynamic_topology_graph_engine():
+    from backend.engine.graph_engine import PerimeterGraphEngine
+    from backend.engine.snapshot_engine import SnapshotEngine
+
+    snapshot_engine = SnapshotEngine()
+    graph_engine = PerimeterGraphEngine()
+
+    # Test T1 (Drifted)
+    t1_snap = snapshot_engine.get_snapshot("T1")
+    assert t1_snap is not None
+    graph_t1 = graph_engine.build_graph_from_snapshot(t1_snap)
+    assert graph_t1["snapshot_id"] == "SNAP-T1"
+    assert len(graph_t1["nodes"]) >= 8
+    assert len(graph_t1["links"]) >= 8
+    # Assert drifted nodes have critical/warning status
+    legacy_node = next(n for n in graph_t1["nodes"] if n["id"] == "sub-legacy")
+    assert legacy_node["status"] == "critical"
+    assert legacy_node["deduction"] == 35
+
+    dev_node = next(n for n in graph_t1["nodes"] if n["id"] == "sub-dev")
+    assert dev_node["status"] == "warning"
+    assert dev_node["port"] == 8080
+
+    s3_node = next(n for n in graph_t1["nodes"] if n["id"] == "sub-s3")
+    assert s3_node["status"] == "critical"
+
+    # Test T0 (Clean Baseline)
+    t0_snap = snapshot_engine.get_snapshot("T0")
+    assert t0_snap is not None
+    graph_t0 = graph_engine.build_graph_from_snapshot(t0_snap)
+    assert all(n["status"] == "healthy" for n in graph_t0["nodes"])
+
+    # Test T2 (Remediated)
+    t2_snap = snapshot_engine.get_snapshot("T2")
+    assert t2_snap is not None
+    graph_t2 = graph_engine.build_graph_from_snapshot(t2_snap)
+    assert all(n["status"] == "healthy" for n in graph_t2["nodes"])
+
+
+def test_api_graph_and_remediation_endpoints():
+    from backend.app import get_snapshot_graph, get_remediation_by_finding
+
+    # 1. Test GET /api/v1/graph/T1
+    graph_data = get_snapshot_graph("T1")
+    assert "nodes" in graph_data
+    assert "links" in graph_data
+    assert "edges" in graph_data
+    assert graph_data["state_id"] == "T1"
+    assert len(graph_data["nodes"]) >= 8
+
+    # 2. Test GET /api/v1/remediation/FIND-01
+    rem1_data = get_remediation_by_finding("FIND-01")
+    assert rem1_data["category"] == "EXPIRED_TLS"
+    assert "certbot" in rem1_data["code"].lower()
+
+    # 3. Test GET /api/v1/remediation/FIND-02 (Port)
+    rem2_data = get_remediation_by_finding("FIND-02")
+    assert rem2_data["category"] == "UNEXPECTED_PORT"
+    assert "ufw" in rem2_data["code"].lower()
+
+    # 4. Test GET /api/v1/remediation/FIND-03 (Dangling DNS)
+    rem3_data = get_remediation_by_finding("FIND-03")
+    assert rem3_data["category"] == "DANGLING_DNS"
+    assert "route53" in rem3_data["code"].lower()
+

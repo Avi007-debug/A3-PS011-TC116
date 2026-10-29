@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Section, SectionHead, StatusBadge } from "./shared";
+import { fetchSnapshotGraph } from "../../lib/api";
 
 interface TopologyNode {
   id: string;
@@ -148,12 +149,28 @@ const LINKS: TopologyLink[] = [
 ];
 
 export function AssetTopologyGraph() {
+  const [nodes, setNodes] = useState<TopologyNode[]>(NODES);
+  const [links, setLinks] = useState<TopologyLink[]>(LINKS);
   const [selectedNodeId, setSelectedNodeId] = useState<string>("sub-legacy");
   const [filter, setFilter] = useState<"all" | "healthy" | "drifting">("all");
+  const [activeSnapshot, setActiveSnapshot] = useState<string>("T1");
 
-  const selectedNode = NODES.find((n) => n.id === selectedNodeId) ?? NODES[2]!;
+  useEffect(() => {
+    let mounted = true;
+    fetchSnapshotGraph(activeSnapshot).then((data) => {
+      if (mounted && data && Array.isArray(data.nodes) && Array.isArray(data.links)) {
+        setNodes(data.nodes);
+        setLinks(data.links);
+      }
+    });
+    return () => {
+      mounted = false;
+    };
+  }, [activeSnapshot]);
 
-  const filteredNodes = NODES.filter((n) => {
+  const selectedNode = nodes.find((n) => n.id === selectedNodeId) ?? nodes[0] ?? NODES[2]!;
+
+  const filteredNodes = nodes.filter((n) => {
     if (filter === "healthy") return n.status === "healthy";
     if (filter === "drifting") return n.status !== "healthy";
     return true;
@@ -166,22 +183,41 @@ export function AssetTopologyGraph() {
         title="Interactive Asset Relationship Graph & Node-Link Topology"
         lede="Visual representation of external perimeter relationships: Apex Domains → Subdomains → Cloud CNAME Targets → Host IPs → Service Ports. Nodes pulse amber/red upon detecting stateful drift."
         action={
-          <div className="flex items-center gap-2 font-mono text-xs">
-            <span className="text-muted-foreground uppercase text-[10.5px]">Filter:</span>
-            {(["all", "drifting", "healthy"] as const).map((mode) => (
-              <button
-                key={mode}
-                type="button"
-                onClick={() => setFilter(mode)}
-                className={`border px-3 py-1 uppercase text-[10px] tracking-wider transition-all cursor-pointer ${
-                  filter === mode
-                    ? "border-primary bg-primary/20 text-primary font-bold shadow-[0_0_10px_rgba(20,184,166,0.2)]"
-                    : "border-border bg-surface text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {mode === "all" ? "All (8 Nodes)" : mode === "drifting" ? "Drifting (3 Faults)" : "Healthy"}
-              </button>
-            ))}
+          <div className="flex flex-wrap items-center gap-3 font-mono text-xs">
+            <div className="flex items-center gap-1">
+              <span className="text-muted-foreground uppercase text-[10px]">Snapshot:</span>
+              {(["T0", "T1", "T2"] as const).map((snap) => (
+                <button
+                  key={snap}
+                  type="button"
+                  onClick={() => setActiveSnapshot(snap)}
+                  className={`border px-2.5 py-0.5 uppercase text-[10px] tracking-wider transition-all cursor-pointer ${
+                    activeSnapshot === snap
+                      ? "border-primary bg-primary/20 text-primary font-bold shadow-xs"
+                      : "border-border bg-surface text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {snap}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-1 border-l border-border pl-3">
+              <span className="text-muted-foreground uppercase text-[10px]">Filter:</span>
+              {(["all", "drifting", "healthy"] as const).map((mode) => (
+                <button
+                  key={mode}
+                  type="button"
+                  onClick={() => setFilter(mode)}
+                  className={`border px-2.5 py-0.5 uppercase text-[10px] tracking-wider transition-all cursor-pointer ${
+                    filter === mode
+                      ? "border-primary bg-primary/20 text-primary font-bold shadow-[0_0_10px_rgba(20,184,166,0.2)]"
+                      : "border-border bg-surface text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {mode === "all" ? `All (${nodes.length})` : mode === "drifting" ? `Drifting (${nodes.filter(n => n.status !== "healthy").length})` : "Healthy"}
+                </button>
+              ))}
+            </div>
           </div>
         }
       />
@@ -195,9 +231,9 @@ export function AssetTopologyGraph() {
           {/* SVG Diagram Canvas */}
           <svg viewBox="0 0 1000 360" className="w-full h-auto">
             {/* Draw links */}
-            {LINKS.map((link, idx) => {
-              const src = NODES.find((n) => n.id === link.source);
-              const tgt = NODES.find((n) => n.id === link.target);
+            {links.map((link, idx) => {
+              const src = nodes.find((n) => n.id === link.source);
+              const tgt = nodes.find((n) => n.id === link.target);
               if (!src || !tgt) return null;
 
               const isHighlighted =
@@ -410,7 +446,7 @@ export function AssetTopologyGraph() {
 
           {/* Footer Timestamp & Merkle Leaf */}
           <div className="mt-6 border-t border-slate-200 dark:border-white/10 pt-3 text-[10.5px] text-slate-500 dark:text-muted-foreground flex items-center justify-between">
-            <span>Verified Snapshot: T1 (Current)</span>
+            <span>Verified Snapshot: {activeSnapshot} ({activeSnapshot === "T0" ? "Baseline" : activeSnapshot === "T1" ? "Current Drift" : "Remediated Recovery"})</span>
             <span className="text-blue-700 dark:text-primary font-bold">Integrity: Chained to Leaf #{selectedNode.id}</span>
           </div>
         </div>
