@@ -103,3 +103,29 @@ export async function simulateRemediation(category: string, target: string) {
   }
   return null;
 }
+
+export async function verifySnapshot(snapshotId: string = "T1") {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/verify/${snapshotId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (res.ok) return await res.json();
+  } catch {
+    // Graceful offline fallback
+  }
+  return null;
+}
+
+export async function verifyChain() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/verify/chain`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (res.ok) return await res.json();
+  } catch {
+    // Graceful offline fallback
+  }
+  return null;
+}

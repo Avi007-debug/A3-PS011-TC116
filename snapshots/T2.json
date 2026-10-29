@@ -1,0 +1,104 @@
+{
+  "snapshot_id": "SNAP-T2",
+  "state_id": "T2",
+  "timestamp": "2026-10-20T05:00:00Z",
+  "scope_sha256": "3b9c5db2b2b89382b40142e1b37186e91b77e522f09887eafa4ad4f5aa4945a2",
+  "authorization_ref": "AIORI-2026-PS011-AUTH-001",
+  "hygiene_score": 100,
+  "hygiene_rating": "HARDENED",
+  "score_breakdown": {
+    "hygiene_score": 100,
+    "rating": "HARDENED",
+    "posture_color": "emerald",
+    "total_deductions": 0,
+    "deductions": [],
+    "rubric_breakdown": [
+      {
+        "dimension": "DNS Zone Hygiene",
+        "score": 25,
+        "max": 25,
+        "weight": "25%"
+      },
+      {
+        "dimension": "TLS & Certificate Validity",
+        "score": 25,
+        "max": 25,
+        "weight": "25%"
+      },
+      {
+        "dimension": "Permitted Port Exposure",
+        "score": 25,
+        "max": 25,
+        "weight": "25%"
+      },
+      {
+        "dimension": "Dangling DNS & CNAME Integrity",
+        "score": 25,
+        "max": 25,
+        "weight": "25%"
+      }
+    ],
+    "standards_compliance": {
+      "rfc_1035": "DNS Implementation Standard",
+      "rfc_5280": "Internet X.509 PKI Certificate Profile",
+      "ca_browser_forum": "Baseline Requirements for TLS",
+      "zero_exploitation_policy": "Compliant (Read-Only Probing)"
+    }
+  },
+  "merkle_root": "0xdc7f24562deb3125452b79877b0b25137f99e27c769b3178c5cd945f9266eb64",
+  "previous_merkle_root": "0x84228964796dafa34fcbe75562a6e13ac571620f2a158042210ea3fcc0a943c1",
+  "total_assets": 6,
+  "total_findings": 0,
+  "assets": [
+    {
+      "domain": "aiori.lab",
+      "ip": "10.0.1.10",
+      "ports": [
+        22,
+        80,
+        443
+      ],
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "api.aiori.lab",
+      "ip": "10.0.1.11",
+      "ports": [
+        80,
+        443
+      ],
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "auth.aiori.lab",
+      "ip": "10.0.1.12",
+      "ports": [
+        443
+      ],
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "legacy.aiori.lab",
+      "ip": "10.0.1.30",
+      "ports": [
+        443
+      ],
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "dev-edge.aiori.lab",
+      "ip": "10.0.1.25",
+      "ports": [
+        80,
+        443
+      ],
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "test-s3.aiori.lab",
+      "cname": "aiori-dormant.s3.amazonaws.com",
+      "status": "HEALTHY"
+    }
+  ],
+  "findings": []
+}

@@ -389,7 +389,7 @@ export function OsintInvestigationDossier() {
               <div className="flex items-center gap-2">
                 <Shield className="h-5 w-5 text-primary dark:text-[#58a6ff]" />
                 <h3 className="font-bold text-slate-900 dark:text-[#f0f6fc] text-sm">
-                  {activeModalEvidence.title} — Forensics Dossier
+                  {activeModalEvidence.title} - Forensics Dossier
                 </h3>
               </div>
               <button

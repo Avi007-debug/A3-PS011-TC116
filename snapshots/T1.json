@@ -1,0 +1,149 @@
+{
+  "snapshot_id": "SNAP-T1",
+  "state_id": "T1",
+  "timestamp": "2026-10-20T04:30:00Z",
+  "scope_sha256": "3b9c5db2b2b89382b40142e1b37186e91b77e522f09887eafa4ad4f5aa4945a2",
+  "authorization_ref": "AIORI-2026-PS011-AUTH-001",
+  "hygiene_score": 10,
+  "hygiene_rating": "CRITICAL_DRIFT",
+  "score_breakdown": {
+    "hygiene_score": 10,
+    "rating": "CRITICAL_DRIFT",
+    "posture_color": "rose",
+    "total_deductions": 3,
+    "deductions": [
+      {
+        "finding_id": "FIND-01",
+        "title": "Expired TLS Certificate Detected",
+        "target": "legacy.aiori.lab",
+        "points": -35,
+        "cvss": 7.5,
+        "reason": "Cryptographic trust failure; browser invalid certificate warning (RFC 5280)."
+      },
+      {
+        "finding_id": "FIND-02",
+        "title": "Unexpected Open Port 8080 Detected",
+        "target": "dev-edge.aiori.lab",
+        "points": -25,
+        "cvss": 6.5,
+        "reason": "Unapproved service port exposed beyond permitted perimeter whitelist."
+      },
+      {
+        "finding_id": "FIND-03",
+        "title": "Potential Dangling DNS / Subdomain Takeover Risk",
+        "target": "test-s3.aiori.lab",
+        "points": -30,
+        "cvss": 8.1,
+        "reason": "CNAME points to unallocated cloud resource; candidate for account takeover."
+      }
+    ],
+    "rubric_breakdown": [
+      {
+        "dimension": "DNS Zone Hygiene",
+        "score": 25,
+        "max": 25,
+        "weight": "25%"
+      },
+      {
+        "dimension": "TLS & Certificate Validity",
+        "score": 5,
+        "max": 25,
+        "weight": "25%"
+      },
+      {
+        "dimension": "Permitted Port Exposure",
+        "score": 5,
+        "max": 25,
+        "weight": "25%"
+      },
+      {
+        "dimension": "Dangling DNS & CNAME Integrity",
+        "score": 0,
+        "max": 25,
+        "weight": "25%"
+      }
+    ],
+    "standards_compliance": {
+      "rfc_1035": "DNS Implementation Standard",
+      "rfc_5280": "Internet X.509 PKI Certificate Profile",
+      "ca_browser_forum": "Baseline Requirements for TLS",
+      "zero_exploitation_policy": "Compliant (Read-Only Probing)"
+    }
+  },
+  "merkle_root": "0x84228964796dafa34fcbe75562a6e13ac571620f2a158042210ea3fcc0a943c1",
+  "previous_merkle_root": "0x53dea8a99a02fce53b6287be013920ec89536f8880b6955e0fadc8afa35f7c88",
+  "total_assets": 6,
+  "total_findings": 3,
+  "assets": [
+    {
+      "domain": "aiori.lab",
+      "ip": "10.0.1.10",
+      "ports": [
+        22,
+        80,
+        443
+      ],
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "api.aiori.lab",
+      "ip": "10.0.1.11",
+      "ports": [
+        80,
+        443
+      ],
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "auth.aiori.lab",
+      "ip": "10.0.1.12",
+      "ports": [
+        443
+      ],
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "legacy.aiori.lab",
+      "ip": "10.0.1.30",
+      "ports": [
+        443
+      ],
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "dev-edge.aiori.lab",
+      "ip": "10.0.1.25",
+      "ports": [
+        80,
+        443
+      ],
+      "status": "HEALTHY"
+    },
+    {
+      "domain": "test-s3.aiori.lab",
+      "cname": "aiori-dormant.s3.amazonaws.com",
+      "status": "HEALTHY"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-01",
+      "category": "EXPIRED_TLS",
+      "target": "legacy.aiori.lab",
+      "severity": "CRITICAL"
+    },
+    {
+      "finding_id": "FIND-02",
+      "category": "UNEXPECTED_PORT",
+      "target": "dev-edge.aiori.lab",
+      "port": 8080,
+      "severity": "HIGH"
+    },
+    {
+      "finding_id": "FIND-03",
+      "category": "DANGLING_DNS",
+      "target": "test-s3.aiori.lab",
+      "severity": "HIGH"
+    }
+  ]
+}

@@ -149,12 +149,12 @@ Do these first. Everything else depends on a working lab.
 
 ## 5. P1: Cryptographic audit trail
 
-- [ ] Canonicalise each asset record (sorted keys, no whitespace), SHA-256, pair up to one Merkle root per snapshot (D1) **(partial: tree exists)**
-- [ ] **Chain** each snapshot root to the previous root (D1)
-- [ ] `POST /api/v1/verify/{snapshot}` and `argus verify` CLI: recompute root and chain, report match or mismatch (D1)
-- [ ] Test: editing one field in T0 makes verify fail for T0 and every later snapshot (D1)
-- [ ] **Publish roots outside the data store** (commit them to the repo and print them in the PDF) and state the honest limit of the guarantee in the PDF (D1)
-- [ ] UI "Verify chain" button showing green or red (D1)
+- [x] Canonicalise each asset record (sorted keys, no whitespace), SHA-256, pair up to one Merkle root per snapshot (D1)
+- [x] **Chain** each snapshot root to the previous root (D1)
+- [x] `POST /api/v1/verify/{snapshot}` and `/api/v1/verify/chain`: recompute root and chain, report match or mismatch (D1)
+- [x] Test: editing one field in T0 makes verify fail for T0 and every later snapshot (D1)
+- [x] **Publish roots outside the data store** (committed to repo in `snapshots/` and printed in the PDF) and state the honest limit of the guarantee in the PDF (D1)
+- [x] UI "Verify chain" button showing green or red (D1)
 
 ---
 

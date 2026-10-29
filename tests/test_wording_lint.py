@@ -22,7 +22,7 @@ FORBIDDEN_DANGLING_PHRASES = [
 ]
 
 SCAN_EXTENSIONS = {".py", ".ts", ".tsx", ".json"}
-IGNORE_DIRS = {".git", "node_modules", ".pytest_cache", "__pycache__", "dist", "build"}
+IGNORE_DIRS = {".git", "node_modules", ".pytest_cache", "__pycache__", "dist", "build", "venv"}
 IGNORE_FILES = {"test_wording_lint.py", "tasks.md", "package-lock.json"}
 
 

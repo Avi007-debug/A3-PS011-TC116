@@ -1,5 +1,5 @@
 """
-ArgusASM Snapshot Engine (Tasks Section 2.3 / R-8)
+ArgusASM Snapshot Engine (Tasks Section 2.3 / R-8 / Section 5)
 AIORI Hackathon 2026 - Problem Statement PS-011
 Writes versioned JSON snapshots (snapshots/T0.json, T1.json, T2.json) with:
 - Scope-file SHA-256 (R-8)
@@ -9,6 +9,7 @@ Writes versioned JSON snapshots (snapshots/T0.json, T1.json, T2.json) with:
 - Perimeter Hygiene Score
 - Cryptographic Merkle root chained to previous snapshot root
 - SQLite index for rapid querying and time-travel replay
+- Cryptographic verification methods (tamper detection & chain continuity)
 """
 
 import os
@@ -95,7 +96,7 @@ class SnapshotEngine:
             "snapshot_id": snapshot_id,
             "assets": assets,
             "findings": findings,
-            "previous_root": previous_merkle_root or "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "previous_root": previous_merkle_root or MerkleAuditLedger.GENESIS_PREVIOUS_ROOT,
         })
         merkle_root = merkle_receipt["merkle_root"]
 
@@ -109,7 +110,7 @@ class SnapshotEngine:
             "hygiene_rating": score_res["rating"],
             "score_breakdown": score_res,
             "merkle_root": merkle_root,
-            "previous_merkle_root": previous_merkle_root,
+            "previous_merkle_root": previous_merkle_root or MerkleAuditLedger.GENESIS_PREVIOUS_ROOT,
             "total_assets": len(assets),
             "total_findings": len(findings),
             "assets": assets,
@@ -140,7 +141,7 @@ class SnapshotEngine:
                 len(assets),
                 len(findings),
                 merkle_root,
-                previous_merkle_root,
+                previous_merkle_root or MerkleAuditLedger.GENESIS_PREVIOUS_ROOT,
                 file_path,
             ))
             conn.commit()
@@ -171,9 +172,9 @@ class SnapshotEngine:
             conn.close()
             return [dict(r) for r in rows]
 
-    def seed_baseline_snapshots(self) -> None:
-        """Seeds the standard T0, T1, and T2 snapshots if not yet present."""
-        if os.path.exists(os.path.join(self.snapshots_dir, "T0.json")):
+    def seed_baseline_snapshots(self, force: bool = False) -> None:
+        """Seeds standard T0, T1, and T2 snapshots if not yet present or if forced."""
+        if not force and os.path.exists(os.path.join(self.snapshots_dir, "T0.json")):
             return
 
         # Base assets
@@ -191,7 +192,7 @@ class SnapshotEngine:
             state_id="T0",
             assets=base_assets,
             findings=[],
-            previous_merkle_root="0x0000000000000000000000000000000000000000000000000000000000000000",
+            previous_merkle_root=MerkleAuditLedger.GENESIS_PREVIOUS_ROOT,
             custom_timestamp="2026-10-20T04:00:00Z",
         )
 
@@ -217,3 +218,29 @@ class SnapshotEngine:
             previous_merkle_root=t1["merkle_root"],
             custom_timestamp="2026-10-20T05:00:00Z",
         )
+
+    def verify_snapshot_by_id(self, snapshot_id_or_state: str) -> Dict[str, Any]:
+        """
+        Verifies the cryptographic Merkle root of a single snapshot stored on disk.
+        """
+        snap = self.get_snapshot(snapshot_id_or_state)
+        if not snap:
+            return {
+                "snapshot_id": snapshot_id_or_state,
+                "status": "NOT_FOUND",
+                "is_valid": False,
+                "reason": f"Snapshot '{snapshot_id_or_state}' does not exist on disk.",
+            }
+        return self.merkle.verify_snapshot(snap)
+
+    def verify_chain(self) -> Dict[str, Any]:
+        """
+        Verifies the entire sequence of standard snapshots (T0 -> T1 -> T2).
+        """
+        states = ["T0", "T1", "T2"]
+        snapshots = []
+        for s in states:
+            snap = self.get_snapshot(s)
+            if snap:
+                snapshots.append(snap)
+        return self.merkle.verify_chain(snapshots)

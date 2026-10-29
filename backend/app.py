@@ -265,11 +265,39 @@ def get_hygiene_score():
 @app.get("/api/v1/merkle/receipt")
 def get_merkle_receipt():
     """SHA-256 Merkle root attestation receipt for snapshot integrity."""
+    t1_snap = snapshot_engine.get_snapshot("T1")
+    if t1_snap:
+        return merkle_ledger.generate_snapshot_receipt(t1_snap)
     return merkle_ledger.generate_snapshot_receipt({
         "snapshot_id": "SNAP-T1-CURRENT",
         "snapshot_tag": "T1",
         "block_height": 1840291,
     })
+
+
+# ==========================================
+# Cryptographic Verification (Section 5)
+# ==========================================
+@app.get("/api/v1/verify/chain")
+@app.post("/api/v1/verify/chain")
+def verify_snapshot_chain():
+    """Verifies the unbroken cryptographic SHA-256 Merkle hash chain across T0 -> T1 -> T2."""
+    return snapshot_engine.verify_chain()
+
+
+@app.get("/api/v1/verify/{state_id}")
+@app.post("/api/v1/verify/{state_id}")
+def verify_snapshot_tamper(state_id: str, custom_payload: Optional[Dict[str, Any]] = None):
+    """
+    Cryptographically verifies Merkle root integrity for a given snapshot (e.g. T0, T1, T2).
+    If custom_payload is passed in body, verifies the payload; otherwise verifies snapshot on disk.
+    """
+    if custom_payload and "assets" in custom_payload and "merkle_root" in custom_payload:
+        return merkle_ledger.verify_snapshot(custom_payload)
+    res = snapshot_engine.verify_snapshot_by_id(state_id)
+    if res.get("status") == "NOT_FOUND":
+        raise HTTPException(status_code=404, detail=f"Snapshot '{state_id}' not found on disk.")
+    return res
 
 
 # ==========================================
