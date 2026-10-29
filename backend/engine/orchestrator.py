@@ -26,6 +26,7 @@ from backend.engine.probes.dns_probe import DNSInventoryProbe
 from backend.engine.probes.tls_probe import TLSCertificateInspector
 from backend.engine.probes.service_probe import PermittedPortAuditor
 from backend.engine.probes.dangling_dns_probe import DanglingDNSDetector
+from backend.engine.fp_engine import FalsePositiveCalibrationEngine
 
 
 class ProbeOrchestrator:
@@ -38,6 +39,7 @@ class ProbeOrchestrator:
         self.ledger = RequestLedger()
         self.kill_switch = ArgusKillSwitch()
         self.hitl = HitlGovernanceEngine()
+        self.fp_engine = FalsePositiveCalibrationEngine()
 
         self.dns_probe = DNSInventoryProbe()
         self.tls_probe = TLSCertificateInspector()
@@ -88,6 +90,19 @@ class ProbeOrchestrator:
         findings = []
         network_calls = 0
 
+        # Scope context resolution for FP calibration
+        scope_summary = self.scope.get_scope_summary()
+        target_scope = None
+        for d in scope_summary.get("approved_domains", []):
+            if d.get("domain", "").lower() == normalized:
+                target_scope = d
+                break
+        if not target_scope:
+            for h in scope_summary.get("approved_hosts", []):
+                if h.get("hostname", "").lower() == normalized or h.get("ip") == normalized:
+                    target_scope = h
+                    break
+
         # Run Check 1: DNS Inventory
         t0 = time.time()
         dns_res = self.dns_probe.resolve_domain(normalized)
@@ -127,15 +142,17 @@ class ProbeOrchestrator:
                 "title": f"Expired TLS Certificate on {normalized}",
                 "description": tls_res.get("warning") or "Certificate expiration violates perimeter trust.",
             }
+            f_item = self.fp_engine.calibrate_finding(f_item, scope_context=target_scope)
             findings.append(f_item)
-            # Automatic Human-in-the-Loop staging
-            self.hitl.request_approval(
-                action_type="REMEDIATION_AUTHORIZATION",
-                criticality="CRITICAL",
-                target=f"{normalized}:443",
-                summary=f"TLS Certificate Expired on {normalized}. Needs automated renewal sign-off.",
-                proposed_action=f"certbot certonly --standalone -d {normalized} && systemctl reload nginx",
-            )
+            if not f_item.get("suppressed"):
+                # Automatic Human-in-the-Loop staging
+                self.hitl.request_approval(
+                    action_type="REMEDIATION_AUTHORIZATION",
+                    criticality="CRITICAL",
+                    target=f"{normalized}:443",
+                    summary=f"TLS Certificate Expired on {normalized}. Needs automated renewal sign-off.",
+                    proposed_action=f"certbot certonly --standalone -d {normalized} && systemctl reload nginx",
+                )
 
         # Run Check 3: Port and Service Audit
         t0 = time.time()
@@ -160,15 +177,17 @@ class ProbeOrchestrator:
                 "title": f"Unapproved Port {unexp['port']} Open ({unexp['service']})",
                 "description": unexp.get("warning") or f"Port {unexp['port']} not permitted by perimeter policy.",
             }
+            f_item = self.fp_engine.calibrate_finding(f_item, scope_context=target_scope)
             findings.append(f_item)
-            # Automatic Human-in-the-Loop staging
-            self.hitl.request_approval(
-                action_type="FIREWALL_POLICY_ENFORCEMENT",
-                criticality="HIGH",
-                target=f"{normalized}:{unexp['port']}",
-                summary=f"Unapproved shadow service on port {unexp['port']}. Needs firewall block approval.",
-                proposed_action=f"ufw deny {unexp['port']}/tcp",
-            )
+            if not f_item.get("suppressed"):
+                # Automatic Human-in-the-Loop staging
+                self.hitl.request_approval(
+                    action_type="FIREWALL_POLICY_ENFORCEMENT",
+                    criticality="HIGH",
+                    target=f"{normalized}:{unexp['port']}",
+                    summary=f"Unapproved shadow service on port {unexp['port']}. Needs firewall block approval.",
+                    proposed_action=f"ufw deny {unexp['port']}/tcp",
+                )
 
         # Run Check 4: Dangling CNAME Detector
         cname = dns_res.get("records", {}).get("CNAME")
@@ -190,20 +209,23 @@ class ProbeOrchestrator:
                 "category": "DANGLING_DNS",
                 "severity": "HIGH",
                 "target": normalized,
+                "cname": cname,
                 "title": f"Potential Dangling DNS Candidate ({dangling_res.get('provider')})",
                 "description": dangling_res.get("fingerprint_evidence") or "Orphaned CNAME detected.",
                 "confidence": dangling_res.get("confidence", "HIGH"),
                 "recommended_action": dangling_res.get("recommended_action"),
             }
+            f_item = self.fp_engine.calibrate_finding(f_item, scope_context=target_scope)
             findings.append(f_item)
-            # Automatic Human-in-the-Loop staging
-            self.hitl.request_approval(
-                action_type="DANGLING_DNS_RECORD_DELETION",
-                criticality="HIGH",
-                target=normalized,
-                summary=f"Potential dangling DNS CNAME to {dangling_res.get('cname_target')}. Needs deletion sign-off.",
-                proposed_action=f"Remove CNAME {normalized} in authoritative DNS zone file.",
-            )
+            if not f_item.get("suppressed"):
+                # Automatic Human-in-the-Loop staging
+                self.hitl.request_approval(
+                    action_type="DANGLING_DNS_RECORD_DELETION",
+                    criticality="HIGH",
+                    target=normalized,
+                    summary=f"Potential dangling DNS CNAME to {dangling_res.get('cname_target')}. Needs deletion sign-off.",
+                    proposed_action=f"Remove CNAME {normalized} in authoritative DNS zone file.",
+                )
 
         total_elapsed = round((time.time() - start_time) * 1000, 2)
         return {

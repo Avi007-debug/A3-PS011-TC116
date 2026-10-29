@@ -11,30 +11,46 @@
     "rating": "CRITICAL_DRIFT",
     "posture_color": "rose",
     "total_deductions": 3,
+    "suppressed_findings_count": 0,
     "deductions": [
       {
         "finding_id": "FIND-01",
-        "title": "Expired TLS Certificate Detected",
+        "category": "EXPIRED_TLS",
+        "title": "Security Finding (EXPIRED_TLS)",
         "target": "legacy.aiori.lab",
         "points": -35,
+        "nominal_points": -35,
+        "is_capped": false,
+        "class_cap": 70,
         "cvss": 7.5,
-        "reason": "Cryptographic trust failure; browser invalid certificate warning (RFC 5280)."
+        "suppressed": false,
+        "reason": "Finding in class EXPIRED_TLS."
       },
       {
         "finding_id": "FIND-02",
-        "title": "Unexpected Open Port 8080 Detected",
+        "category": "UNEXPECTED_PORT",
+        "title": "Security Finding (UNEXPECTED_PORT)",
         "target": "dev-edge.aiori.lab",
         "points": -25,
+        "nominal_points": -25,
+        "is_capped": false,
+        "class_cap": 50,
         "cvss": 6.5,
-        "reason": "Unapproved service port exposed beyond permitted perimeter whitelist."
+        "suppressed": false,
+        "reason": "Finding in class UNEXPECTED_PORT."
       },
       {
         "finding_id": "FIND-03",
-        "title": "Potential Dangling DNS / Subdomain Takeover Risk",
+        "category": "DANGLING_DNS_HIGH",
+        "title": "Security Finding (DANGLING_DNS_HIGH)",
         "target": "test-s3.aiori.lab",
         "points": -30,
+        "nominal_points": -30,
+        "is_capped": false,
+        "class_cap": 60,
         "cvss": 8.1,
-        "reason": "CNAME points to unallocated cloud resource; candidate for account takeover."
+        "suppressed": false,
+        "reason": "Finding in class DANGLING_DNS_HIGH."
       }
     ],
     "rubric_breakdown": [
@@ -58,16 +74,89 @@
       },
       {
         "dimension": "Dangling DNS & CNAME Integrity",
-        "score": 0,
+        "score": 5,
         "max": 25,
         "weight": "25%"
+      }
+    ],
+    "caps_breakdown": [
+      {
+        "class": "EXPIRED_TLS",
+        "deduction_per_finding": 35,
+        "cap": 70,
+        "total_deducted": 35,
+        "is_capped": false
+      },
+      {
+        "class": "CERT_EXPIRING_SOON",
+        "deduction_per_finding": 10,
+        "cap": 30,
+        "total_deducted": 0,
+        "is_capped": false
+      },
+      {
+        "class": "UNEXPECTED_PORT",
+        "deduction_per_finding": 25,
+        "cap": 50,
+        "total_deducted": 25,
+        "is_capped": false
+      },
+      {
+        "class": "DANGLING_DNS_HIGH",
+        "deduction_per_finding": 30,
+        "cap": 60,
+        "total_deducted": 30,
+        "is_capped": false
+      },
+      {
+        "class": "DANGLING_DNS_MEDIUM",
+        "deduction_per_finding": 15,
+        "cap": 30,
+        "total_deducted": 0,
+        "is_capped": false
+      },
+      {
+        "class": "DANGLING_DNS_LOW",
+        "deduction_per_finding": 5,
+        "cap": 15,
+        "total_deducted": 0,
+        "is_capped": false
+      },
+      {
+        "class": "TLS_MISMATCH",
+        "deduction_per_finding": 10,
+        "cap": 20,
+        "total_deducted": 0,
+        "is_capped": false
+      },
+      {
+        "class": "SELF_SIGNED_CERT",
+        "deduction_per_finding": 10,
+        "cap": 20,
+        "total_deducted": 0,
+        "is_capped": false
+      },
+      {
+        "class": "WEAK_TLS",
+        "deduction_per_finding": 5,
+        "cap": 15,
+        "total_deducted": 0,
+        "is_capped": false
+      },
+      {
+        "class": "DNS_DRIFT",
+        "deduction_per_finding": 10,
+        "cap": 30,
+        "total_deducted": 0,
+        "is_capped": false
       }
     ],
     "standards_compliance": {
       "rfc_1035": "DNS Implementation Standard",
       "rfc_5280": "Internet X.509 PKI Certificate Profile",
       "ca_browser_forum": "Baseline Requirements for TLS",
-      "zero_exploitation_policy": "Compliant (Read-Only Probing)"
+      "zero_exploitation_policy": "Compliant (Read-Only Probing)",
+      "deduction_caps_policy": "Section 8.3 Enforced"
     }
   },
   "merkle_root": "0x84228964796dafa34fcbe75562a6e13ac571620f2a158042210ea3fcc0a943c1",

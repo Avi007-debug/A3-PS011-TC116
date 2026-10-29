@@ -20,6 +20,7 @@ from backend.engine.kill_switch import ArgusKillSwitch
 from backend.engine.hitl_gate import HitlGovernanceEngine
 from backend.engine.snapshot_engine import SnapshotEngine
 from backend.engine.orchestrator import ProbeOrchestrator
+from backend.engine.fp_engine import FalsePositiveCalibrationEngine
 from backend.engine.alert_dispatcher import alert_dispatcher
 from backend.engine.scheduler import argus_scheduler
 from backend.engine.probes.dns_probe import DNSInventoryProbe
@@ -53,6 +54,7 @@ kill_switch = ArgusKillSwitch()
 hitl_engine = HitlGovernanceEngine()
 snapshot_engine = SnapshotEngine()
 orchestrator = ProbeOrchestrator()
+fp_engine = FalsePositiveCalibrationEngine()
 
 dns_probe = DNSInventoryProbe()
 tls_probe = TLSCertificateInspector()
@@ -87,6 +89,12 @@ class HitlDecisionRequest(BaseModel):
     approval_id: str
     reviewer_id: str
     justification: str
+
+
+class AckRequest(BaseModel):
+    action: str  # "accept" or "false_positive"
+    reason: str
+    reviewer: Optional[str] = "security_lead"
 
 
 # ==========================================
@@ -201,13 +209,13 @@ def get_snapshot(state_id: str):
 
 
 # ==========================================
-# Findings & Scoring
+# Findings & Scoring (with FP Calibration & Baseline Ack)
 # ==========================================
 @app.get("/api/findings")
 @app.get("/api/v1/findings")
 def get_findings():
-    """Returns list of detected security findings and seeded issues."""
-    findings = [
+    """Returns list of detected security findings with FP calibration and suppression states."""
+    raw_findings = [
         {
             "finding_id": "F-001",
             "category": "EXPIRED_TLS",
@@ -215,7 +223,6 @@ def get_findings():
             "target": "legacy.aiori.lab",
             "title": "Expired TLS Certificate (X.509 RFC 5280)",
             "cvss": 7.5,
-            "fp_confidence": "HIGH",
             "description": "Certificate expired on 2026-01-01. Browser trust chain broken.",
             "evidence": {"notAfter": "2026-01-01T00:00:00Z", "issuer": "Let's Encrypt Authority X3"},
             "remediation_ready": True,
@@ -225,9 +232,9 @@ def get_findings():
             "category": "UNEXPECTED_PORT",
             "severity": "HIGH",
             "target": "dev-edge.aiori.lab:8080",
+            "port": 8080,
             "title": "Unauthorized Open Port 8080 (Debug Console)",
             "cvss": 6.5,
-            "fp_confidence": "HIGH",
             "description": "Service exposed beyond approved perimeter whitelist [22, 53, 80, 443].",
             "evidence": {"port": 8080, "banner": "Werkzeug/2.3.8 Python/3.11.8"},
             "remediation_ready": True,
@@ -237,28 +244,97 @@ def get_findings():
             "category": "DANGLING_DNS",
             "severity": "HIGH",
             "target": "test-s3.aiori.lab",
+            "cname": "aiori-test-bucket-deprecated.s3.amazonaws.com",
+            "http_status": 404,
             "title": "Potential Dangling CNAME (AWS S3 NoSuchBucket)",
             "cvss": 8.1,
-            "fp_confidence": "HIGH",
             "description": "Orphaned CNAME pointing to deleted S3 bucket. Potential dangling DNS candidate.",
+            "fingerprint_evidence": "NoSuchBucket (The specified bucket does not exist)",
             "evidence": {"cname": "aiori-test-bucket-deprecated.s3.amazonaws.com", "http_status": 404},
             "remediation_ready": True,
         },
     ]
+
+    # Run through FP Calibration Engine
+    calibrated_findings = [fp_engine.calibrate_finding(f) for f in raw_findings]
+    score_res = scoring_engine.calculate_score(calibrated_findings)
+
     return {
-        "total_findings": len(findings),
-        "hygiene_score": 68,
-        "rating": "ELEVATED_RISK",
-        "findings": findings,
+        "total_findings": len(calibrated_findings),
+        "active_findings": len([f for f in calibrated_findings if not f.get("suppressed")]),
+        "suppressed_findings": len([f for f in calibrated_findings if f.get("suppressed")]),
+        "hygiene_score": score_res["hygiene_score"],
+        "rating": score_res["rating"],
+        "findings": calibrated_findings,
     }
 
 
 @app.get("/api/score")
 @app.get("/api/v1/score")
 def get_hygiene_score():
-    """Computes Perimeter Hygiene Score based on detected findings."""
+    """Computes Perimeter Hygiene Score with Section 8.3 deduction caps and suppressions."""
     findings_resp = get_findings()
     return scoring_engine.calculate_score(findings_resp["findings"])
+
+
+# ==========================================
+# Baseline Acknowledgement & Suppression Workflow (R-3)
+# ==========================================
+@app.post("/api/v1/findings/{finding_id}/ack")
+@app.post("/api/v1/findings/ack")
+def acknowledge_finding_endpoint(req: AckRequest, finding_id: Optional[str] = None):
+    """
+    Acknowledges a finding as either accepted normal baseline or verified false positive (R-3).
+    Suppressed findings bypass hygiene score deduction while persisting in audit history.
+    """
+    f_id = finding_id or req.reason
+    try:
+        ack_res = fp_engine.acknowledge_finding(
+            finding_id=f_id,
+            action=req.action,
+            reason=req.reason,
+            reviewer=req.reviewer or "security_lead",
+        )
+        return ack_res
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@app.get("/api/v1/findings/acknowledged")
+@app.get("/api/v1/findings/suppressed")
+def list_acknowledged_findings():
+    """Lists all operator-acknowledged and suppressed baseline findings."""
+    return {
+        "total_acknowledged": len(fp_engine.get_all_acknowledgements()),
+        "acknowledgements": fp_engine.get_all_acknowledgements(),
+    }
+
+
+@app.delete("/api/v1/findings/{finding_id}/ack")
+def unacknowledge_finding_endpoint(finding_id: str):
+    """Removes baseline acknowledgement and restores finding to active deduction state."""
+    deleted = fp_engine.remove_acknowledgement(finding_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail=f"No acknowledgement found for finding '{finding_id}'.")
+    return {"status": "UNACKNOWLEDGED", "finding_id": finding_id}
+
+
+@app.get("/api/v1/fp/calibration")
+def get_fp_calibration_summary():
+    """Returns False-Positive Calibration rules, classes, and confidence statistics."""
+    return {
+        "status": "OPERATIONAL",
+        "supported_classes": [
+            {"class": "Wildcard DNS", "rule": "Pre-query random subdomain; down-weights discovered assets"},
+            {"class": "CDN / Reverse Proxy", "rule": "Matches CNAME & Server/Via headers; down-weights port anomalies"},
+            {"class": "Staging Self-Signed", "rule": "Cross-references role in approved_scope.json; downgrades severity"},
+            {"class": "Generic 404", "rule": "Requires matching provider domain + signature string; otherwise Low confidence"},
+            {"class": "Dangling DNS Matrix", "rule": "NXDOMAIN/sig -> High; timeout -> Med; generic 404/CDN -> Low"},
+            {"class": "Expected Services", "rule": "Honors per-asset expected services whitelist from approved scope"},
+        ],
+        "active_acknowledgements_count": len(fp_engine.get_all_acknowledgements()),
+        "rubric_caps_enforced": True,
+    }
 
 
 @app.get("/api/ledger/receipt")
