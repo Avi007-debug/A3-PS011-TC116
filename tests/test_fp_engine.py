@@ -198,3 +198,4 @@ def test_scoring_deduction_caps():
     assert len(capped_rules) == 1
     assert capped_rules[0]["is_capped"] is True
     assert capped_rules[0]["total_deducted"] == 70
+
