@@ -90,3 +90,4 @@ def test_api_cli_execute_endpoint():
     res = execute_cli_endpoint(req)
     assert res["exit_code"] == 0
     assert "Comparing Baseline Snapshot" in res["output"]
+
