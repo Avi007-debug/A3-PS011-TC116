@@ -172,10 +172,10 @@ Do these first. Everything else depends on a working lab.
 
 ## 7. P1: CLI
 
-- [ ] `argus scan --scope approved_scope.json`
-- [ ] `argus diff --baseline T0 --current T1`
-- [ ] `argus verify`, `argus ledger`, `argus kill`
-- [ ] Wire the existing CLI-style modal in the UI to the same commands (D2)
+- [x] `argus scan --scope approved_scope.json`
+- [x] `argus diff --baseline T0 --current T1`
+- [x] `argus verify`, `argus ledger`, `argus kill`
+- [x] Wire the existing CLI-style modal in the UI to the same commands (D2)
 
 ---
 

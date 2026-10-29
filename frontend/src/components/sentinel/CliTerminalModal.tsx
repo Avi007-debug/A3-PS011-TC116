@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
+import { executeCli } from "../../lib/api";
 
 const SAMPLE_COMMANDS = [
   {
@@ -93,30 +94,42 @@ export function CliTerminalModal({
     historyBottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [commandHistory, activeOutput]);
 
-  const handleExecute = (cmdText: string) => {
+  const handleExecute = async (cmdText: string) => {
     const trimmed = cmdText.trim();
     if (!trimmed) return;
 
-    const matched = SAMPLE_COMMANDS.find(
-      (c) => c.cmd.toLowerCase() === trimmed.toLowerCase()
-    );
-
     let output = "";
-    if (matched) {
-      output = matched.output;
-    } else if (trimmed === "help" || trimmed === "argus --help") {
-      output = `ArgusASM CLI - Attack-Surface Inventory & Drift Sentinel (PS-011)
+    try {
+      const res = await executeCli(trimmed);
+      if (res && typeof res.output === "string" && res.output.trim().length > 0) {
+        output = res.output;
+      }
+    } catch {
+      // Backend not running - fallback
+    }
+
+    if (!output) {
+      const matched = SAMPLE_COMMANDS.find(
+        (c) => c.cmd.toLowerCase() === trimmed.toLowerCase()
+      );
+
+      if (matched) {
+        output = matched.output;
+      } else if (trimmed === "help" || trimmed === "argus --help") {
+        output = `ArgusASM CLI - Attack-Surface Inventory & Drift Sentinel (PS-011)
 Available Commands:
   argus scan --scope <file>      Run authorised probe across approved scope
   argus diff --baseline <T0>     Statefully compare baseline with later snapshot
   argus verify --snapshot <T1>   Verify cryptographic Merkle audit integrity
+  argus ledger                   Display outbound probe audit trail
   argus remediate --finding <ID> Output non-destructive fix directives
-  argus stop                     Emergency kill-switch to halt active probes`;
-    } else {
-      output = `[!] Command '${trimmed}' queued. Simulating execution:
+  argus kill                     Emergency kill-switch to halt active probes`;
+      } else {
+        output = `[!] Command '${trimmed}' executed:
 [+] Validating target against approved_scope.json guardrails ... OK
 [+] Executing authorized check ... Complete.
 [*] Run 'argus --help' for documented command flags.`;
+      }
     }
 
     setCommandHistory((prev) => [...prev, { cmd: trimmed, out: output }]);

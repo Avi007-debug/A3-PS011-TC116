@@ -99,6 +99,10 @@ class AckRequest(BaseModel):
     reviewer: Optional[str] = "security_lead"
 
 
+class CliExecuteRequest(BaseModel):
+    command: str
+
+
 # ==========================================
 # Root & Telemetry
 # ==========================================
@@ -533,4 +537,14 @@ def start_scheduler(interval_seconds: Optional[int] = Query(None, description="O
 def stop_scheduler():
     """Stops recurring background scan scheduler."""
     return argus_scheduler.stop()
+
+
+# ==========================================
+# CLI Execution Engine (Tasks Section 7)
+# ==========================================
+@app.post("/api/v1/cli/execute")
+def execute_cli_endpoint(req: CliExecuteRequest):
+    """Executes ArgusASM unified CLI command string and returns output (Tasks Section 7)."""
+    from argus import execute_argus_command
+    return execute_argus_command(req.command)
 
