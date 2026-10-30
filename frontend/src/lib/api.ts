@@ -214,3 +214,42 @@ export async function executeCli(command: string) {
   }
   return null;
 }
+
+
+export async function fetchSarifExport() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/export/sarif`);
+    if (res.ok) return await res.json();
+  } catch {
+    // Graceful offline fallback
+  }
+  return null;
+}
+
+export function getExecutiveReportUrl(): string {
+  return `${API_BASE_URL}/api/v1/export/executive-report`;
+}
+
+export async function fetchSimulationState() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/simulation/state`);
+    if (res.ok) return await res.json();
+  } catch {
+    // Graceful offline fallback
+  }
+  return null;
+}
+
+export async function switchSimulationScenario(stateKey: string) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/simulation/switch`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ state: stateKey }),
+    });
+    if (res.ok) return await res.json();
+  } catch {
+    // Graceful offline fallback
+  }
+  return null;
+}
