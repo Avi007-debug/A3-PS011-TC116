@@ -121,22 +121,22 @@ ArgusASM provides an operator CLI ([`argus.py`](file:///c:/Coding/A3-PS011-TC116
 
 ```bash
 # 1. Run scope-enforced inventory scan
-python argus.py scan --scope approved_scope.json
+python backend/argus.py scan --scope approved_scope.json
 
 # 2. Calculate stateful drift between T0 baseline and T1 current
-python argus.py diff --baseline T0 --current T1
+python backend/argus.py diff --baseline T0 --current T1
 
 # 3. Cryptographically verify SHA-256 Merkle snapshot chain
-python argus.py verify
+python backend/argus.py verify
 
 # 4. Inspect request ledger audit trail (R-1)
-python argus.py ledger --limit 10
+python backend/argus.py ledger --limit 10
 
 # 5. Engage emergency kill switch (R-7)
-python argus.py kill --action activate --reason "Operator manual abort"
+python backend/argus.py kill --action activate --reason "Operator manual abort"
 
 # 6. Generate non-destructive remediation snippet
-python argus.py remediate --category EXPIRED_TLS --target legacy.aiori.lab
+python backend/argus.py remediate --category EXPIRED_TLS --target legacy.aiori.lab
 ```
 
 ---
@@ -147,7 +147,7 @@ python argus.py remediate --category EXPIRED_TLS --target legacy.aiori.lab
 A3-PS011-TC116/
 |-- SETUP_GUIDE.md               <- This operational deployment guide
 |-- TEST_FEATURES.md             <- Evaluator feature testing and demo walkthrough
-|-- argus.py                     <- Unified operator CLI (scan, diff, verify, kill)
+|-- backend/argus.py             <- Unified operator CLI (scan, diff, verify, kill)
 |-- approved_scope.json          <- Scope contract (hard caps: 20 domains, 10 hosts)
 |-- backend/
 |   |-- app.py                   <- FastAPI server & REST endpoints

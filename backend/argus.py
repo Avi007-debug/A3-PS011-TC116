@@ -21,7 +21,7 @@ from contextlib import redirect_stdout, redirect_stderr
 from typing import Dict, Any, List, Optional
 
 # Ensure project root is in sys.path
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
 
@@ -246,7 +246,7 @@ def execute_argus_command(cmd_string: str) -> Dict[str, Any]:
     parts = shlex.split(cmd_string)
     if parts and (parts[0] == "python" or parts[0] == "python3"):
         parts = parts[1:]
-    if parts and (parts[0] == "argus" or parts[0] == "argus.py"):
+    if parts and (parts[0] in ["argus", "argus.py", "backend/argus.py", "backend.argus"]):
         parts = parts[1:]
 
     if not parts or parts[0] in ["--help", "-h", "help"]:

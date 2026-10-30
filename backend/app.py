@@ -563,7 +563,10 @@ def stop_scheduler():
 @app.post("/api/v1/cli/execute")
 def execute_cli_endpoint(req: CliExecuteRequest):
     """Executes ArgusASM unified CLI command string and returns output (Tasks Section 7)."""
-    from argus import execute_argus_command
+    try:
+        from backend.argus import execute_argus_command
+    except ImportError:
+        from argus import execute_argus_command
     return execute_argus_command(req.command)
 
 

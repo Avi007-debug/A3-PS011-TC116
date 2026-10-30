@@ -10,7 +10,10 @@ Tests:
 - POST /api/v1/cli/execute endpoint
 """
 
-from argus import execute_argus_command
+try:
+    from backend.argus import execute_argus_command
+except ImportError:
+    from argus import execute_argus_command
 from backend.app import execute_cli_endpoint, CliExecuteRequest
 from backend.engine.kill_switch import ArgusKillSwitch
 
