@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ArgusASM Executive Perimeter Security Report</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.5; margin: 0; padding: 40px; background: #fff; }
+    .header { border-bottom: 2px solid #0284c7; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-start; }
+    .title { font-size: 26px; font-weight: 800; color: #0f172a; margin: 0; letter-spacing: -0.02em; }
+    .subtitle { font-size: 14px; color: #64748b; margin-top: 5px; }
+    .score-badge { text-align: right; }
+    .score-num { font-size: 42px; font-weight: 900; color: #f59e0b; margin: 0; line-height: 1; }
+    .score-label { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 15px; }
+    .card-val { font-size: 22px; font-weight: 700; color: #0f172a; margin-top: 4px; }
+    .card-lbl { font-size: 11px; text-transform: uppercase; color: #64748b; font-weight: 600; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
+    th { background: #f1f5f9; padding: 10px; text-align: left; font-weight: 700; color: #334155; border-bottom: 2px solid #cbd5e1; }
+    .banner { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 16px; border-radius: 4px; margin-bottom: 25px; font-size: 13px; }
+    .merkle-box { background: #0f172a; color: #38bdf8; padding: 14px 18px; border-radius: 6px; font-family: monospace; font-size: 12px; margin-top: 25px; }
+    @media print { body { padding: 20px; } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <h1 class="title">ARGUS-ASM // EXECUTIVE PERIMETER AUDIT</h1>
+      <div class="subtitle">AIORI Hackathon 2026 · Problem Statement PS-011 · Generated: 2026-10-30 14:56:15 UTC</div>
+    </div>
+    <div class="score-badge">
+      <div class="score-num">68/100</div>
+      <div class="score-label">ELEVATED_RISK</div>
+    </div>
+  </div>
+
+  <div class="banner">
+    <strong>DEFENSIVE OPERATIONAL GUARANTEE:</strong> ArgusASM operates strictly with zero invasive scanning, authorized RFC-compliant read-only inspection, and zero third-party cloud claiming. All outbound requests are logged in the cryptographic request ledger.
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-lbl">Approved Domains</div>
+      <div class="card-val">20 / 20 Max</div>
+    </div>
+    <div class="card">
+      <div class="card-lbl">Permitted Ports</div>
+      <div class="card-val">22, 53, 80, 443, 8080</div>
+    </div>
+    <div class="card">
+      <div class="card-lbl">Active Findings</div>
+      <div class="card-val">3</div>
+    </div>
+    <div class="card">
+      <div class="card-lbl">HITL Gate Status</div>
+      <div class="card-val">Enforced</div>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:8px; font-size:16px;">Active Attack Surface Findings</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Finding ID</th>
+        <th>Severity</th>
+        <th>Target Asset</th>
+        <th>Finding Title</th>
+        <th>Confidence</th>
+        <th>Impact</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+            <tr>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0; font-family:monospace; font-weight:bold;">FIND-01</td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0;"><span style="background:#ef4444; color:#fff; padding:2px 8px; border-radius:4px; font-weight:bold; font-size:12px;">CRITICAL</span></td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0; font-family:monospace;">legacy.aiori.lab</td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0; font-weight:600;">N/A</td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0;">HIGH</td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0; font-family:monospace; font-weight:bold;">-0.0</td>
+            </tr>
+            
+            <tr>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0; font-family:monospace; font-weight:bold;">FIND-02</td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0;"><span style="background:#f59e0b; color:#fff; padding:2px 8px; border-radius:4px; font-weight:bold; font-size:12px;">HIGH</span></td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0; font-family:monospace;">dev-edge.aiori.lab</td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0; font-weight:600;">N/A</td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0;">HIGH</td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0; font-family:monospace; font-weight:bold;">-0.0</td>
+            </tr>
+            
+            <tr>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0; font-family:monospace; font-weight:bold;">FIND-03</td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0;"><span style="background:#f59e0b; color:#fff; padding:2px 8px; border-radius:4px; font-weight:bold; font-size:12px;">HIGH</span></td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0; font-family:monospace;">test-s3.aiori.lab</td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0; font-weight:600;">N/A</td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0;">HIGH</td>
+              <td style="padding:10px; border-bottom:1px solid #e2e8f0; font-family:monospace; font-weight:bold;">-0.0</td>
+            </tr>
+            
+    </tbody>
+  </table>
+
+  <div class="merkle-box">
+    <strong>CRYPTOGRAPHIC TAMPER-EVIDENT MERKLE ATTESTATION (R-8)</strong><br>
+    Merkle Root: 0x84228964796dafa34fcbe75562a6e13ac571620f2a158042210ea3fcc0a943c1<br>
+    Scope Hash : 3b9c5db2b2b89382b40142e1b37186e91b77e522f09887eafa4ad4f5aa4945a2<br>
+    Status     : CRYPTOGRAPHICALLY_VERIFIED_TAMPER_FREE
+  </div>
+
+  <div style="margin-top: 40px; text-align: center; color: #94a3b8; font-size: 11px;">
+    ArgusASM Sentinel · Autonomous Attack-Surface Inventory & Drift Sentinel · AIORI 2026
+  </div>
+</body>
+</html>

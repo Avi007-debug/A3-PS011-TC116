@@ -11,6 +11,27 @@
 
 ---
 
+## Official Level 2 Submission & Working Demo Verification Matrix
+
+In strict accordance with **Step 9 (Submission of Code)** and **Step 10 (Working Demo)** of the AIORI Hackathon submission mandate, the table below provides direct access to all verified live deliverables, production environments, and offline review artifacts:
+
+| Milestone / Deliverable | Direct Link / Location | Purpose & Verification Scope | Evaluator Instructions |
+| :--- | :--- | :--- | :--- |
+| **Step 10: Live Working Demo** | [https://a3-ps-011-tc-116.vercel.app](https://a3-ps-011-tc-116.vercel.app) | **Autonomous Sentinel HUD & Drift Sentinel Console**<br>Interactive attack-surface dashboard, live score gauge, Dark/Light theme, dynamic node-link topology graph, and time-travel scrubber. | Open in any browser. Click **"Run Scan"** or navigate to `/drift` to observe stateful detection of the 3 seeded faults. |
+| **Step 10: Live Backend Control Plane** | [https://argus-backend-api-sqrs.onrender.com](https://argus-backend-api-sqrs.onrender.com) | **FastAPI Probe & Verification Engine**<br>Live public REST API enforcing scope caps, cryptographic Merkle audit ledger, and Human-in-the-Loop governance gate. | Returns JSON status `ONLINE`, scope SHA-256 hash, and active guardrail telemetry. |
+| **Step 10: Interactive API Documentation** | [https://argus-backend-api-sqrs.onrender.com/docs](https://argus-backend-api-sqrs.onrender.com/docs) | **OpenAPI / Swagger Interface**<br>Interactive documentation covering all 26 REST endpoints (probes, drift, verify, ledger, killswitch, exports). | Test live API calls directly from the browser. |
+| **Step 10: One-Click Executive Report** | [https://argus-backend-api-sqrs.onrender.com/api/v1/export/executive-report](https://argus-backend-api-sqrs.onrender.com/api/v1/export/executive-report) | **Print-Ready Executive Perimeter Audit Report**<br>One-click printable report (HTML/PDF ready) with hygiene score gauge, findings matrix, and SHA-256 Merkle attestation. | Open URL in browser to view or print (Ctrl+P / Cmd+P). |
+| **Step 10: OASIS SARIF v2.1.0 Export** | [https://argus-backend-api-sqrs.onrender.com/api/v1/export/sarif](https://argus-backend-api-sqrs.onrender.com/api/v1/export/sarif) | **Standard Security Ingestion Format ($R_9$)**<br>OASIS SARIF 2.1.0 document for direct ingestion into GitHub Advanced Security, DefectDojo, and SIEMs. | Validated against official OASIS SARIF schema. |
+| **Step 9: Complete Source Code** | [`backend/`](../backend) & [`frontend/`](../frontend) | **Production Decoupled Architecture**<br>FastAPI asynchronous engine + React 19 / TypeScript / Vite tactical console. | Clean builds (`vite build` in 14.2s, 0 bundle warnings). |
+| **Step 9: Seeded Testbed & Lab Scenarios** | [`testbed/`](../testbed) | **Isolated 5-Container Docker Lab Testbed**<br>CoreDNS, Host A (control), Host B (seed 1), Host C (seed 2), Mock S3 (seed 3) + cross-platform controller `run_scenarios.py`. | Run `python testbed/run_scenarios.py --state T1` or launch via `docker compose up -d`. |
+| **Step 9: Automated Test Harness (51 Tests)** | [`tests/`](../tests) | **Full Pytest Suite & Seeded Evaluation Runner**<br>51 tests across 9 test suites covering scope caps, 0-packet ledger, Merkle chain, wording lint, and precision/recall. | Run `python -m pytest tests/ -v` (100% pass rate in ~1.1s). |
+| **Step 9: Operational Setup Guide** | [`SETUP_GUIDE.md`](../SETUP_GUIDE.md) | **Step-by-Step Evaluator Deployment Guide**<br>Instructions for Mode 1 (Live Cloud Link), Mode 2 (Lightweight Local Launch), and Mode 3 (Docker Lab). | Start-to-finish guide for evaluators and mentors. |
+| **Step 9: Feature Testing Walkthrough** | [`TEST_FEATURES.md`](../TEST_FEATURES.md) | **3-Minute Evaluator Demo Script**<br>Chronological walkthrough covering Scope Lock, Baseline T0, Seeded T1, FP Calibration, HITL Gate, and Merkle Proof. | Exact script matching hackathon evaluation criteria. |
+| **Step 9: Operational Safety Policy** | [`docs/safety-policy.md`](./safety-policy.md) | **Non-Exploitation Charter & Guardrails Matrix**<br>Cross-reference matrix mapping PS-011 mandates (G-01 to G-08) to code lines and unit tests. | Proves zero invasive scanning and zero cloud bucket claiming. |
+| **Step 9: Offline Deliverable Review Pack** | [`samples/`](../samples) | **Pre-Computed Snapshot & Export Deliverables**<br>`snapshot_T0.json`, `snapshot_T1.json`, `snapshot_T2.json`, `drift_report.json`, `findings_export.sarif`, `findings_export.csv`, `findings_export.json`, `executive_audit_report.html`. | Ready for direct offline review if evaluator does not run Docker. |
+
+---
+
 ## Section 1: Title, Abstract, Authorized Scope Definition & Authorization Statement
 
 ### 1.1 Executive Abstract
@@ -255,11 +276,16 @@ ArgusASM transforms external attack surface management from an intrusive, ad-hoc
 1. **Passive Fingerprinting Limits:** Read-only inspection cannot confirm whether an unallocated S3 bucket name is blacklisted or reserved by AWS internal namespaces.
 2. **Lab Subnet Focus:** Designed for controlled enterprise subnets and authoritative CoreDNS zones; does not perform global internet-wide scans (complying strictly with PS-011).
 
-### 7.3 Roadmap for Regional Hackathon (November 2026)
-Upon selection for the regional finals, the team will deliver:
-1. **Passive Certificate Transparency (CT) Streamer:** Real-time ingestion of `crt.sh` logs for early warning of newly issued corporate certificates.
-2. **Offline Regional Demo Bundle:** Pre-packaged self-contained USB testbed requiring zero internet access for rapid 5-minute evaluator demonstrations.
-3. **Automated SARIF / OpenSCAP Vulnerability Export:** Direct ingestion into enterprise SIEM/SOAR platforms (Splunk, Microsoft Sentinel).
+### 7.3 Delivered P2 Differentiators & Roadmap for Regional Hackathon
+All P2 engineering differentiators are delivered and operational in this Level 2 submission:
+1. **Automated SARIF 2.1.0 & CSV Findings Export ($R_9$):** Ingestable into GitHub Security, DefectDojo, and SIEMs (`/api/v1/export/sarif` and `/api/v1/export/csv`).
+2. **One-Click Executive Audit Report ($T_{3-2}$):** Real-time printable perimeter security summary with cryptographic Merkle attestation.
+3. **Passive Certificate Transparency (CT) Monitor ($T_{3-1}$):** Ingests public CT logs; flags discoveries as candidates to add to scope with strictly 0 network probing.
+4. **Offline Evaluator Delivery Pack:** Pre-computed snapshots ($T_0, T_1, T_2$), drift deltas, and export artifacts preloaded in `samples/`.
+
+For the regional finals (November 2026), the team will extend:
+1. **Post-Quantum Cryptography (PQC) Readiness Ledger:** Tracking NIST FIPS 203/204 (ML-KEM / ML-DSA) perimeter migration.
+2. **Multi-Region Distributed Probe Nodes:** Geographic validation across multi-cloud edge locations.
 
 ---
 

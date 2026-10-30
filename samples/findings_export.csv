@@ -1,0 +1,4 @@
+Finding ID,Category,Severity,Target,Port,Title,CVSS Score,Confidence,False Positive Risk,Suppressed,Description,Recommended Action
+FIND-01,EXPIRED_TLS,CRITICAL,legacy.aiori.lab,N/A,N/A,0.0,HIGH,LOW,NO,,Review in Argus Console
+FIND-02,UNEXPECTED_PORT,HIGH,dev-edge.aiori.lab,8080,N/A,0.0,HIGH,LOW,NO,,Review in Argus Console
+FIND-03,DANGLING_DNS,HIGH,test-s3.aiori.lab,N/A,N/A,0.0,HIGH,LOW,NO,,Review in Argus Console

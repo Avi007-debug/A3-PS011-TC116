@@ -1,0 +1,219 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "ArgusASM",
+          "version": "1.0.0",
+          "informationUri": "https://github.com/aiori-hackathon/A3-PS011-TC116",
+          "rules": [
+            {
+              "id": "ARGUS-SEC-001",
+              "name": "ExpiredTLSCertificate",
+              "shortDescription": {
+                "text": "X.509 TLS certificate has expired beyond its valid window."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "helpUri": "https://datatracker.ietf.org/doc/html/rfc5280",
+              "properties": {
+                "tags": [
+                  "security",
+                  "attack-surface",
+                  "perimeter-defense"
+                ]
+              }
+            },
+            {
+              "id": "ARGUS-SEC-002",
+              "name": "UnauthorizedServicePort",
+              "shortDescription": {
+                "text": "Service exposed on a port outside the approved whitelist."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "helpUri": "https://attack.mitre.org/techniques/T1046/",
+              "properties": {
+                "tags": [
+                  "security",
+                  "attack-surface",
+                  "perimeter-defense"
+                ]
+              }
+            },
+            {
+              "id": "ARGUS-SEC-003",
+              "name": "PotentialDanglingDNSCandidate",
+              "shortDescription": {
+                "text": "CNAME points to an unallocated or decommissioned cloud asset."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "helpUri": "https://datatracker.ietf.org/doc/html/rfc1035",
+              "properties": {
+                "tags": [
+                  "security",
+                  "attack-surface",
+                  "perimeter-defense"
+                ]
+              }
+            },
+            {
+              "id": "ARGUS-SEC-004",
+              "name": "DeprecatedTLSProtocol",
+              "shortDescription": {
+                "text": "Endpoint negotiates deprecated TLS 1.0 or TLS 1.1 protocol."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "helpUri": "https://datatracker.ietf.org/doc/html/rfc8996",
+              "properties": {
+                "tags": [
+                  "security",
+                  "attack-surface",
+                  "perimeter-defense"
+                ]
+              }
+            },
+            {
+              "id": "ARGUS-SEC-005",
+              "name": "MissingOrPermissiveSPF",
+              "shortDescription": {
+                "text": "Domain lacks SPF record or uses overly permissive +all policy."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "helpUri": "https://datatracker.ietf.org/doc/html/rfc7208",
+              "properties": {
+                "tags": [
+                  "security",
+                  "attack-surface",
+                  "perimeter-defense"
+                ]
+              }
+            },
+            {
+              "id": "ARGUS-SEC-006",
+              "name": "MissingDMARCPolicy",
+              "shortDescription": {
+                "text": "Domain lacks DMARC enforcement policy record in DNS."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "helpUri": "https://datatracker.ietf.org/doc/html/rfc7489",
+              "properties": {
+                "tags": [
+                  "security",
+                  "attack-surface",
+                  "perimeter-defense"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "endTimeUtc": "2026-10-30T14:56:15.236665+00:00",
+          "properties": {
+            "scope_sha256": "3b9c5db2b2b89382b40142e1b37186e91b77e522f09887eafa4ad4f5aa4945a2",
+            "merkle_root": "0x84228964796dafa34fcbe75562a6e13ac571620f2a158042210ea3fcc0a943c1",
+            "guardrails": "Strict Non-Exploitation / 20 Domains / 10 Hosts"
+          }
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "ARGUS-SEC-001",
+          "level": "error",
+          "message": {
+            "text": "Perimeter finding: "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "https://legacy.aiori.lab"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "properties": {
+            "findingId": "FIND-01",
+            "category": "EXPIRED_TLS",
+            "confidence": "HIGH",
+            "fpRisk": "LOW",
+            "cvss": 0.0,
+            "suppressed": false
+          }
+        },
+        {
+          "ruleId": "ARGUS-SEC-002",
+          "level": "error",
+          "message": {
+            "text": "Perimeter finding: "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "https://dev-edge.aiori.lab:8080"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "properties": {
+            "findingId": "FIND-02",
+            "category": "UNEXPECTED_PORT",
+            "confidence": "HIGH",
+            "fpRisk": "LOW",
+            "cvss": 0.0,
+            "suppressed": false
+          }
+        },
+        {
+          "ruleId": "ARGUS-SEC-003",
+          "level": "error",
+          "message": {
+            "text": "Perimeter finding: "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "https://test-s3.aiori.lab"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "properties": {
+            "findingId": "FIND-03",
+            "category": "DANGLING_DNS",
+            "confidence": "HIGH",
+            "fpRisk": "LOW",
+            "cvss": 0.0,
+            "suppressed": false
+          }
+        }
+      ]
+    }
+  ]
+}

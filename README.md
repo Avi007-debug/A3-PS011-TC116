@@ -22,13 +22,15 @@
 
 | Resource | Direct Link | Description |
 | :--- | :--- | :--- |
-| **Intro Video** | [Watch Video on YouTube](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) | Project introduction, PS-011 alignment, architecture, and Level 2 schedule. |
+| **Step 10: Live Working Demo** | [https://a3-ps-011-tc-116.vercel.app](https://a3-ps-011-tc-116.vercel.app) | Production Sentinel Web Console (Interactive HUD, topology graph, drift viewer). |
+| **Step 10: Live Backend API** | [https://argus-backend-api-sqrs.onrender.com](https://argus-backend-api-sqrs.onrender.com) | Live FastAPI REST API & Swagger UI (/docs). |
+| **Step 9: Submission Dossier** | [docs/HACKATHON_SUBMISSION_DOSSIER.md](./docs/HACKATHON_SUBMISSION_DOSSIER.md) | Official 7-Section Technical Specification & verification matrix. |
+| **Step 9: Setup & Deployment Guide** | [SETUP_GUIDE.md](./SETUP_GUIDE.md) | Comprehensive setup guide (Cloud mode, lightweight local mode, Docker testbed). |
+| **Step 9: Feature Testing & Demo** | [TEST_FEATURES.md](./TEST_FEATURES.md) | 3-minute evaluator demo script & seeded validation testing guide. |
+| **Step 9: Operational Safety Policy** | [docs/safety-policy.md](./docs/safety-policy.md) | Cross-reference matrix mapping PS-011 rules to code lines and unit tests. |
+| **Step 9: Offline Deliverable Pack** | [samples/](./samples) | Pre-computed snapshots (T0/T1/T2), drift reports, SARIF, CSV, and HTML report. |
+| **Presentation Video** | [Watch Video on YouTube](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) | Project introduction, PS-011 alignment, architecture, and demonstration. |
 | **Live Presentation Deck** | [Google Slides Deck](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) | System design, scope boundaries, and implementation plan. |
-| **Technical Submission Dossier** | [`docs/HACKATHON_SUBMISSION_DOSSIER.md`](./docs/HACKATHON_SUBMISSION_DOSSIER.md) | Authoritative 7-section specification for hackathon evaluators. |
-| **Operational Safety Policy** | [`docs/safety-policy.md`](./docs/safety-policy.md) | Cross-reference matrix mapping PS-011 rules to code lines and unit tests. |
-| **Operational Setup Guide** | [SETUP_GUIDE.md](./SETUP_GUIDE.md) | Complete setup guide (Live cloud link, lightweight local mode, Docker testbed). |
-| **Feature Testing & Demo Guide** | [TEST_FEATURES.md](./TEST_FEATURES.md) | Step-by-step feature testing matrix, live simulation drift, and demo walkthrough. |
-| **Testing Guide** | [docs/TESTING_GUIDE.md](./docs/TESTING_GUIDE.md) | Detailed instructions for executing all 51 automated pytests and seeded validation runner. |
 
 ---
 

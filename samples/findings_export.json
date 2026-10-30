@@ -1,0 +1,42 @@
+{
+  "metadata": {
+    "generated_by": "ArgusASM v1.0.0",
+    "generated_at": "2026-10-30T14:56:15.238331+00:00",
+    "hackathon": "AIORI Hackathon 2026 - Problem Statement PS-011",
+    "hygiene_score": 68,
+    "rating": "ELEVATED_RISK",
+    "scope_sha256": "3b9c5db2b2b89382b40142e1b37186e91b77e522f09887eafa4ad4f5aa4945a2",
+    "merkle_root": "0x84228964796dafa34fcbe75562a6e13ac571620f2a158042210ea3fcc0a943c1",
+    "non_exploitation_enforced": true
+  },
+  "summary": {
+    "total_findings": 3,
+    "active_findings": 3,
+    "suppressed_findings": 0,
+    "critical": 1,
+    "high": 2,
+    "medium": 0,
+    "low": 0
+  },
+  "findings": [
+    {
+      "finding_id": "FIND-01",
+      "category": "EXPIRED_TLS",
+      "target": "legacy.aiori.lab",
+      "severity": "CRITICAL"
+    },
+    {
+      "finding_id": "FIND-02",
+      "category": "UNEXPECTED_PORT",
+      "target": "dev-edge.aiori.lab",
+      "port": 8080,
+      "severity": "HIGH"
+    },
+    {
+      "finding_id": "FIND-03",
+      "category": "DANGLING_DNS",
+      "target": "test-s3.aiori.lab",
+      "severity": "HIGH"
+    }
+  ]
+}
