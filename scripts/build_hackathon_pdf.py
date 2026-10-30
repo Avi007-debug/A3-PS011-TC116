@@ -190,14 +190,14 @@ def build_pdf(filename="Proposed-structure-hackathon.pdf"):
             Paragraph("Production Sentinel Web Console (Interactive HUD, topology graph, drift viewer, Dark/Light mode)", table_cell),
         ],
         [
-            Paragraph("<b>Walkthrough Video</b>", table_cell),
+            Paragraph("<b>Project Intro Video</b>", table_cell),
             Paragraph("https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd", table_cell),
-            Paragraph("Complete video demonstration covering perimeter discovery, drift injection, and verification", table_cell),
+            Paragraph("Introductory video covering problem statement PS-011 context, threat landscape, and architecture", table_cell),
         ],
         [
-            Paragraph("<b>Presentation Deck</b>", table_cell),
+            Paragraph("<b>Preliminary Concept Pitch Deck</b>", table_cell),
             Paragraph("Google Slides Presentation", table_cell),
-            Paragraph("High-level architecture, threat modeling, and defensive engineering approach", table_cell),
+            Paragraph("Initial concept proposal prepared during preliminary ideation before implementation", table_cell),
         ],
         [
             Paragraph("<b>Live Backend API</b>", table_cell),

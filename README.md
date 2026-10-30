@@ -23,11 +23,11 @@
 | Resource | Direct Link | Description |
 | :--- | :--- | :--- |
 | **Live Working Demo** | [https://a3-ps-011-tc-116.vercel.app](https://a3-ps-011-tc-116.vercel.app) | Production Sentinel Web Console (Interactive HUD, topology graph, drift viewer). |
-| **Walkthrough Video** | [Watch Video on YouTube](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) | Complete demonstration of perimeter discovery, drift injection, and verification. |
-| **Presentation Deck** | [Google Slides Deck](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) | High-level architecture, threat modeling, and defensive engineering approach. |
+| **Project Intro Video** | [Watch Intro Video on YouTube](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) | Introductory video covering problem statement PS-011 context, threat landscape, and architecture. |
+| **Preliminary Concept Pitch Deck** | [Google Slides Deck](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) | Initial concept proposal prepared during preliminary ideation before implementation. |
 | **Live Backend API** | [https://argus-backend-api-sqrs.onrender.com](https://argus-backend-api-sqrs.onrender.com) | Live FastAPI REST API & Swagger UI (`/docs`). |
 | **Executive Audit Report** | [Print-Ready Report](https://argus-backend-api-sqrs.onrender.com/api/v1/export/executive-report) | One-click printable perimeter audit with cryptographic Merkle proof. |
-| **Submission Dossier (PDF)** | [ArgusASM_Professional_Submission_Dossier.pdf](./ArgusASM_Professional_Submission_Dossier.pdf) | Formal publication-grade 7-Section Technical Dossier (PDF). |
+| **Final Submission Dossier (PDF)** | [ArgusASM_Professional_Submission_Dossier.pdf](./ArgusASM_Professional_Submission_Dossier.pdf) | Definitive post-implementation 7-Section technical engineering dossier (PDF). |
 | **Submission Dossier (Markdown)** | [`docs/HACKATHON_SUBMISSION_DOSSIER.md`](./docs/HACKATHON_SUBMISSION_DOSSIER.md) | Official 7-Section Technical Specification & verification matrix (Markdown). |
 | **Setup & Deployment Guide** | [SETUP_GUIDE.md](./SETUP_GUIDE.md) | Comprehensive setup guide (Cloud mode, lightweight local mode, Docker testbed). |
 | **Feature Testing & Demo** | [TEST_FEATURES.md](./TEST_FEATURES.md) | 3-minute evaluator demo script & seeded validation testing guide. |
@@ -409,7 +409,7 @@ npm run dev
 ```
 .
 ├── ArgusASM_Professional_Submission_Dossier.pdf # Official 7-Section Technical Dossier (PDF)
-├── ArgusASM_AIORI.pdf              # Official Level 2 Presentation Deck (PDF)
+├── ArgusASM_AIORI.pdf              # Preliminary Concept Pitch Deck (PDF)
 ├── README.md                       # Master Documentation & Evaluator Guide
 ├── approved_scope.json             # Authorized target scope definition & caps
 ├── docs/
