@@ -22,15 +22,16 @@
 
 | Resource | Direct Link | Description |
 | :--- | :--- | :--- |
-| **Step 10: Live Working Demo** | [https://a3-ps-011-tc-116.vercel.app](https://a3-ps-011-tc-116.vercel.app) | Production Sentinel Web Console (Interactive HUD, topology graph, drift viewer). |
-| **Step 10: Live Backend API** | [https://argus-backend-api-sqrs.onrender.com](https://argus-backend-api-sqrs.onrender.com) | Live FastAPI REST API & Swagger UI (/docs). |
-| **Step 9: Submission Dossier** | [docs/HACKATHON_SUBMISSION_DOSSIER.md](./docs/HACKATHON_SUBMISSION_DOSSIER.md) | Official 7-Section Technical Specification & verification matrix. |
-| **Step 9: Setup & Deployment Guide** | [SETUP_GUIDE.md](./SETUP_GUIDE.md) | Comprehensive setup guide (Cloud mode, lightweight local mode, Docker testbed). |
-| **Step 9: Feature Testing & Demo** | [TEST_FEATURES.md](./TEST_FEATURES.md) | 3-minute evaluator demo script & seeded validation testing guide. |
-| **Step 9: Operational Safety Policy** | [docs/safety-policy.md](./docs/safety-policy.md) | Cross-reference matrix mapping PS-011 rules to code lines and unit tests. |
-| **Step 9: Offline Deliverable Pack** | [samples/](./samples) | Pre-computed snapshots (T0/T1/T2), drift reports, SARIF, CSV, and HTML report. |
-| **Presentation Video** | [Watch Video on YouTube](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) | Project introduction, PS-011 alignment, architecture, and demonstration. |
-| **Live Presentation Deck** | [Google Slides Deck](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) | System design, scope boundaries, and implementation plan. |
+| **Live Working Demo** | [https://a3-ps-011-tc-116.vercel.app](https://a3-ps-011-tc-116.vercel.app) | Production Sentinel Web Console (Interactive HUD, topology graph, drift viewer). |
+| **Walkthrough Video** | [Watch Video on YouTube](https://youtu.be/rFjD-Qt4ju8?si=UlPgNCL80PGyVgLd) | Complete demonstration of perimeter discovery, drift injection, and verification. |
+| **Presentation Deck** | [Google Slides Deck](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) | High-level architecture, threat modeling, and defensive engineering approach. |
+| **Live Backend API** | [https://argus-backend-api-sqrs.onrender.com](https://argus-backend-api-sqrs.onrender.com) | Live FastAPI REST API & Swagger UI (`/docs`). |
+| **Executive Audit Report** | [Print-Ready Report](https://argus-backend-api-sqrs.onrender.com/api/v1/export/executive-report) | One-click printable perimeter audit with cryptographic Merkle proof. |
+| **Submission Dossier** | [`docs/HACKATHON_SUBMISSION_DOSSIER.md`](./docs/HACKATHON_SUBMISSION_DOSSIER.md) | Official 7-Section Technical Specification & verification matrix. |
+| **Setup & Deployment Guide** | [SETUP_GUIDE.md](./SETUP_GUIDE.md) | Comprehensive setup guide (Cloud mode, lightweight local mode, Docker testbed). |
+| **Feature Testing & Demo** | [TEST_FEATURES.md](./TEST_FEATURES.md) | 3-minute evaluator demo script & seeded validation testing guide. |
+| **Operational Safety Policy** | [`docs/safety-policy.md`](./docs/safety-policy.md) | Cross-reference matrix mapping PS-011 rules to code lines and unit tests. |
+| **Offline Deliverables Pack** | [`samples/`](./samples) | Pre-computed snapshots (T0/T1/T2), drift reports, SARIF, CSV, and HTML report. |
 
 ---
 
