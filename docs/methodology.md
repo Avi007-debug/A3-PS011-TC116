@@ -5,7 +5,7 @@
 The full methodology, architectural specifications, and mathematical drift formulations are formally documented across:
 - **Hackathon Submission Dossier (Section 2 & 4)**: [`HACKATHON_SUBMISSION_DOSSIER.md`](./HACKATHON_SUBMISSION_DOSSIER.md)
 - **Master Plan Specification**: [`ARGUS_ASM_PS011_MASTER_PLAN.md`](./ARGUS_ASM_PS011_MASTER_PLAN.md)
-- **Submission Document PDF**: [`../Proposed-structure-hackathon.pdf`](../Proposed-structure-hackathon.pdf)
+- **Submission Document PDF**: [`../ArgusASM_Professional_Submission_Dossier.pdf`](../ArgusASM_Professional_Submission_Dossier.pdf)
 
 ## Core Inspection Engines (Passive & Safe)
 1. **RFC 1035 DNS Inventory Probe**: [`backend/engine/dns_probe.py`](../backend/engine/dns_probe.py)

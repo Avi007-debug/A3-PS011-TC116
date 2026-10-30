@@ -27,7 +27,8 @@
 | **Presentation Deck** | [Google Slides Deck](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) | High-level architecture, threat modeling, and defensive engineering approach. |
 | **Live Backend API** | [https://argus-backend-api-sqrs.onrender.com](https://argus-backend-api-sqrs.onrender.com) | Live FastAPI REST API & Swagger UI (`/docs`). |
 | **Executive Audit Report** | [Print-Ready Report](https://argus-backend-api-sqrs.onrender.com/api/v1/export/executive-report) | One-click printable perimeter audit with cryptographic Merkle proof. |
-| **Submission Dossier** | [`docs/HACKATHON_SUBMISSION_DOSSIER.md`](./docs/HACKATHON_SUBMISSION_DOSSIER.md) | Official 7-Section Technical Specification & verification matrix. |
+| **Submission Dossier (PDF)** | [ArgusASM_Professional_Submission_Dossier.pdf](./ArgusASM_Professional_Submission_Dossier.pdf) | Formal publication-grade 7-Section Technical Dossier (PDF). |
+| **Submission Dossier (Markdown)** | [`docs/HACKATHON_SUBMISSION_DOSSIER.md`](./docs/HACKATHON_SUBMISSION_DOSSIER.md) | Official 7-Section Technical Specification & verification matrix (Markdown). |
 | **Setup & Deployment Guide** | [SETUP_GUIDE.md](./SETUP_GUIDE.md) | Comprehensive setup guide (Cloud mode, lightweight local mode, Docker testbed). |
 | **Feature Testing & Demo** | [TEST_FEATURES.md](./TEST_FEATURES.md) | 3-minute evaluator demo script & seeded validation testing guide. |
 | **Operational Safety Policy** | [`docs/safety-policy.md`](./docs/safety-policy.md) | Cross-reference matrix mapping PS-011 rules to code lines and unit tests. |
@@ -407,6 +408,7 @@ npm run dev
 
 ```
 .
+├── ArgusASM_Professional_Submission_Dossier.pdf # Official 7-Section Technical Dossier (PDF)
 ├── ArgusASM_AIORI.pdf              # Official Level 2 Presentation Deck (PDF)
 ├── README.md                       # Master Documentation & Evaluator Guide
 ├── approved_scope.json             # Authorized target scope definition & caps

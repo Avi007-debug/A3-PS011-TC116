@@ -17,6 +17,6 @@
 | **Phase 7: Real-Time Web Dashboard** | Complete | React 19 + TanStack + Tailwind CSS + Lucide UI |
 | **Phase 8: Tier 3 Differentiators** | Complete | SARIF / CSV / JSON / Executive HTML exports, CT Monitor, Simulation Switcher |
 | **Phase 9: Automated Testing & CI** | Complete | 51 pytest unit tests + 10 automated seeded validation checks passing (100% recall & precision) |
-| **Phase 10: Submission Package & PDF** | Complete | `Proposed-structure-hackathon.pdf`, Dossier, Root Guides |
+| **Phase 10: Submission Package & PDF** | Complete | `ArgusASM_Professional_Submission_Dossier.pdf`, Dossier, Root Guides |
 | **Phase 11: Production Deployment** | Complete | Frontend on Vercel, Backend on Render, CORS configured |
 
