@@ -26,8 +26,9 @@
 | **Live Presentation Deck** | [Google Slides Deck](https://docs.google.com/presentation/d/11FaIzXaJAGfJlCcU4IYPzWOipFKJMxIwrX3YVimfk34/edit?usp=sharing) | System design, scope boundaries, and implementation plan. |
 | **Technical Submission Dossier** | [`docs/HACKATHON_SUBMISSION_DOSSIER.md`](./docs/HACKATHON_SUBMISSION_DOSSIER.md) | Authoritative 7-section specification for hackathon evaluators. |
 | **Operational Safety Policy** | [`docs/safety-policy.md`](./docs/safety-policy.md) | Cross-reference matrix mapping PS-011 rules to code lines and unit tests. |
-| **Run & Operational Guide** | [`docs/RUN_GUIDE.md`](./docs/RUN_GUIDE.md) | Quickstart, Docker lab testbed commands, and step-by-step demo. |
-| **Testing Guide** | [`docs/TESTING_GUIDE.md`](./docs/TESTING_GUIDE.md) | Instructions for executing all 19 pytest tests and seeded validation runner. |
+| **Operational Setup Guide** | [SETUP_GUIDE.md](./SETUP_GUIDE.md) | Complete setup guide (Live cloud link, lightweight local mode, Docker testbed). |
+| **Feature Testing & Demo Guide** | [TEST_FEATURES.md](./TEST_FEATURES.md) | Step-by-step feature testing matrix, live simulation drift, and demo walkthrough. |
+| **Testing Guide** | [docs/TESTING_GUIDE.md](./docs/TESTING_GUIDE.md) | Detailed instructions for executing all 51 automated pytests and seeded validation runner. |
 
 ---
 
@@ -38,7 +39,7 @@ Follow these exact steps to verify ArgusASM's empirical performance:
 | Step | Action to Perform | Expected Outcome |
 | :--- | :--- | :--- |
 | **1. Run Validation** | In terminal, run: `python tests/seeded_validation.py` *(or `make demo`)* | **10/10 Checks Pass (100% Success)**. 100% recall on 3 seeds, 100% precision on Host A control, ASCII Precision/Recall table printed. |
-| **2. Run Tests** | In terminal, run: `python -m pytest tests/ -v` *(or `make test`)* | **19/19 Tests Pass** in <0.5s. Verifies scope caps, 0-network-call rejections, kill switch, and non-offensive wording lint. |
+| **2. Run Tests** | In terminal, run: `python -m pytest tests/ -v` *(or `make test`)* | **51/51 Tests Pass** in <0.5s. Verifies scope caps, 0-network-call rejections, kill switch, and non-offensive wording lint. |
 | **3. Open HUD** | Start backend (`uvicorn backend.app:app --port 8000`) and frontend (`cd frontend && npm run dev`), open `http://localhost:5173` | **Top Telemetry Strip** displays `SCOPE: 20 DOMAINS / 10 HOSTS`, sub-millisecond wire latency, and live check counter. |
 | **4. Check Baseline ($T_0$)** | Run `python testbed/run_scenarios.py --state T0` and click "Run Scan" | Perimeter Hygiene Score is **96/100 (Clean)**. All certificates valid, zero unapproved ports. |
 | **5. Inject Drift ($T_1$)** | Run `python testbed/run_scenarios.py --state T1` and click "Run Scan" | Real-time alerts fire. Score drops to **68/100 (Elevated Risk)** with the 3 seeds detected (-35 expired TLS, -25 port 8080, -30 dangling S3). |

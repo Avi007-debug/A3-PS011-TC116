@@ -183,10 +183,10 @@ Do these first. Everything else depends on a working lab.
 
 Only start these once the seeded validation is green in CI.
 
-- [ ] **Exports (R-9):** JSON, CSV and **SARIF** for findings (D1)
-- [ ] **One-click executive PDF export (T3-2):** score, findings, drift, remediation, Merkle root (D1)
-- [ ] **Rich webhook formatting (T3-3):** Discord/Slack embeds with severity colours (D2)
-- [ ] **Passive CT monitor (T3-1):** crt.sh lookups shown as "candidates to add to scope", never scanned automatically (D2)
+- [x] **Exports (R-9):** JSON, CSV and **SARIF** for findings (D1)
+- [x] **One-click executive PDF export (T3-2):** score, findings, drift, remediation, Merkle root (D1)
+- [x] **Rich webhook formatting (T3-3):** Discord/Slack embeds with severity colours (D2)
+- [x] **Passive CT monitor (T3-1):** crt.sh lookups shown as "candidates to add to scope", never scanned automatically (D2)
 - [ ] Offline demo kit: laptop-ready bundle with the testbed preloaded and no internet needed (BOTH, needed if selected for regionals)
 
 ---
