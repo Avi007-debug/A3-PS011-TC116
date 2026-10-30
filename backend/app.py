@@ -4,8 +4,17 @@ Autonomous Attack-Surface Inventory & Drift Sentinel
 AIORI Hackathon 2026 - Problem Statement PS-011 - Track: Cybersecurity & Infrastructure Resilience
 """
 
+import os
 import time
 from typing import List, Optional, Dict, Any
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+    load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
+except ImportError:
+    pass
+
 from fastapi import FastAPI, HTTPException, Query, Response
 from fastapi.responses import HTMLResponse, PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
