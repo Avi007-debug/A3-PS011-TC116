@@ -8,6 +8,8 @@ from .scoring_engine import PerimeterHygieneScorer
 from .merkle_audit import MerkleAuditLedger
 from .drift_engine import StatefulDriftEngine
 from .remediation import RemediationAdvisor
+from .export_engine import FindingsExportEngine
+from .ct_monitor import PassiveCTMonitor
 
 __all__ = [
     "ScopeSafetyEnforcer",
@@ -15,4 +17,6 @@ __all__ = [
     "MerkleAuditLedger",
     "StatefulDriftEngine",
     "RemediationAdvisor",
+    "FindingsExportEngine",
+    "PassiveCTMonitor",
 ]
