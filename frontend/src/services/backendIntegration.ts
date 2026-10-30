@@ -46,7 +46,7 @@ export interface ScanResult {
 }
 
 class BackendIntegrationService {
-  private apiBaseUrl: string = "http://localhost:8000";
+  private apiBaseUrl: string = ((typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_API_URL) ? import.meta.env.VITE_API_URL : "http://localhost:8000").replace(/\/+$/, "");
   private currentMode: ConnectionMode = "demo";
   private currentStatus: ConnectionStatus = "connecting";
   private lastLatency: number = 0;
