@@ -13,3 +13,4 @@ The exhaustive False-Positive Analysis, Calibration Matrix, and empirical metric
 3. **Internal / Staging Classification**: Downgrades self-signed certificates on non-production assets (`dev-*`, `stg-*`).
 4. **Generic 404 Fallback**: Re-verifies error payloads to avoid misclassifying active domains as dangling records.
 5. **Expected Services Whitelist**: Explicitly suppresses alerts for sanctioned ports defined in `approved_scope.json`.
+

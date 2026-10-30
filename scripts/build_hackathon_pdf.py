@@ -380,3 +380,4 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         out_pdf = sys.argv[1]
     build_pdf(out_pdf)
+

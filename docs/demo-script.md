@@ -20,3 +20,4 @@ The step-by-step evaluator testing flow and quick verification procedures are de
 4. **2:30 - 3:00: Remediation & Resolution ($T_2$)**:
    - Inspect copy-paste remediation commands.
    - Re-scan to verify score restoration to 100/100.
+
