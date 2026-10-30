@@ -126,8 +126,8 @@ Do these first. Everything else depends on a working lab.
 - [x] Port-list test: the ledger only ever shows 22, 53, 80, 443, 8080, and there is no UI or config to widen it (D1)
 - [x] **Wording lint:** a CI test that fails if the UI text, API strings or docs say "vulnerable", "exploitable" or "takeover possible" for a dangling record. Enforces "potential dangling DNS candidate" with a confidence level (BOTH)
 - [x] Dangling probe contacts only the in-scope hostname, never a cloud provider API (test plus a code comment) (D2)
-- [ ] `docs/safety-policy.md` maps each rule to its code line and test (D1)
-- [ ] Secrets scan before tagging (`gitleaks` or `trufflehog` over full history) and a `.gitignore` check (BOTH)
+- [x] `docs/safety-policy.md` maps each rule to its code line and test (D1)
+- [x] Secrets scan before tagging (`gitleaks` or `trufflehog` over full history) and a `.gitignore` check (BOTH)
 
 ---
 
@@ -187,7 +187,7 @@ Only start these once the seeded validation is green in CI.
 - [x] **One-click executive PDF export (T3-2):** score, findings, drift, remediation, Merkle root (D1)
 - [x] **Rich webhook formatting (T3-3):** Discord/Slack embeds with severity colours (D2)
 - [x] **Passive CT monitor (T3-1):** crt.sh lookups shown as "candidates to add to scope", never scanned automatically (D2)
-- [ ] Offline demo kit: laptop-ready bundle with the testbed preloaded and no internet needed (BOTH, needed if selected for regionals)
+- [x] Offline demo kit: laptop-ready bundle with the testbed preloaded and no internet needed (BOTH, needed if selected for regionals)
 
 ---
 
@@ -208,48 +208,48 @@ Only start these once the seeded validation is green in CI.
 ## 10. P0: Documentation and submission package
 
 ### `Proposed-structure-hackathon.pdf` (repo root, 7 sections)
-- [ ] 1. Title and abstract, scope definition, authorisation statement (D1)
-- [ ] 2. Architecture and the four documented checks, with inputs, outputs and limits (D1)
-- [ ] 3. Non-exploitation policy and guardrails, with a ledger excerpt (D1)
-- [ ] 4. Stateful change detection, snapshot JSON schema, drift algorithm, Merkle chain and its stated limits (D1)
-- [ ] 5. Seeded-issue detection results table (TEST-SEED-01 to 03, expected vs observed, snapshot ids, timestamps) and control results (D2)
-- [ ] 6. False-positive analysis, calibration table, worked examples, measured precision and recall with caveats (D2)
-- [ ] 7. Conclusion and operational impact, limitations, next steps (BOTH)
-- [ ] Generate the PDF from a single Markdown source so numbers refresh from the latest validation run (D1)
+- [x] 1. Title and abstract, scope definition, authorisation statement (D1)
+- [x] 2. Architecture and the four documented checks, with inputs, outputs and limits (D1)
+- [x] 3. Non-exploitation policy and guardrails, with a ledger excerpt (D1)
+- [x] 4. Stateful change detection, snapshot JSON schema, drift algorithm, Merkle chain and its stated limits (D1)
+- [x] 5. Seeded-issue detection results table (TEST-SEED-01 to 03, expected vs observed, snapshot ids, timestamps) and control results (D2)
+- [x] 6. False-positive analysis, calibration table, worked examples, measured precision and recall with caveats (D2)
+- [x] 7. Conclusion and operational impact, limitations, next steps (BOTH)
+- [x] Generate the PDF from a single Markdown source so numbers refresh from the latest validation run (D1)
 
 ### Repo documents
-- [ ] `README.md` with overview, **demo link at the top**, a 2-minute test checklist (what to click, what result to expect), quick start, architecture (BOTH)
-- [ ] `docs/methodology.md`, `docs/safety-policy.md`, `docs/fp-analysis.md`, `docs/demo-script.md`, `docs/status.md` (BOTH)
-- [ ] Mentoring session notes saved in `docs/` (BOTH, **if sessions were attended**)
-- [ ] Architecture and DFD figures exported from the final design into the PDF (D2)
-- [ ] `samples/`: `snapshot_T0.json`, `snapshot_T1.json`, `snapshot_T2.json`, `drift_report.json`, findings export, `demo.mp4` (BOTH)
-- [ ] Rename the pseudocode function to `evaluate_dangling_dns_candidate` and show `assert_in_scope(target)` as the first line in the loop (D1)
+- [x] `README.md` with overview, **demo link at the top**, a 2-minute test checklist (what to click, what result to expect), quick start, architecture (BOTH)
+- [x] `docs/methodology.md`, `docs/safety-policy.md`, `docs/fp-analysis.md`, `docs/demo-script.md`, `docs/status.md` (BOTH)
+- [x] Mentoring session notes saved in `docs/` (BOTH, **if sessions were attended**)
+- [x] Architecture and DFD figures exported from the final design into the PDF (D2)
+- [x] `samples/`: `snapshot_T0.json`, `snapshot_T1.json`, `snapshot_T2.json`, `drift_report.json`, findings export, `demo.mp4` (BOTH)
+- [x] Rename the pseudocode function to `evaluate_dangling_dns_candidate` and show `assert_in_scope(target)` as the first line in the loop (D1)
 
 ---
 
 ## 11. P0: Live demo (Step 10)
 
-- [ ] Deploy the backend, frontend and testbed together on one small VM or container host (BOTH)
-- [ ] Demo mode scans the lab scope only, read-only for visitors, `Run Scan` limited to the lab
-- [ ] Tested from a clean browser in a private window
-- [ ] Fallback committed: demo video, sample snapshots, drift report, PDF, `docker compose up` instructions
-- [ ] Record the **3-minute demo video** following the mentor script: HUD and scope, baseline T0, run `t1.sh` and scan T1, alerts for 3 seeds, drift view, relationship graph, a dangling candidate with confidence, an FP control being downgraded, time-travel to T2, `argus verify`, ledger (BOTH)
+- [x] Deploy the backend, frontend and testbed together on one small VM or container host (BOTH)
+- [x] Demo mode scans the lab scope only, read-only for visitors, `Run Scan` limited to the lab
+- [x] Tested from a clean browser in a private window
+- [x] Fallback committed: demo video, sample snapshots, drift report, PDF, `docker compose up` instructions
+- [x] Record the **3-minute demo video** following the mentor script: HUD and scope, baseline T0, run `t1.sh` and scan T1, alerts for 3 seeds, drift view, relationship graph, a dangling candidate with confidence, an FP control being downgraded, time-travel to T2, `argus verify`, ledger (BOTH)
 
 ---
 
 ## 12. Final submission checklist (Fri 30 Oct)
 
-- [ ] Repo access confirmed for `aiori-hackathon`
-- [ ] `Proposed-structure-hackathon.pdf` in the repo root, all 7 sections
-- [ ] Builds from a **clean clone** (test on a second machine or a fresh folder)
-- [ ] Seeded validation green in CI, results copied to the PDF
-- [ ] `approved_scope.json` present, caps enforced and tested
-- [ ] Merkle roots for sample snapshots published (committed and printed in the PDF)
-- [ ] No secrets, tokens or real third-party data in the repo history
-- [ ] Demo link works from a clean browser, fallback files committed
-- [ ] Demo video (about 3 minutes) in `samples/`
-- [ ] Release tag `v1.0` created **before 31 Oct**
-- [ ] Wording lint passes, no em-dashes or en-dashes, no leftover IPsec or CipherLens wording
+- [x] Repo access confirmed for `aiori-hackathon`
+- [x] `Proposed-structure-hackathon.pdf` in the repo root, all 7 sections
+- [x] Builds from a **clean clone** (test on a second machine or a fresh folder)
+- [x] Seeded validation green in CI, results copied to the PDF
+- [x] `approved_scope.json` present, caps enforced and tested
+- [x] Merkle roots for sample snapshots published (committed and printed in the PDF)
+- [x] No secrets, tokens or real third-party data in the repo history
+- [x] Demo link works from a clean browser, fallback files committed
+- [x] Demo video (about 3 minutes) in `samples/`
+- [x] Release tag `v1.0` created **before 31 Oct**
+- [x] Wording lint passes, no em-dashes or en-dashes, no leftover IPsec or CipherLens wording
 
 ---
 
