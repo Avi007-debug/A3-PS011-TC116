@@ -15,7 +15,7 @@
 
 ---
 
-> **LIVE WORKING DEMO:** [https://argus-asm-aiori.vercel.app](https://argus-asm-aiori.vercel.app) *(Local Demo: `http://localhost:5173`)*  
+> **LIVE WORKING DEMO:** [https://a3-ps-011-tc-116.vercel.app](https://a3-ps-011-tc-116.vercel.app) *(Local Demo: `http://localhost:5173`)*  
 > **OFFICIAL SUBMISSION DOSSIER:** [`docs/HACKATHON_SUBMISSION_DOSSIER.md`](./docs/HACKATHON_SUBMISSION_DOSSIER.md) *(7-Section PS-011 Technical Specification)*
 
 ### Key Submission Links

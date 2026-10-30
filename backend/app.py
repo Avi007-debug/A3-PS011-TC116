@@ -48,10 +48,26 @@ app = FastAPI(
     version="1.0.0-prod",
 )
 
-# Enable CORS for local Vite dev server and external evaluators
+# Enable CORS for local Vite dev server, production Vercel domains, and evaluators
+cors_origins = [
+    "https://a3-ps-011-tc-116.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://127.0.0.1:5173",
+]
+env_origins = os.environ.get("ARGUS_CORS_ORIGINS", "*")
+if env_origins and env_origins != "*":
+    for o in env_origins.split(","):
+        clean_o = o.strip()
+        if clean_o and clean_o not in cors_origins:
+            cors_origins.append(clean_o)
+elif env_origins == "*":
+    cors_origins.append("*")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=cors_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
