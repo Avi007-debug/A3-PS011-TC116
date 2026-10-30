@@ -11,7 +11,7 @@ Generates non-destructive, copy-paste remediation directives for all detected pe
 - Email DNS Hygiene: SPF and DMARC BIND / Route53 TXT record templates
 """
 
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 
 
 class RemediationAdvisor:
